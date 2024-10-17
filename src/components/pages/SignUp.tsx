@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import { Label } from "@radix-ui/react-label";
 import { Lock, Mail, User } from "lucide-react";
+import { useAuthStore } from "@/store/auth/useAuthStore";
 
 type SignUpFormValues = {
   nickname: string;
@@ -22,6 +23,7 @@ const SignUp = () => {
     formState: { errors },
   } = useForm<SignUpFormValues>();
   const navigate = useNavigate();
+  const setUser = useAuthStore((state) => state.setUser);
 
   const onSubmit = async (data: SignUpFormValues) => {
     const { nickname, email, password, isSeller } = data;
@@ -42,6 +44,13 @@ const SignUp = () => {
         isSeller: isSeller,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
+      });
+
+      setUser({
+        uid: user.uid,
+        email: user.email || "",
+        nickname: nickname,
+        isSeller: isSeller,
       });
 
       if (isSeller) {

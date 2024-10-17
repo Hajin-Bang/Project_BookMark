@@ -7,6 +7,7 @@ import { Label } from "../ui/label";
 import { Lock, Mail } from "lucide-react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { useAuthStore } from "@/store/auth/useAuthStore";
 
 type SignInFormValues = {
   email: string;
@@ -20,6 +21,7 @@ const SignIn = () => {
     formState: { errors },
   } = useForm<SignInFormValues>();
   const navigate = useNavigate();
+  const setUser = useAuthStore((state) => state.setUser);
 
   const onSubmit = async (data: SignInFormValues) => {
     const { email, password } = data;
@@ -34,25 +36,24 @@ const SignIn = () => {
       const user = userCredential.user;
 
       const userDoc = await getDoc(doc(db, "users", user.uid));
-      console.log("UID:", user.uid); // Firebase UID 출력
-      console.log("Firestore 문서 존재 여부:", userDoc.exists());
 
       if (userDoc.exists()) {
         const userData = userDoc.data();
 
-        if (userData?.isSeller) {
-          navigate("/manage");
-        } else {
-          navigate("/");
-        }
+        setUser({
+          uid: user.uid,
+          email: user.email || "",
+          nickname: userData.nickname,
+          isSeller: userData.isSeller,
+        });
+        navigate("/");
       } else {
-        console.log("사용자 데이터가 존재하지 않습니다.");
+        console.error("Firestore에서 사용자 정보를 찾을 수 없습니다.");
       }
     } catch (error) {
       console.error("로그인 에러:", error);
     }
   };
-
   const handleClickSignUp = () => {
     navigate("/signup");
   };
