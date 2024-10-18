@@ -1,15 +1,22 @@
 import { useAuthStore } from "@/store/auth/useAuthStore";
+import { Button } from "../ui/button";
 
 const HomePage = () => {
-  const { user } = useAuthStore();
+  const { user, logout } = useAuthStore();
+  const handleLogout = () => {
+    logout();
+  };
 
   return (
     <div>
       <h1>도서 탐색 메인 페이지</h1>
       {user ? (
-        <h2>{user.nickname}님 안녕하세요!</h2> // 로그인된 사용자의 nickname 표시
+        <div>
+          <h2>{user.nickname}님 안녕하세요!</h2>{" "}
+          <Button onClick={handleLogout}>로그아웃</Button>
+        </div>
       ) : (
-        <h2>로그인을 해주세요.</h2> // 로그인이 안 된 경우
+        <h2>로그인을 해주세요.</h2>
       )}
     </div>
   );

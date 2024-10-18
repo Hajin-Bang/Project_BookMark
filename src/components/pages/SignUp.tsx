@@ -1,13 +1,10 @@
 import { useForm } from "react-hook-form";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
-import { db } from "../../../src/firebase";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useNavigate } from "react-router-dom";
 import { Label } from "@radix-ui/react-label";
 import { Lock, Mail, User } from "lucide-react";
-import { useAuthStore } from "@/store/auth/useAuthStore";
+import { useSignUp } from "@/lib/auth/useSignUp";
+import { authStatusType, Layout } from "../common/components/Layout";
 
 type SignUpFormValues = {
   nickname: string;
@@ -22,45 +19,19 @@ const SignUp = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<SignUpFormValues>();
-  const navigate = useNavigate();
-  const setUser = useAuthStore((state) => state.setUser);
+  const { mutate, isPending: isLoading } = useSignUp();
 
   const onSubmit = async (data: SignUpFormValues) => {
-    const { nickname, email, password, isSeller } = data;
-    const auth = getAuth();
+    mutate(data);
+  };
 
-    try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const user = userCredential.user;
-
-      await setDoc(doc(db, "users", user.uid), {
-        id: user.uid,
-        nickname: nickname,
-        email: email,
-        isSeller: isSeller,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      });
-
-      setUser({
-        uid: user.uid,
-        email: user.email || "",
-        nickname: nickname,
-        isSeller: isSeller,
-      });
-
-      if (isSeller) {
-        navigate("/manage");
-      } else {
-        navigate("/");
-      }
-    } catch (error) {
-      console.error("회원가입 에러:", error);
-    }
+  const emailValidation = {
+    required: "이메일은 필수 항목입니다.",
+    validate: {
+      validEmail: (value: string) =>
+        /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value) ||
+        "이메일 양식이 올바르지 않습니다.",
+    },
   };
 
   const passwordValidation = {
@@ -70,7 +41,7 @@ const SignUp = () => {
         value.length >= 10 ||
         (value.length >= 8 &&
           /(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])/.test(value)) ||
-        "비밀번호는 최소 10자리이거나, 최소 8자리 이상이면서 대문자, 소문자, 숫자, 특수문자 중 3가지를 포함해야 합니다.",
+        `비밀번호는 최소 10자리이거나,최소 8자리 이상이면서 대문자, 소문자, 숫자, 특수문자 중 3가지를 포함해야 합니다.`,
       notEasyPassword: (value: string) =>
         !/(\d)\1{2}/.test(value) ||
         "비밀번호에 일련번호나 쉬운 숫자 패턴이 포함되어서는 안 됩니다.",
@@ -78,60 +49,72 @@ const SignUp = () => {
   };
 
   return (
-    <div className="w-full h-screen max-w-md mx-auto space-y-8 flex flex-col justify-center">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <div className="space-y-2">
-          <Label htmlFor="nickname">닉네임</Label>
-          <div className="relative">
-            <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-            <Input
-              {...register("nickname", { required: "닉네임을 입력하세요" })}
-              placeholder="닉네임"
-              className="pl-10"
-            />
+    <Layout authStatus={authStatusType.NEED_NOT_LOGIN}>
+      <div className="w-full h-screen max-w-md mx-auto space-y-8 flex flex-col justify-center">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="nickname">닉네임</Label>
+            <div className="relative">
+              <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <Input
+                {...register("nickname", { required: "닉네임을 입력하세요" })}
+                type="text"
+                placeholder="닉네임"
+                className="pl-10"
+              />
+            </div>
+            {errors.nickname && (
+              <p className="text-sm text-red-500">{errors.nickname.message}</p>
+            )}
           </div>
-          {errors.nickname && (
-            <p className="text-sm text-red-500">{errors.nickname.message}</p>
-          )}
-        </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="email">이메일</Label>
-          <div className="relative">
-            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-            <Input
-              {...register("email", { required: "이메일을 입력하세요" })}
-              placeholder="이메일"
-              className="pl-10"
+          <div className="space-y-2">
+            <Label htmlFor="email">이메일</Label>
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <Input
+                {...register("email", emailValidation)}
+                placeholder="이메일"
+                className="pl-10"
+              />
+            </div>
+            {errors.email && (
+              <p className="text-sm text-red-500">{errors.email.message}</p>
+            )}
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="password">비밀번호</Label>
+            <div className="relative">
+              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <Input
+                {...register("password", passwordValidation)}
+                placeholder="비밀번호"
+                className="pl-10"
+              />
+            </div>
+            {errors.password && (
+              <p className="text-sm text-red-500">{errors.password.message}</p>
+            )}
+          </div>
+          <div className="space-y-2">
+            <Label
+              htmlFor="isSeller"
+              className="ml-2 text-sm font-medium leading-none"
+            >
+              판매자 계정으로 가입하기
+            </Label>
+            <input
+              type="checkbox"
+              {...register("isSeller")}
+              className="ml-2 accent-slate-500"
             />
           </div>
-          {errors.email && (
-            <p className="text-sm text-red-500">{errors.email.message}</p>
-          )}
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="password">비밀번호</Label>
-          <div className="relative">
-            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-            <Input
-              {...register("password", passwordValidation)}
-              placeholder="비밀번호"
-              className="pl-10"
-            />
-          </div>
-          {errors.password && (
-            <p className="text-sm text-red-500">{errors.password.message}</p>
-          )}
-        </div>
-        <div className="space-y-2">
-          <label htmlFor="isSeller">판매자 계정으로 가입하기</label>
-          <input type="checkbox" {...register("isSeller")} className="ml-2" />
-        </div>
-        <Button type="submit" className="w-full">
-          회원가입
-        </Button>
-      </form>
-    </div>
+          <Button type="submit" className="w-full">
+            {isLoading ? "가입 중..." : "회원가입"}
+          </Button>
+        </form>
+      </div>
+    </Layout>
   );
 };
 

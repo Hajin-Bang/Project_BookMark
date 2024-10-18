@@ -5,81 +5,24 @@ import SignIn from "@/components/pages/SignIn";
 import ManageMainPage from "@/components/pages/ManageMainPage";
 import MyPage from "@/components/pages/MyPage";
 import SignUp from "@/components/pages/SignUp";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { useAuthStore } from "./store/auth/useAuthStore";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 const AppRouter = () => {
-  const { isAuthenticated, user } = useAuthStore();
-
   return (
     <BrowserRouter>
       <Routes>
         {/* 누구나 접근 가능한 공용 페이지 */}
         <Route path="/" element={<HomePage />} />
-        <Route
-          path="/signin"
-          element={
-            !isAuthenticated ? (
-              <SignIn />
-            ) : (
-              <Navigate to={user?.isSeller ? "/manage" : "/"} />
-            )
-          }
-        />
-        <Route
-          path="/signup"
-          element={
-            !isAuthenticated ? (
-              <SignUp />
-            ) : (
-              <Navigate to={user?.isSeller ? "/manage" : "/"} />
-            )
-          }
-        />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
 
         {/* 구매자 전용 페이지 */}
-        <Route
-          path="/cart"
-          element={
-            isAuthenticated && !user?.isSeller ? (
-              <CartPage />
-            ) : (
-              <Navigate to="/signin" />
-            )
-          }
-        />
-        <Route
-          path="/checkout"
-          element={
-            isAuthenticated && !user?.isSeller ? (
-              <CheckoutPage />
-            ) : (
-              <Navigate to="/signin" />
-            )
-          }
-        />
-        <Route
-          path="/mypage"
-          element={
-            isAuthenticated && !user?.isSeller ? (
-              <MyPage />
-            ) : (
-              <Navigate to="/signin" />
-            )
-          }
-        />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/mypage" element={<MyPage />} />
 
         {/* 판매자 전용 페이지 */}
-        <Route
-          path="/manage"
-          element={
-            isAuthenticated && user?.isSeller ? (
-              <ManageMainPage />
-            ) : (
-              <Navigate to="/signin" />
-            )
-          }
-        />
+        <Route path="/manage" element={<ManageMainPage />} />
       </Routes>
     </BrowserRouter>
   );
