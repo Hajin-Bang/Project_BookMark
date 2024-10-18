@@ -5,6 +5,7 @@ import SignIn from "@/components/pages/SignIn";
 import ManageMainPage from "@/components/pages/ManageMainPage";
 import MyPage from "@/components/pages/MyPage";
 import SignUp from "@/components/pages/SignUp";
+import ProductAdd from "./components/pages/ProductAdd";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 const AppRouter = () => {
@@ -23,6 +24,7 @@ const AppRouter = () => {
 
         {/* 판매자 전용 페이지 */}
         <Route path="/manage" element={<ManageMainPage />} />
+        <Route path="/manage/add" element={<ProductAdd />} />
       </Routes>
     </BrowserRouter>
   );
