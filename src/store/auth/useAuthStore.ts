@@ -13,8 +13,7 @@ interface User {
 interface AuthState {
   user: User | null;
   isLogin: boolean;
-  registerStatus: "idle" | "loading" | "error";
-  registerError: string | null;
+  loading: boolean;
   setUser: (userData: User) => void;
   setIsLogin: (isLogin: boolean) => void;
   logout: () => void;
@@ -24,15 +23,16 @@ interface AuthState {
 export const useAuthStore = create<AuthState>((set) => ({
   isLogin: !!Cookies.get("accessToken"),
   user: null,
-  registerStatus: "idle",
-  registerError: null,
+  loading: true,
 
   setUser: (userData) => {
     set({
       user: userData,
       isLogin: true,
+      loading: false,
     });
   },
+
   setIsLogin: (isLogin: boolean) => {
     set({ isLogin });
   },
@@ -42,6 +42,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({
       user: null,
       isLogin: false,
+      loading: false,
     });
   },
 
@@ -49,43 +50,34 @@ export const useAuthStore = create<AuthState>((set) => ({
     const token = Cookies.get("accessToken");
     if (token) {
       const auth = getAuth();
-      auth.onAuthStateChanged(async (currentUser) => {
-        if (currentUser) {
+      // 인증 상태 확인: onAuthStateChanged
+      auth.onAuthStateChanged(async (user) => {
+        if (user) {
           try {
-            const userDoc = await getDoc(doc(db, "users", currentUser.uid));
+            const userDoc = await getDoc(doc(db, "users", user.uid));
             if (userDoc.exists()) {
               const userData = userDoc.data();
-              console.log("Firestore에서 가져온 유저 데이터:", userData);
-
               set({
                 user: {
-                  uid: currentUser.uid,
-                  email: currentUser.email || "",
+                  uid: user.uid,
+                  email: user.email || "",
                   nickname: userData.nickname,
                   isSeller: userData.isSeller,
                 },
                 isLogin: true,
+                loading: false,
               });
-            } else {
-              set({
-                user: null,
-                isLogin: false,
-              });
-              console.error("유저 정보를 찾을 수 없습니다.");
             }
           } catch (error) {
-            console.error(
-              "Firestore에서 유저 정보를 가져오는 중 에러 발생",
-              error
-            );
-            set({ user: null, isLogin: false });
+            console.error("유저 정보 불러오기 실패", error);
+            set({ user: null, isLogin: false, loading: false });
           }
         } else {
-          set({ user: null, isLogin: false });
+          set({ user: null, isLogin: false, loading: false });
         }
       });
     } else {
-      set({ isLogin: false, user: null });
+      set({ isLogin: false, user: null, loading: false });
     }
   },
 }));

@@ -23,8 +23,12 @@ const SignIn = () => {
 
   const onSubmit: SubmitHandler<SignInFormValues> = (data) => {
     signIn(data, {
-      onSuccess: () => {
-        navigate("/");
+      onSuccess: (user) => {
+        if (user.isSeller) {
+          navigate("/manage");
+        } else {
+          navigate("/");
+        }
       },
       onError: (error) => {
         console.error("로그인 실패", error);

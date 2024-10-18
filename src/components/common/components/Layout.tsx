@@ -21,7 +21,11 @@ export const Layout: React.FC<LayoutProps> = ({
   containerClassName = "",
   authStatus = authStatusType.COMMON,
 }) => {
-  const { isLogin, user } = useAuthStore();
+  const { isLogin, user, loading } = useAuthStore();
+
+  if (loading) {
+    return <div>로딩 중...</div>; // 로딩 중일 때 화면 표시
+  }
 
   // 로그인 필요하고 로그인 안 되어 있으면 로그인 페이지로 이동
   if (authStatus === authStatusType.NEED_LOGIN && !isLogin) {
@@ -30,7 +34,6 @@ export const Layout: React.FC<LayoutProps> = ({
 
   // 로그인하지 않은 유저가 접근 가능한 페이지(로그인 페이지 등)
   if (authStatus === authStatusType.NEED_NOT_LOGIN && isLogin) {
-    // 로그인한 사용자가 로그인/회원가입 페이지에 접근할 경우 리다이렉트
     return <Navigate to={user?.isSeller ? "/manage" : "/"} />;
   }
 
@@ -40,7 +43,7 @@ export const Layout: React.FC<LayoutProps> = ({
       return <Navigate to="/login" />;
     }
     if (isLogin && !user?.isSeller) {
-      return <Navigate to="/books" />;
+      return <Navigate to="/" />;
     }
   }
 
