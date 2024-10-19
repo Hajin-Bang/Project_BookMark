@@ -5,6 +5,7 @@ export interface Product {
   productId: string;
   sellerId: string;
   productName: string;
+  productAuthor: string;
   productPrice: number;
   productQuantity: number;
   productDescription: string;
