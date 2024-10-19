@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytes,
+} from "firebase/storage";
 import { Input } from "../ui/input";
 import { storage } from "@/firebase";
 
@@ -13,8 +18,14 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
   initialImages = [],
 }) => {
   const [imageURLs, setImageURLs] = useState<string[]>(initialImages);
-  const [firebaseImageURLs, setFirebaseImageURLs] =
-    useState<string[]>(initialImages);
+  const [firebaseImageURLs, setFirebaseImageURLs] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (initialImages.length > 0) {
+      setImageURLs(initialImages);
+      setFirebaseImageURLs(initialImages);
+    }
+  }, [initialImages]);
 
   useEffect(() => {
     onImageChange(firebaseImageURLs);
@@ -40,15 +51,22 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
       const blobUrl = URL.createObjectURL(file); // 미리보기용 blob URL 생성
       newImageUrls.push(blobUrl);
 
-      const firebaseUrl = await uploadImageToFirebase(file);
-      firebaseUrls.push(firebaseUrl);
+      try {
+        const firebaseUrl = await uploadImageToFirebase(file);
+        firebaseUrls.push(firebaseUrl);
+      } catch (error) {
+        console.error("이미지 업로드 중 에러:", error);
+      }
     }
 
     setImageURLs((prevURLs) => [...prevURLs, ...newImageUrls]);
     setFirebaseImageURLs((prevURLs) => [...prevURLs, ...firebaseUrls]);
   };
 
-  const handleImageRemove = (index: number) => {
+  const handleImageRemove = async (index: number) => {
+    const imageUrlToDelete = firebaseImageURLs[index];
+
+    // 배열에서 이미지 제거 먼저 처리
     const updatedImageURLs = imageURLs.filter((_, i) => i !== index);
     const updatedFirebaseImageURLs = firebaseImageURLs.filter(
       (_, i) => i !== index
@@ -56,6 +74,15 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 
     setImageURLs(updatedImageURLs);
     setFirebaseImageURLs(updatedFirebaseImageURLs);
+
+    // Firebase에서 이미지 삭제 처리
+    try {
+      const imageRef = ref(storage, imageUrlToDelete);
+      await deleteObject(imageRef);
+    } catch (error) {
+      console.error("이미지 삭제 중 에러 발생:", error);
+      return;
+    }
   };
 
   return (
@@ -65,7 +92,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
           {imageURLs.map((url, index) => (
             <div key={index} className="relative">
               <img
-                src={url}
+                src={url ? url : undefined}
                 alt={`미리보기 이미지 ${index + 1}`}
                 className="w-full h-32 object-cover"
               />

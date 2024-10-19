@@ -7,6 +7,7 @@ import CheckoutPage from "./pages/CheckoutPage";
 import MyPage from "./pages/MyPage";
 import ProductsManage from "./pages/ProductsManage";
 import ProductAdd from "./pages/ProductAdd";
+import ProductUpdateDelete from "./pages/ProductUpdateDelete";
 
 const AppRouter = () => {
   return (
@@ -25,6 +26,10 @@ const AppRouter = () => {
         {/* 판매자 전용 페이지 */}
         <Route path="/manage" element={<ProductsManage />} />
         <Route path="/manage/add" element={<ProductAdd />} />
+        <Route
+          path="/manage/edit/:productId"
+          element={<ProductUpdateDelete />}
+        />
       </Routes>
     </BrowserRouter>
   );

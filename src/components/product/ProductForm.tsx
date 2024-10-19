@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
@@ -44,6 +44,12 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     defaultValues,
   });
   const [firebaseImageURLs, setFirebaseImageURLs] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (defaultValues) {
+      reset(defaultValues);
+    }
+  }, [defaultValues, reset]);
 
   const onFormSubmit = (data: ProductAddFormValues) => {
     onSubmit({
