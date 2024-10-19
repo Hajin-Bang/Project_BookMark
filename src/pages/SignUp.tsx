@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import { Lock, Mail, User } from "lucide-react";
 import { useSignUp } from "@/lib/auth/useSignUp";
-import { authStatusType, Layout } from "../common/components/Layout";
+import { authStatusType, Layout } from "@/components/common/components/Layout";
 
 type SignUpFormValues = {
   nickname: string;

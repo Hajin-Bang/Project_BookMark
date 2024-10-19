@@ -1,12 +1,12 @@
-import HomePage from "./components/pages/HomePage";
-import SignIn from "./components/pages/SignIn";
-import SignUp from "./components/pages/SignUp";
-import CartPage from "@/components/pages/CartPage";
-import CheckoutPage from "@/components/pages/CheckoutPage";
-import MyPage from "@/components/pages/MyPage";
-import ProductAdd from "./components/pages/ProductAdd";
-import ProductsManage from "./components/pages/ProductsManage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
+import CartPage from "./pages/CartPage";
+import CheckoutPage from "./pages/CheckoutPage";
+import MyPage from "./pages/MyPage";
+import ProductsManage from "./pages/ProductsManage";
+import ProductAdd from "./pages/ProductAdd";
 
 const AppRouter = () => {
   return (

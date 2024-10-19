@@ -1,5 +1,5 @@
 import { useAuthStore } from "@/store/auth/useAuthStore";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 
 const HomePage = () => {
   const { user, logout } = useAuthStore();

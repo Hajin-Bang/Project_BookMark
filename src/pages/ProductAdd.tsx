@@ -1,21 +1,21 @@
 import { Controller, useForm } from "react-hook-form";
-import { authStatusType, Layout } from "../common/components/Layout";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
+import { imageUpload } from "@/utils/imageUpload";
+import { useState } from "react";
+import { useAddProduct } from "@/lib/product/useAddProduct";
+import { useProductStore } from "@/store/product/useProductStore";
+import { useAuthStore } from "@/store/auth/useAuthStore";
+import { authStatusType, Layout } from "@/components/common/components/Layout";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select";
-import { Textarea } from "../ui/textarea";
-import { imageUpload } from "@/utils/imageUpload";
-import { useState } from "react";
-import { Button } from "../ui/button";
-import { useAddProduct } from "@/lib/product/useAddProduct";
-import { useProductStore } from "@/store/product/useProductStore";
-import { useAuthStore } from "@/store/auth/useAuthStore";
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 
 type ProductAddFormValues = {
   productName: string;

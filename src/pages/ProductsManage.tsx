@@ -1,7 +1,7 @@
 import { useAuthStore } from "@/store/auth/useAuthStore";
-import { Layout } from "../common/components/Layout";
-import { Button } from "../ui/button";
 import { useFetchSellerProducts } from "@/lib/product/useFetchSellerProducts";
+import { Layout } from "@/components/common/components/Layout";
+import { Button } from "@/components/ui/button";
 
 const ProductsManage = () => {
   const { user } = useAuthStore();
