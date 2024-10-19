@@ -18,6 +18,7 @@ export interface Product {
 interface ProductState {
   products: Product[];
   addProduct: (product: Product) => void;
+  deleteProduct: (productId: string) => void;
 }
 
 export const useProductStore = create<ProductState>((set) => ({
@@ -26,5 +27,12 @@ export const useProductStore = create<ProductState>((set) => ({
   addProduct: (product: Product) =>
     set((state) => ({
       products: [...state.products, product],
+    })),
+
+  deleteProduct: (productId: string) =>
+    set((state) => ({
+      products: state.products.filter(
+        (product) => product.productId !== productId
+      ),
     })),
 }));

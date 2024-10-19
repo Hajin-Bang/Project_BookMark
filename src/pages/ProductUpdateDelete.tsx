@@ -5,6 +5,7 @@ import {
 } from "@/components/product/ProductForm";
 import { Button } from "@/components/ui/button";
 import { db } from "@/firebase";
+import { useDeleteProduct } from "@/lib/product/useDeleteProduct";
 import { useUpdateProduct } from "@/lib/product/useUpdateProduct";
 import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
@@ -16,6 +17,7 @@ const ProductUpdateDelete = () => {
     ProductAddFormValues | undefined
   >(undefined);
   const updateProduct = useUpdateProduct();
+  const deleteProduct = useDeleteProduct();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -48,7 +50,17 @@ const ProductUpdateDelete = () => {
     );
   };
 
-  const handleProductDelete = () => {};
+  const handleProductDelete = () => {
+    if (!productId) return;
+    deleteProduct.mutate(productId, {
+      onSuccess: () => {
+        navigate("/manage");
+      },
+      onError: (error) => {
+        console.error("상품 삭제 중 에러 발생:", error);
+      },
+    });
+  };
 
   return (
     <Layout authStatus={authStatusType.ONLY_SELLER}>
