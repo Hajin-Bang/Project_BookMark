@@ -10,13 +10,12 @@ import {
   SelectValue,
 } from "../ui/select";
 import { Textarea } from "../ui/textarea";
-import { Button } from "../ui/button";
 import { ImageUploader } from "./ImageUploader";
 
 type ProductFormProps = {
   onSubmit: (data: ProductAddFormValues) => void;
   defaultValues?: ProductAddFormValues;
-  isEditMode?: boolean;
+  id?: string;
 };
 
 export type ProductAddFormValues = {
@@ -32,7 +31,7 @@ export type ProductAddFormValues = {
 export const ProductForm: React.FC<ProductFormProps> = ({
   onSubmit,
   defaultValues,
-  isEditMode = false,
+  id = "productForm",
 }) => {
   const {
     register,
@@ -61,6 +60,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
 
   return (
     <form
+      id={id}
       onSubmit={handleSubmit(onFormSubmit)}
       className="w-full flex flex-col gap-6"
     >
@@ -175,11 +175,6 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             {errors.productDescription.message}
           </small>
         )}
-      </div>
-      <div className="w-full flex gap-2">
-        <Button type="submit" className="flex-grow">
-          {isEditMode ? "수정" : "저장"}
-        </Button>
       </div>
     </form>
   );

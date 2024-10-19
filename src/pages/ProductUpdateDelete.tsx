@@ -3,6 +3,7 @@ import {
   ProductAddFormValues,
   ProductForm,
 } from "@/components/product/ProductForm";
+import { Button } from "@/components/ui/button";
 import { db } from "@/firebase";
 import { useUpdateProduct } from "@/lib/product/useUpdateProduct";
 import { doc, getDoc } from "firebase/firestore";
@@ -41,14 +42,13 @@ const ProductUpdateDelete = () => {
       { ...productData, ...updatedData },
       {
         onSuccess: () => {
-          navigate("/manage"); // 수정 후 /manage 페이지로 이동
+          navigate("/manage");
         },
       }
     );
   };
 
-  // const handleProductDelete = (data) => {
-  //     }
+  const handleProductDelete = () => {};
 
   return (
     <Layout authStatus={authStatusType.ONLY_SELLER}>
@@ -58,8 +58,18 @@ const ProductUpdateDelete = () => {
         <ProductForm
           onSubmit={handleProductUpdate}
           defaultValues={productData}
-          isEditMode={true}
         />
+        <div className="w-full flex gap-2 mt-2">
+          <Button type="submit" form="productForm" className="flex-grow">
+            수정하기
+          </Button>
+          <Button
+            onClick={handleProductDelete}
+            className="flex-grow bg-red-300"
+          >
+            삭제하기
+          </Button>
+        </div>
       </div>
     </Layout>
   );
