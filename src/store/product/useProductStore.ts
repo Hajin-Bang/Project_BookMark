@@ -10,8 +10,8 @@ export interface Product {
   productDescription: string;
   productCategory: string;
   productImage: string[];
-  createdAt: string | FieldValue; // FieldValue 타입 허용
-  updatedAt: string | FieldValue;
+  createdAt: string | FieldValue | Date; // FieldValue 타입 허용
+  updatedAt: string | FieldValue | Date;
 }
 
 interface ProductState {

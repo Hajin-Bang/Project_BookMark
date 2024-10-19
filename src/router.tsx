@@ -1,11 +1,11 @@
-import HomePage from "@/components/pages/HomePage";
+import HomePage from "./components/pages/HomePage";
+import SignIn from "./components/pages/SignIn";
+import SignUp from "./components/pages/SignUp";
 import CartPage from "@/components/pages/CartPage";
 import CheckoutPage from "@/components/pages/CheckoutPage";
-import SignIn from "@/components/pages/SignIn";
-import ManageMainPage from "@/components/pages/ManageMainPage";
 import MyPage from "@/components/pages/MyPage";
-import SignUp from "@/components/pages/SignUp";
 import ProductAdd from "./components/pages/ProductAdd";
+import ProductsManage from "./components/pages/ProductsManage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 const AppRouter = () => {
@@ -23,7 +23,7 @@ const AppRouter = () => {
         <Route path="/mypage" element={<MyPage />} />
 
         {/* 판매자 전용 페이지 */}
-        <Route path="/manage" element={<ManageMainPage />} />
+        <Route path="/manage" element={<ProductsManage />} />
         <Route path="/manage/add" element={<ProductAdd />} />
       </Routes>
     </BrowserRouter>
