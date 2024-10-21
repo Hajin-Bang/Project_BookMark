@@ -63,7 +63,11 @@ export const GoogleSignIn = () => {
   };
 
   return (
-    <Button onClick={handleGoogleSignIn} className="w-full">
+    <Button
+      onClick={handleGoogleSignIn}
+      variant="outline"
+      className="w-full border-slate-600"
+    >
       구글 이메일로 로그인하기
     </Button>
   );
