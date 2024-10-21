@@ -57,7 +57,6 @@ const fetchSellerProducts = async (
       } as Product;
     });
 
-    console.log("판매중인 상품:", products);
     return { products, lastVisible };
   } catch (error) {
     console.error("Firestore 쿼리 중 오류 발생:", error);

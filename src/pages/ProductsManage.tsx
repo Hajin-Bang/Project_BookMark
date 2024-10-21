@@ -108,8 +108,7 @@ const ProductsManage = () => {
               <h3 className="text-lg font-semibold">{product.productName}</h3>
               <p className="text-sm">작가: {product.productAuthor}</p>
               <p className="text-sm">가격: {product.productPrice}원</p>
-              <p className="text-sm">재고: {product.productQuantity}개</p>
-              <p className="text-sm">{product.productDescription}</p>
+              <p className="text-sm">분야: {product.productCategory}</p>
             </div>
           ))}
         </div>

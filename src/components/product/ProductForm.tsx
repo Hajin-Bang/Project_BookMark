@@ -111,12 +111,12 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                   <SelectValue placeholder="카테고리 선택" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="POETRY_NOVELS">시/소설</SelectItem>
-                  <SelectItem value="PICTURE_BOOKS_ILLUSTRATIONS">
+                  <SelectItem value="시/소설">시/소설</SelectItem>
+                  <SelectItem value="그림책/일러스트">
                     그림책/일러스트
                   </SelectItem>
-                  <SelectItem value="ESSAYS_HUMANITIES">에세이/인문</SelectItem>
-                  <SelectItem value="LIFESTYLE">라이프스타일</SelectItem>
+                  <SelectItem value="에세이/인문">에세이/인문</SelectItem>
+                  <SelectItem value="사진">사진</SelectItem>
                 </SelectContent>
               </Select>
               {errors.productCategory && (
