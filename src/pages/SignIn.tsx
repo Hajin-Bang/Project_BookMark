@@ -6,6 +6,7 @@ import { authStatusType, Layout } from "@/components/common/components/Layout";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { GoogleSignIn } from "@/components/common/components/GoogleSignIn";
 
 type SignInFormValues = {
   email: string;
@@ -79,6 +80,7 @@ const SignIn = () => {
             {isLoading ? "로그인 중..." : "로그인"}
           </Button>
         </form>
+        <GoogleSignIn />
         <Button
           variant="outline"
           className="w-full"
