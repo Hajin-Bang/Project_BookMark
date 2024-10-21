@@ -1,11 +1,13 @@
-import HomePage from "@/components/pages/HomePage";
-import CartPage from "@/components/pages/CartPage";
-import CheckoutPage from "@/components/pages/CheckoutPage";
-import SignIn from "@/components/pages/SignIn";
-import ManageMainPage from "@/components/pages/ManageMainPage";
-import MyPage from "@/components/pages/MyPage";
-import SignUp from "@/components/pages/SignUp";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
+import CartPage from "./pages/CartPage";
+import CheckoutPage from "./pages/CheckoutPage";
+import MyPage from "./pages/MyPage";
+import ProductsManage from "./pages/ProductsManage";
+import ProductAdd from "./pages/ProductAdd";
+import ProductUpdateDelete from "./pages/ProductUpdateDelete";
 
 const AppRouter = () => {
   return (
@@ -22,7 +24,12 @@ const AppRouter = () => {
         <Route path="/mypage" element={<MyPage />} />
 
         {/* 판매자 전용 페이지 */}
-        <Route path="/manage" element={<ManageMainPage />} />
+        <Route path="/manage" element={<ProductsManage />} />
+        <Route path="/manage/add" element={<ProductAdd />} />
+        <Route
+          path="/manage/edit/:productId"
+          element={<ProductUpdateDelete />}
+        />
       </Routes>
     </BrowserRouter>
   );

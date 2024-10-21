@@ -1,11 +1,11 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { Label } from "../ui/label";
 import { Lock, Mail } from "lucide-react";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
 import useSignIn from "@/lib/auth/useSignIn";
-import { authStatusType, Layout } from "../common/components/Layout";
+import { authStatusType, Layout } from "@/components/common/components/Layout";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 type SignInFormValues = {
   email: string;
@@ -23,8 +23,12 @@ const SignIn = () => {
 
   const onSubmit: SubmitHandler<SignInFormValues> = (data) => {
     signIn(data, {
-      onSuccess: () => {
-        navigate("/");
+      onSuccess: (user) => {
+        if (user.isSeller) {
+          navigate("/manage");
+        } else {
+          navigate("/");
+        }
       },
       onError: (error) => {
         console.error("로그인 실패", error);
