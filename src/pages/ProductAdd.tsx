@@ -8,6 +8,7 @@ import {
 } from "@/components/product/ProductForm";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { NavigationBar } from "@/components/common/components/NavigationBar";
 
 const ProductAdd = () => {
   const { user } = useAuthStore();
@@ -42,9 +43,12 @@ const ProductAdd = () => {
 
   return (
     <Layout authStatus={authStatusType.ONLY_SELLER}>
+      <NavigationBar />
       <main className="w-full flex flex-col items-center gap-6 mt-12 px-8"></main>
-      <h2>도서 등록</h2>
-      <div className="w-2/3 min-w-72">
+      <h2 className="scroll-m-20 pb-2 text-2xl font-semibold tracking-tight mt-2">
+        도서 등록
+      </h2>
+      <div className="w-2/3 min-w-72 mx-auto">
         <ProductForm onSubmit={handleProductAdd} id="productForm" />
         <div className="w-full flex mt-2">
           <Button type="submit" form="productForm" className="flex-grow">

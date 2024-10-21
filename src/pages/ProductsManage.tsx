@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import { useInfiniteScroll } from "@/lib/product/useInfiniteScroll";
+import { NavigationBar } from "@/components/common/components/NavigationBar";
 
 const ProductsManage = () => {
   const { user } = useAuthStore();
@@ -52,10 +53,11 @@ const ProductsManage = () => {
 
   return (
     <Layout authStatus={authStatusType.ONLY_SELLER}>
+      <NavigationBar />
       <main className="w-full flex flex-col items-center gap-6 mt-12 px-8">
         <div>
-          <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-            {user?.nickname} 님이 판매중인 도서
+          <h2 className="scroll-m-20 pb-2 text-2xl font-semibold tracking-tight mt-2">
+            {user?.nickname}님이 판매중인 도서
           </h2>
           <Button onClick={() => navigate("/manage/add")} className="mt-5">
             판매 도서 추가하기
@@ -86,7 +88,7 @@ const ProductsManage = () => {
                   />
                   {/* 좌우 화살표 버튼 */}
                   <button
-                    className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-700 text-white px-2"
+                    className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-500 text-white px-2"
                     onClick={(e) => {
                       e.stopPropagation();
                       handleNextImage(productIndex, "prev");
@@ -95,7 +97,7 @@ const ProductsManage = () => {
                     {"<"}
                   </button>
                   <button
-                    className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-700 text-white px-2"
+                    className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-500 text-white px-2"
                     onClick={(e) => {
                       e.stopPropagation();
                       handleNextImage(productIndex, "next");

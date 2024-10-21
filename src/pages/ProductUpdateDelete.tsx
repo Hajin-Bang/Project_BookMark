@@ -1,4 +1,5 @@
 import { authStatusType, Layout } from "@/components/common/components/Layout";
+import { NavigationBar } from "@/components/common/components/NavigationBar";
 import {
   ProductAddFormValues,
   ProductForm,
@@ -64,9 +65,12 @@ const ProductUpdateDelete = () => {
 
   return (
     <Layout authStatus={authStatusType.ONLY_SELLER}>
+      <NavigationBar />
       <main className="w-full flex flex-col items-center gap-6 mt-12 px-8"></main>
-      <h2>도서 수정/삭제하기</h2>
-      <div className="w-2/3 min-w-72">
+      <h2 className="scroll-m-20 pb-2 text-2xl font-semibold tracking-tight mt-2">
+        도서 수정/삭제하기
+      </h2>
+      <div className="w-2/3 min-w-72 mx-auto">
         <ProductForm
           onSubmit={handleProductUpdate}
           defaultValues={productData}

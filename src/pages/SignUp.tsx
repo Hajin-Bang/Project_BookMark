@@ -5,6 +5,7 @@ import { Label } from "@radix-ui/react-label";
 import { Lock, Mail, User } from "lucide-react";
 import { useSignUp } from "@/lib/auth/useSignUp";
 import { authStatusType, Layout } from "@/components/common/components/Layout";
+import { NavigationBar } from "@/components/common/components/NavigationBar";
 
 type SignUpFormValues = {
   nickname: string;
@@ -50,6 +51,7 @@ const SignUp = () => {
 
   return (
     <Layout authStatus={authStatusType.NEED_NOT_LOGIN}>
+      <NavigationBar />
       <div className="w-full h-screen max-w-md mx-auto space-y-8 flex flex-col justify-center">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-2">
