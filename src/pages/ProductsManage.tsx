@@ -3,9 +3,10 @@ import { useFetchSellerProducts } from "@/lib/product/useFetchSellerProducts";
 import { authStatusType, Layout } from "@/components/common/components/Layout";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useInfiniteScroll } from "@/lib/product/useInfiniteScroll";
 import { NavigationBar } from "@/components/common/components/NavigationBar";
+import { ProductCard } from "@/components/product/ProductCard";
 
 const ProductsManage = () => {
   const { user } = useAuthStore();
@@ -17,31 +18,8 @@ const ProductsManage = () => {
     return data?.pages.flatMap((page) => page.products) || [];
   }, [data?.pages]);
 
-  const [currentImageIndex, setCurrentImageIndex] = useState<number[]>(
-    products.map(() => 0)
-  );
-
-  useEffect(() => {
-    if (products.length > 0) {
-      setCurrentImageIndex(products.map(() => 0));
-    }
-  }, [products]);
-
   const handleProductClick = (productId: string) => {
     navigate(`/manage/edit/${productId}`);
-  };
-
-  const handleNextImage = (index: number, direction: "next" | "prev") => {
-    setCurrentImageIndex((prevIndexes) =>
-      prevIndexes.map((imgIdx, idx) =>
-        idx === index
-          ? direction === "next"
-            ? (imgIdx + 1) % products[idx].productImage.length
-            : (imgIdx - 1 + products[idx].productImage.length) %
-              products[idx].productImage.length
-          : imgIdx
-      )
-    );
   };
 
   // 무한 스크롤
@@ -72,46 +50,12 @@ const ProductsManage = () => {
         )}
         {/* 판매 도서가 있을 경우 */}
         <div className="grid grid-cols-4 gap-4 justify-center">
-          {products.map((product, productIndex) => (
-            <div
+          {products.map((product) => (
+            <ProductCard
               key={product.productId}
-              onClick={() => handleProductClick(product.productId)}
-              className="border p-4"
-            >
-              {/* 이미지 슬라이드 */}
-              {product.productImage && product.productImage.length > 0 && (
-                <div className="relative">
-                  <img
-                    src={product.productImage[currentImageIndex[productIndex]]}
-                    alt={product.productName}
-                    className="w-full h-48 object-cover mb-2"
-                  />
-                  {/* 좌우 화살표 버튼 */}
-                  <button
-                    className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-500 text-white px-2"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleNextImage(productIndex, "prev");
-                    }}
-                  >
-                    {"<"}
-                  </button>
-                  <button
-                    className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-500 text-white px-2"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleNextImage(productIndex, "next");
-                    }}
-                  >
-                    {">"}
-                  </button>
-                </div>
-              )}
-              <h3 className="text-lg font-semibold">{product.productName}</h3>
-              <p className="text-sm">작가: {product.productAuthor}</p>
-              <p className="text-sm">가격: {product.productPrice}원</p>
-              <p className="text-sm">분야: {product.productCategory}</p>
-            </div>
+              product={product}
+              onClick={handleProductClick}
+            />
           ))}
         </div>
         <div ref={ref} style={{ height: "1px" }}></div>
