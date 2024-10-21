@@ -3,12 +3,19 @@ import { useFetchSellerProducts } from "@/lib/product/useFetchSellerProducts";
 import { authStatusType, Layout } from "@/components/common/components/Layout";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useInfiniteScroll } from "@/lib/product/useInfiniteScroll";
 
 const ProductsManage = () => {
   const { user } = useAuthStore();
-  const { data: products = [] } = useFetchSellerProducts(user?.uid || "");
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useFetchSellerProducts(user?.uid || "");
   const navigate = useNavigate();
+
+  const products = useMemo(() => {
+    return data?.pages.flatMap((page) => page.products) || [];
+  }, [data?.pages]);
+
   const [currentImageIndex, setCurrentImageIndex] = useState<number[]>(
     products.map(() => 0)
   );
@@ -35,6 +42,13 @@ const ProductsManage = () => {
       )
     );
   };
+
+  // 무한 스크롤
+  const { ref } = useInfiniteScroll({
+    fetchNextPage,
+    hasNextPage: hasNextPage || false,
+    isFetchingNextPage,
+  });
 
   return (
     <Layout authStatus={authStatusType.ONLY_SELLER}>
@@ -99,6 +113,7 @@ const ProductsManage = () => {
             </div>
           ))}
         </div>
+        <div ref={ref} style={{ height: "1px" }}></div>
       </main>
     </Layout>
   );
