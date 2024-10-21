@@ -64,7 +64,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
       onSubmit={handleSubmit(onFormSubmit)}
       className="w-full flex flex-col gap-6"
     >
-      <div className="w-full grid items-center gap-2">
+      <div className="w-full grid items-center gap-2 ">
         {/* 이미지 업로드 */}
         <Label htmlFor="productImage">사진</Label>
         <ImageUploader
@@ -73,7 +73,9 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         />
 
         {/* 책 제목 */}
-        <Label htmlFor="productName">책 제목</Label>
+        <Label htmlFor="productName" className="mt-4">
+          책 제목
+        </Label>
         <Input
           {...register("productName", { required: "책 제목을 입력하세요" })}
           type="text"

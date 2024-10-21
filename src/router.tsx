@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
+import { Skeleton } from "./components/ui/skeleton";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const SignIn = lazy(() => import("./pages/SignIn"));
@@ -14,7 +15,7 @@ const ProductUpdateDelete = lazy(() => import("./pages/ProductUpdateDelete"));
 const AppRouter = () => {
   return (
     <BrowserRouter>
-      <Suspense fallback={<div>로딩중 !</div>}>
+      <Suspense fallback={<Skeleton className="w-24 h-8" />}>
         <Routes>
           {/* 누구나 접근 가능한 공용 페이지 */}
           <Route path="/" element={<HomePage />} />

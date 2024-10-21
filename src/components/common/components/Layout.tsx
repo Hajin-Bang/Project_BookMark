@@ -40,7 +40,7 @@ export const Layout: React.FC<LayoutProps> = ({
   // 판매자 전용 페이지 접근 시, 판매자가 아니면 리다이렉트
   if (authStatus === authStatusType.ONLY_SELLER) {
     if (!isLogin) {
-      return <Navigate to="/login" />;
+      return <Navigate to="/signin" />;
     }
     if (isLogin && !user?.isSeller) {
       return <Navigate to="/" />;
@@ -50,7 +50,7 @@ export const Layout: React.FC<LayoutProps> = ({
   // 구매자 전용 페이지 접근 시, 구매자가 아니면 리다이렉트
   if (authStatus === authStatusType.ONLY_BUYER) {
     if (!isLogin) {
-      return <Navigate to="/login" />;
+      return <Navigate to="/signin" />;
     }
     if (isLogin && user?.isSeller) {
       return <Navigate to="/manage" />;

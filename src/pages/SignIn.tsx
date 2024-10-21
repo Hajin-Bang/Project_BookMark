@@ -6,7 +6,8 @@ import { authStatusType, Layout } from "@/components/common/components/Layout";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { GoogleSignIn } from "@/components/common/components/GoogleSignIn";
+import { GoogleSignIn } from "@/components/auth/GoogleSignIn";
+import { NavigationBar } from "@/components/common/components/NavigationBar";
 
 type SignInFormValues = {
   email: string;
@@ -43,7 +44,11 @@ const SignIn = () => {
 
   return (
     <Layout authStatus={authStatusType.NEED_NOT_LOGIN}>
-      <div className="-full h-screen max-w-md mx-auto space-y-8 flex flex-col justify-center">
+      <NavigationBar />
+      <div className="-full h-screen max-w-md mx-auto space-y-5 flex flex-col justify-center">
+        <h2 className="scroll-m-20 pb-2 text-2xl font-semibold tracking-tight">
+          로그인
+        </h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="email">이메일</Label>
