@@ -19,6 +19,7 @@ export const fetchProducts = async (
     category?: string;
     order?: string;
     sellerId?: string;
+    productId?: string;
     limit?: number;
   },
   pageParam: QueryDocumentSnapshot<DocumentData> | null = null
@@ -26,7 +27,6 @@ export const fetchProducts = async (
   products: Product[];
   lastVisible: QueryDocumentSnapshot<DocumentData> | null;
 }> => {
-  console.log("fetchProducts 호출됨", options);
   try {
     const productRef = collection(db, "products");
 
@@ -34,27 +34,33 @@ export const fetchProducts = async (
       "createdAt",
       "desc",
     ];
+
     let q = query(
       productRef,
       orderBy(orderField, orderDirection as OrderByDirection)
     );
 
-    // 카테고리 필터 적용
+    // 카테고리 필터
     if (options.category) {
       q = query(q, where("productCategory", "==", options.category));
     }
 
-    // 판매자 필터 적용
+    // 판매자 필터
     if (options.sellerId) {
       q = query(q, where("sellerId", "==", options.sellerId));
     }
 
-    // 페이지네이션 적용
+    // 특정 상품 ID
+    if (options.productId) {
+      q = query(q, where("productId", "==", options.productId));
+    }
+
+    // 페이지네이션
     if (pageParam) {
       q = query(q, startAfter(pageParam));
     }
 
-    // 가져올 개수 제한 적용
+    // 개수 제한
     if (options.limit) {
       q = query(q, limit(options.limit));
     }
@@ -65,7 +71,6 @@ export const fetchProducts = async (
 
     const products: Product[] = querySnapshot.docs.map((doc) => {
       const data = doc.data() as Product;
-      console.log(data);
       const createdAt = (data.createdAt as Timestamp)?.toDate();
       const updatedAt = (data.updatedAt as Timestamp)?.toDate();
 

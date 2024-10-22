@@ -1,5 +1,4 @@
 import { useAuthStore } from "@/store/auth/useAuthStore";
-import { useFetchSellerProducts } from "@/lib/product/useFetchSellerProducts";
 import { authStatusType, Layout } from "@/components/common/components/Layout";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
@@ -7,11 +6,12 @@ import { useMemo } from "react";
 import { useInfiniteScroll } from "@/lib/product/useInfiniteScroll";
 import { NavigationBar } from "@/components/common/components/NavigationBar";
 import { ProductCard } from "@/components/product/ProductCard";
+import { useFetchProducts } from "@/lib/product/useFetchProducts";
 
 const ProductsManage = () => {
   const { user } = useAuthStore();
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useFetchSellerProducts(user?.uid || "");
+    useFetchProducts({ sellerId: user?.uid });
   const navigate = useNavigate();
 
   const products = useMemo(() => {
@@ -22,7 +22,6 @@ const ProductsManage = () => {
     navigate(`/manage/edit/${productId}`);
   };
 
-  // 무한 스크롤
   const { ref } = useInfiniteScroll({
     fetchNextPage,
     hasNextPage: hasNextPage || false,

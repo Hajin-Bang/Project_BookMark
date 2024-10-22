@@ -1,8 +1,8 @@
-import { useFetchCategoryProducts } from "@/lib/product/useFetchCategoryProducts";
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { ProductCard } from "./ProductCard";
 import { ChevronRight } from "lucide-react";
+import { useFetchProducts } from "@/lib/product/useFetchProducts";
 
 interface ProductCategorySectionProps {
   category: string;
@@ -12,11 +12,7 @@ export const ProductCategorySection = ({
   category,
 }: ProductCategorySectionProps) => {
   const order = "createdAt/desc";
-  const { data, isLoading, isError } = useFetchCategoryProducts(
-    category,
-    order,
-    4
-  );
+  const { data, isError } = useFetchProducts({ category, order, limit: 4 });
   const navigate = useNavigate();
 
   const products = useMemo(() => {
@@ -25,10 +21,9 @@ export const ProductCategorySection = ({
   }, [data?.pages]);
 
   const handleProductClick = (productId: string) => {
-    navigate(`/products/${productId}`);
+    navigate(`/product/${productId}`);
   };
 
-  if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error loading products</div>;
 
   return (
