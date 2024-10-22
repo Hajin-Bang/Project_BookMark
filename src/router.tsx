@@ -11,6 +11,7 @@ const MyPage = lazy(() => import("./pages/MyPage"));
 const ProductsManage = lazy(() => import("./pages/ProductsManage"));
 const ProductAdd = lazy(() => import("./pages/ProductAdd"));
 const ProductUpdateDelete = lazy(() => import("./pages/ProductUpdateDelete"));
+const ProductCategory = lazy(() => import("./pages/ProductCategory"));
 
 const AppRouter = () => {
   return (
@@ -21,6 +22,7 @@ const AppRouter = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/category/:category" element={<ProductCategory />} />
 
           {/* 구매자 전용 페이지 */}
           <Route path="/cart" element={<CartPage />} />

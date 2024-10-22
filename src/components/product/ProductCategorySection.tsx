@@ -27,11 +27,13 @@ export const ProductCategorySection = ({
   if (isError) return <div>Error loading products</div>;
 
   return (
-    <section
-      onClick={() => navigate("/")}
-      className="w-full h-fit min-h-[300px] bg-white p-5"
-    >
-      <h3 className="text-xl font-semibold tracking-tight flex justify-center items-center mb-4">
+    <section className="w-full h-fit min-h-[300px] bg-white p-5">
+      <h3
+        onClick={() =>
+          navigate(`/category/${encodeURIComponent(category || "")}`)
+        }
+        className="text-xl cursor-pointer font-semibold tracking-tight flex justify-center items-center mb-4"
+      >
         {category} <ChevronRight />
       </h3>
       <div className="grid grid-cols-4 justify-center">

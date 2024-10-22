@@ -20,7 +20,12 @@ export const NavigationBar = () => {
       <nav className="fixed left-0 top-0 w-full bg-white shadow-md z-50">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center h-16">
-            <h1 className="text-xl font-bold cursor-pointer">책갈피</h1>
+            <h1
+              onClick={() => navigate("/")}
+              className="text-xl font-bold cursor-pointer"
+            >
+              책갈피
+            </h1>
             <div className="flex items-center space-x-4">
               {isLogin ? (
                 <div className="flex items-center space-x-4">
