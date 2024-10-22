@@ -1,7 +1,6 @@
 import { authStatusType, Layout } from "@/components/common/components/Layout";
 import { NavigationBar } from "@/components/common/components/NavigationBar";
 import { ProductCard } from "@/components/product/ProductCard";
-import { useFetchCategoryProducts } from "@/lib/product/useFetchCategoryProducts";
 import { useInfiniteScroll } from "@/lib/product/useInfiniteScroll";
 import { useMemo, useState } from "react";
 import {
@@ -12,12 +11,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useNavigate, useParams } from "react-router-dom";
+import { useFetchProducts } from "@/lib/product/useFetchProducts";
 
 const ProductCategory = () => {
   const { category } = useParams();
   const [order, setOrder] = useState("createdAt/desc");
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useFetchCategoryProducts(category || "", order);
+    useFetchProducts({ category, order });
   const navigate = useNavigate();
 
   const products = useMemo(() => {
