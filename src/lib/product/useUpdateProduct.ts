@@ -12,6 +12,7 @@ export const useUpdateProduct = () => {
 
       await updateDoc(productRef, {
         ...(product.productName && { productName: product.productName }),
+        ...(product.productAuthor && { productAuthor: product.productAuthor }),
         ...(product.productPrice && { productPrice: product.productPrice }),
         ...(product.productQuantity && {
           productQuantity: product.productQuantity,
