@@ -66,27 +66,28 @@ const ProductUpdateDelete = () => {
   return (
     <Layout authStatus={authStatusType.ONLY_SELLER}>
       <NavigationBar />
-      <main className="w-full flex flex-col items-center gap-6 mt-12 px-8"></main>
-      <h2 className="scroll-m-20 pb-2 text-2xl font-semibold tracking-tight mt-2">
-        도서 수정/삭제하기
-      </h2>
-      <div className="w-2/3 min-w-72 mx-auto">
-        <ProductForm
-          onSubmit={handleProductUpdate}
-          defaultValues={productData}
-        />
-        <div className="w-full flex gap-2 mt-2">
-          <Button type="submit" form="productForm" className="flex-grow">
-            수정하기
-          </Button>
-          <Button
-            onClick={handleProductDelete}
-            className="flex-grow bg-red-300"
-          >
-            삭제하기
-          </Button>
+      <main className="w-full flex flex-col items-center gap-6 mt-12 px-8">
+        <h2 className="scroll-m-20 pb-2 text-2xl font-semibold tracking-tight mt-2">
+          도서 수정/삭제하기
+        </h2>
+        <div className="w-2/3 min-w-72 mx-auto">
+          <ProductForm
+            onSubmit={handleProductUpdate}
+            defaultValues={productData}
+          />
+          <div className="w-full flex gap-2 mt-2">
+            <Button type="submit" form="productForm" className="flex-grow">
+              수정하기
+            </Button>
+            <Button
+              onClick={handleProductDelete}
+              className="flex-grow bg-red-300"
+            >
+              삭제하기
+            </Button>
+          </div>
         </div>
-      </div>
+      </main>
     </Layout>
   );
 };
