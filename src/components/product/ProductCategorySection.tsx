@@ -11,7 +11,12 @@ interface ProductCategorySectionProps {
 export const ProductCategorySection = ({
   category,
 }: ProductCategorySectionProps) => {
-  const { data, isLoading, isError } = useFetchCategoryProducts(category, 4);
+  const order = "createdAt/desc";
+  const { data, isLoading, isError } = useFetchCategoryProducts(
+    category,
+    order,
+    4
+  );
   const navigate = useNavigate();
 
   const products = useMemo(() => {

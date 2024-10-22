@@ -3,13 +3,21 @@ import { NavigationBar } from "@/components/common/components/NavigationBar";
 import { ProductCard } from "@/components/product/ProductCard";
 import { useFetchCategoryProducts } from "@/lib/product/useFetchCategoryProducts";
 import { useInfiniteScroll } from "@/lib/product/useInfiniteScroll";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useNavigate, useParams } from "react-router-dom";
 
 const ProductCategory = () => {
   const { category } = useParams();
+  const [order, setOrder] = useState("createdAt/desc");
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useFetchCategoryProducts(category || "");
+    useFetchCategoryProducts(category || "", order);
   const navigate = useNavigate();
 
   const products = useMemo(() => {
@@ -30,6 +38,18 @@ const ProductCategory = () => {
           <h2 className="scroll-m-20 pb-2 text-2xl font-semibold tracking-tight mt-2">
             {category}
           </h2>
+        </div>
+        <div>
+          <Select value={order} onValueChange={(value) => setOrder(value)}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="선택" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="createdAt/desc">최신순</SelectItem>
+              <SelectItem value="productPrice/desc">높은 가격순</SelectItem>
+              <SelectItem value="productPrice/asc">낮은 가격순</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
         <div className="grid grid-cols-4 gap-4 justify-center">
           {products.map((product) => (

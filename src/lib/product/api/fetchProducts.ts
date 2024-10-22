@@ -11,10 +11,16 @@ import {
   startAfter,
   Timestamp,
   where,
+  OrderByDirection,
 } from "firebase/firestore";
 
 export const fetchProducts = async (
-  options: { category?: string; sellerId?: string; limit?: number },
+  options: {
+    category?: string;
+    order?: string;
+    sellerId?: string;
+    limit?: number;
+  },
   pageParam: QueryDocumentSnapshot<DocumentData> | null = null
 ): Promise<{
   products: Product[];
@@ -23,7 +29,15 @@ export const fetchProducts = async (
   console.log("fetchProducts 호출됨", options);
   try {
     const productRef = collection(db, "products");
-    let q = query(productRef, orderBy("createdAt", "desc"));
+
+    const [orderField, orderDirection] = options.order?.split("/") || [
+      "createdAt",
+      "desc",
+    ];
+    let q = query(
+      productRef,
+      orderBy(orderField, orderDirection as OrderByDirection)
+    );
 
     // 카테고리 필터 적용
     if (options.category) {
