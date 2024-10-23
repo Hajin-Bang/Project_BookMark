@@ -1,18 +1,17 @@
-import { useCartStore } from "@/store/cart/useCartStore";
+import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteCartAPI } from "../api";
 
 export const useDeleteCart = () => {
   const queryClient = useQueryClient();
-  const deleteCartItem = useCartStore((state) => state.deleteCart);
+  const { user } = useAuthStore();
 
   return useMutation<void, Error, string>({
     mutationFn: async (productId: string) => {
-      deleteCartItem(productId);
-      return Promise.resolve();
+      await deleteCartAPI(productId, user?.uid);
     },
-    onSuccess: (_, productId) => {
-      deleteCartItem(productId);
-      queryClient.invalidateQueries({ queryKey: ["cartItems"] });
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["cartItems", user?.uid] });
     },
     onError: (error) => {
       console.error("장바구니 상품 삭제 중 에러 발생", error);
