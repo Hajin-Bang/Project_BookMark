@@ -1,9 +1,21 @@
 import { useDeleteCart } from "@/lib/cart/hooks/useDeleteCart";
-import { useCartStore } from "@/store/cart/useCartStore";
+import { useFetchCart } from "@/lib/cart/hooks/useFetchCart";
+import { useUpdateCartQuantity } from "@/lib/cart/hooks/useUpdateCart";
 
 const CartTable = () => {
-  const { cartItems } = useCartStore();
+  const { data: cartItems, isLoading, error } = useFetchCart();
   const { mutate: removeFromCart } = useDeleteCart();
+  const { mutate: updateCartQuantity } = useUpdateCartQuantity();
+
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error fetching cart items: {error.message}</p>;
+
+  if (!cartItems || cartItems.length === 0)
+    return <p>장바구니가 비어 있습니다.</p>;
+
+  const handleQuantityChange = (productId: string, newQuantity: number) => {
+    updateCartQuantity({ productId, newQuantity });
+  };
 
   return (
     <div className="overflow-x-auto mt-7">
@@ -19,15 +31,17 @@ const CartTable = () => {
 
         {/* 테이블 바디 */}
         <tbody>
-          {cartItems.map((item) => (
-            <tr key={item.productId} className="border-b">
+          {cartItems.map((item, index) => (
+            <tr key={`${item.productId}-${index}`} className="border-b">
               <td className="p-4 whitespace-nowrap">{item.productName}</td>
               <td className="p-4">
                 <input
                   type="number"
                   min="1"
                   value={item.quantity}
-                  onChange={() => {}}
+                  onChange={(e) =>
+                    handleQuantityChange(item.productId, Number(e.target.value))
+                  }
                   className="w-16 text-center border border-gray-300 rounded-md p-1"
                 />
               </td>
