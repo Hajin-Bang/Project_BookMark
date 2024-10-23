@@ -4,7 +4,7 @@ import { getAuth } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 
-interface User {
+export interface User {
   uid: string;
   nickname: string;
   email: string;

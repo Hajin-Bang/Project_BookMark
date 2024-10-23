@@ -1,4 +1,3 @@
-import { useAddProduct } from "@/lib/product/useAddProduct";
 import { useProductStore } from "@/store/product/useProductStore";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { authStatusType, Layout } from "@/components/common/components/Layout";
@@ -9,6 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { NavigationBar } from "@/components/common/components/NavigationBar";
+import { useAddProduct } from "@/lib/product/hooks/useAddProduct";
 
 const ProductAdd = () => {
   const { user } = useAuthStore();

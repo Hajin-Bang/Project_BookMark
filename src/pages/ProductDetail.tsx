@@ -1,3 +1,4 @@
+import CartDrawer from "@/components/cart/CartDrawer";
 import { authStatusType, Layout } from "@/components/common/components/Layout";
 import { NavigationBar } from "@/components/common/components/NavigationBar";
 import { ProductCategorySection } from "@/components/product/ProductCategorySection";
@@ -10,7 +11,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { useAddCart } from "@/lib/cart/hooks/useAddCart";
 import { useFetchProducts } from "@/lib/product/hooks/useFetchProducts";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 const ProductDetail = () => {
@@ -19,6 +22,20 @@ const ProductDetail = () => {
   const product = data?.pages
     ?.flatMap((page) => page.products)
     ?.find((product) => product.productId === productId);
+
+  const { mutate: addCart } = useAddCart();
+  const [cartOpen, setCartOpen] = useState(false);
+
+  const handleAddToCart = () => {
+    if (product) {
+      addCart(product);
+      setCartOpen(true);
+    }
+  };
+
+  const handleCloseCart = () => {
+    setCartOpen(false);
+  };
 
   return (
     <Layout authStatus={authStatusType.COMMON}>
@@ -79,7 +96,9 @@ const ProductDetail = () => {
               </div>
             </section>
             <div className="flex gap-4">
-              <Button className="w-1/2">장바구니</Button>
+              <Button className="w-1/2" onClick={handleAddToCart}>
+                장바구니
+              </Button>
               <Button className="w-1/2">구매하기</Button>
             </div>
           </div>
@@ -97,6 +116,8 @@ const ProductDetail = () => {
           <ProductCategorySection category={product.productCategory} />
         )}
       </section>
+
+      <CartDrawer isOpen={cartOpen} onClose={handleCloseCart} />
     </Layout>
   );
 };
