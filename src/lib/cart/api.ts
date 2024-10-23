@@ -28,3 +28,10 @@ export const addCartAPI = async (
     return newCartItem;
   });
 };
+
+export const deleteCartAPI = async (productId: string, user: User) => {
+  return await runTransaction(db, async (transaction) => {
+    const cartItemRef = doc(db, "carts", user.uid, "cartItems", productId);
+    transaction.delete(cartItemRef);
+  });
+};
