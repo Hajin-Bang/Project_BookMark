@@ -63,3 +63,20 @@ export const fetchCartItems = async (user: User): Promise<CartItem[]> => {
 
   return cartItems;
 };
+
+export const updateCartQuantityAPI = async (
+  productId: string,
+  user: User,
+  newQuantity: number
+): Promise<void> => {
+  const cartItemRef = doc(db, "carts", user.uid, "cartItems", productId);
+
+  return await runTransaction(db, async (transaction) => {
+    const cartItemSnapshot = await transaction.get(cartItemRef);
+    if (!cartItemSnapshot.exists()) {
+      throw new Error("해당 장바구니 항목이 존재하지 않습니다.");
+    }
+
+    transaction.update(cartItemRef, { quantity: newQuantity });
+  });
+};
