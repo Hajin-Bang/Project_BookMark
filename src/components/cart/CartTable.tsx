@@ -1,7 +1,10 @@
+import { useDeleteCart } from "@/lib/cart/hooks/useDeleteCart";
 import { useCartStore } from "@/store/cart/useCartStore";
 
 const CartTable = () => {
   const { cartItems } = useCartStore();
+  const { mutate: removeFromCart } = useDeleteCart();
+
   return (
     <div className="overflow-x-auto mt-7">
       <table className="min-w-full table-auto border-collapse">
@@ -34,7 +37,7 @@ const CartTable = () => {
               {/* 삭제 버튼 */}
               <td className="p-4">
                 <button
-                  //   onClick={() => removeFromCart(item.productId)}
+                  onClick={() => removeFromCart(item.productId)}
                   className="text-red-500 hover:text-red-700 transition-colors"
                 >
                   삭제
