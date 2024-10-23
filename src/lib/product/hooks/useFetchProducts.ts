@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
-import { fetchProducts } from "./api/fetchProducts";
+import { fetchProducts } from "../api";
 
 export const useFetchProducts = (options: {
   category?: string;
