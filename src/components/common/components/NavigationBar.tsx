@@ -1,18 +1,27 @@
 import { useAuthStore } from "@/store/auth/useAuthStore";
-import { ShoppingCart } from "lucide-react";
+import { LogOut, ShoppingCart, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../ui/button";
 
 export const NavigationBar = () => {
   const navigate = useNavigate();
 
-  const { isLogin, logout } = useAuthStore();
+  const { isLogin, logout, user } = useAuthStore();
 
   const handleLogin = () => {
     navigate("/signin");
   };
   const handleLogout = () => {
     logout();
+    navigate("/signin");
+  };
+
+  const handleCartClick = () => {
+    navigate("/cart");
+  };
+
+  const handleMyPageClick = () => {
+    navigate("/mypage");
   };
 
   return (
@@ -27,27 +36,52 @@ export const NavigationBar = () => {
               책갈피
             </h1>
             <div className="flex items-center space-x-4">
-              {isLogin ? (
-                <div className="flex items-center space-x-4">
-                  <ShoppingCart className="h-5 w-5" />
+              {!isLogin && (
+                <>
+                  <ShoppingCart
+                    className="h-5 w-5 cursor-pointer"
+                    onClick={handleCartClick}
+                  />
                   <Button
                     variant="ghost"
                     size="sm"
                     className="text-primary hover:text-primary-dark"
-                    onClick={handleLogout}
+                    onClick={handleLogin}
                   >
-                    로그아웃
+                    로그인
                   </Button>
-                </div>
-              ) : (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-primary hover:text-primary-dark"
-                  onClick={handleLogin}
-                >
-                  로그인
-                </Button>
+                </>
+              )}
+              {isLogin && user && !user.isSeller && (
+                <>
+                  <ShoppingCart
+                    className="h-5 w-5 cursor-pointer"
+                    onClick={handleCartClick}
+                  />
+                  <User
+                    className="h-5 w-5 cursor-pointer"
+                    onClick={handleMyPageClick}
+                  />
+                  <LogOut
+                    onClick={handleLogout}
+                    className="h-5 w-5 cursor-pointer"
+                  />
+                </>
+              )}
+              {isLogin && user && user.isSeller && (
+                <>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-primary hover:text-primary-dark text-red-500"
+                  >
+                    계정 관리
+                  </Button>
+                  <LogOut
+                    onClick={handleLogout}
+                    className="h-5 w-5 cursor-pointer"
+                  />
+                </>
               )}
             </div>
           </div>
