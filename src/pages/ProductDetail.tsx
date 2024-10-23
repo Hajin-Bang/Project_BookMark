@@ -10,7 +10,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { useFetchProducts } from "@/lib/product/useFetchProducts";
+import { useFetchProducts } from "@/lib/product/hooks/useFetchProducts";
 import { useParams } from "react-router-dom";
 
 const ProductDetail = () => {

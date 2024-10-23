@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { ProductCard } from "./ProductCard";
 import { ChevronRight } from "lucide-react";
-import { useFetchProducts } from "@/lib/product/useFetchProducts";
+import { useFetchProducts } from "@/lib/product/hooks/useFetchProducts";
 
 interface ProductCategorySectionProps {
   category: string;
