@@ -2,11 +2,13 @@ import { useAuthStore } from "@/store/auth/useAuthStore";
 import { LogOut, ShoppingCart, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../ui/button";
+import { useState } from "react";
+import CartDrawer from "@/components/cart/CartDrawer";
 
 export const NavigationBar = () => {
   const navigate = useNavigate();
-
   const { isLogin, logout, user } = useAuthStore();
+  const [cartOpen, setCartOpen] = useState(false);
 
   const handleLogin = () => {
     navigate("/signin");
@@ -17,7 +19,11 @@ export const NavigationBar = () => {
   };
 
   const handleCartClick = () => {
-    navigate("/cart");
+    setCartOpen((prev) => !prev);
+  };
+
+  const handleCartClose = () => {
+    setCartOpen(false); // 드로어 닫기
   };
 
   const handleMyPageClick = () => {
@@ -39,8 +45,8 @@ export const NavigationBar = () => {
               {!isLogin && (
                 <>
                   <ShoppingCart
-                    className="h-5 w-5 cursor-pointer"
                     onClick={handleCartClick}
+                    className="h-5 w-5 cursor-pointer"
                   />
                   <Button
                     variant="ghost"
@@ -55,8 +61,8 @@ export const NavigationBar = () => {
               {isLogin && user && !user.isSeller && (
                 <>
                   <ShoppingCart
-                    className="h-5 w-5 cursor-pointer"
                     onClick={handleCartClick}
+                    className="h-5 w-5 cursor-pointer"
                   />
                   <User
                     className="h-5 w-5 cursor-pointer"
@@ -87,6 +93,10 @@ export const NavigationBar = () => {
           </div>
         </div>
       </nav>
+
+      <div className="mt-16">
+        <CartDrawer isOpen={cartOpen} onClose={handleCartClose} />
+      </div>
     </>
   );
 };
