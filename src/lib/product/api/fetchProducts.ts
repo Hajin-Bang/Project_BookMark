@@ -1,6 +1,5 @@
 import { db } from "@/firebase";
 import { Product } from "@/store/product/useProductStore";
-import { useInfiniteQuery } from "@tanstack/react-query";
 import {
   collection,
   DocumentData,
@@ -12,10 +11,17 @@ import {
   startAfter,
   Timestamp,
   where,
+  OrderByDirection,
 } from "firebase/firestore";
 
-const fetchSellerProducts = async (
-  sellerId: string,
+export const fetchProducts = async (
+  options: {
+    category?: string;
+    order?: string;
+    sellerId?: string;
+    productId?: string;
+    limit?: number;
+  },
   pageParam: QueryDocumentSnapshot<DocumentData> | null = null
 ): Promise<{
   products: Product[];
@@ -23,21 +29,40 @@ const fetchSellerProducts = async (
 }> => {
   try {
     const productRef = collection(db, "products");
+
+    const [orderField, orderDirection] = options.order?.split("/") || [
+      "createdAt",
+      "desc",
+    ];
+
     let q = query(
       productRef,
-      where("sellerId", "==", sellerId),
-      orderBy("createdAt", "desc"),
-      limit(8)
+      orderBy(orderField, orderDirection as OrderByDirection)
     );
 
+    // 카테고리 필터
+    if (options.category) {
+      q = query(q, where("productCategory", "==", options.category));
+    }
+
+    // 판매자 필터
+    if (options.sellerId) {
+      q = query(q, where("sellerId", "==", options.sellerId));
+    }
+
+    // 특정 상품 ID
+    if (options.productId) {
+      q = query(q, where("productId", "==", options.productId));
+    }
+
+    // 페이지네이션
     if (pageParam) {
-      q = query(
-        productRef,
-        where("sellerId", "==", sellerId),
-        orderBy("createdAt", "desc"),
-        startAfter(pageParam),
-        limit(8)
-      );
+      q = query(q, startAfter(pageParam));
+    }
+
+    // 개수 제한
+    if (options.limit) {
+      q = query(q, limit(options.limit));
     }
 
     const querySnapshot = await getDocs(q);
@@ -62,20 +87,4 @@ const fetchSellerProducts = async (
     console.error("Firestore 쿼리 중 오류 발생:", error);
     return { products: [], lastVisible: null };
   }
-};
-
-export const useFetchSellerProducts = (sellerId: string) => {
-  return useInfiniteQuery({
-    queryKey: ["products", sellerId],
-    queryFn: async ({
-      pageParam,
-    }: {
-      pageParam: QueryDocumentSnapshot<DocumentData> | null;
-    }) => {
-      return fetchSellerProducts(sellerId, pageParam);
-    },
-    getNextPageParam: (lastPage) => lastPage?.lastVisible || undefined,
-    enabled: !!sellerId,
-    initialPageParam: null,
-  });
 };

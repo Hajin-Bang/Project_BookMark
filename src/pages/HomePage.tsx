@@ -1,24 +1,29 @@
-import { useAuthStore } from "@/store/auth/useAuthStore";
-import { Button } from "@/components/ui/button";
+import { authStatusType, Layout } from "@/components/common/components/Layout";
+import { NavigationBar } from "@/components/common/components/NavigationBar";
+import { ProductCategorySection } from "@/components/product/ProductCategorySection";
+import { useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 const HomePage = () => {
-  const { user, logout } = useAuthStore();
-  const handleLogout = () => {
-    logout();
-  };
+  const categories = ["시/소설", "에세이/인문", "그림책/일러스트", "사진"];
+
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    return () => {
+      queryClient.removeQueries({ queryKey: ["products"] });
+    };
+  }, [queryClient]);
 
   return (
-    <div>
-      <h1>도서 탐색 메인 페이지</h1>
-      {user ? (
-        <div>
-          <h2>{user.nickname}님 안녕하세요!</h2>{" "}
-          <Button onClick={handleLogout}>로그아웃</Button>
-        </div>
-      ) : (
-        <h2>로그인을 해주세요.</h2>
-      )}
-    </div>
+    <Layout authStatus={authStatusType.COMMON}>
+      <NavigationBar />
+      <main className="w-full flex flex-col items-center gap-6 mt-12 px-8">
+        {categories.map((category) => {
+          return <ProductCategorySection key={category} category={category} />;
+        })}
+      </main>
+    </Layout>
   );
 };
 
