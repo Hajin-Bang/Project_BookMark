@@ -12,6 +12,7 @@ const ProductAdd = lazy(() => import("./pages/ProductAdd"));
 const ProductUpdateDelete = lazy(() => import("./pages/ProductUpdateDelete"));
 const ProductCategory = lazy(() => import("./pages/ProductCategory"));
 const ProductDetail = lazy(() => import("./pages/ProductDetail"));
+const ManagementPage = lazy(() => import("./pages/ManagementPage"));
 
 const AppRouter = () => {
   return (
@@ -36,6 +37,7 @@ const AppRouter = () => {
             path="/manage/edit/:productId"
             element={<ProductUpdateDelete />}
           />
+          <Route path="/manage/options" element={<ManagementPage />} />
         </Routes>
       </Suspense>
     </BrowserRouter>

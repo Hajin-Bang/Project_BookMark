@@ -33,6 +33,10 @@ export const NavigationBar = () => {
     navigate("/mypage");
   };
 
+  const handleManagePageClick = () => {
+    navigate("/manage/options");
+  };
+
   return (
     <>
       <nav className="fixed left-0 top-0 w-full bg-white shadow-md z-50">
@@ -89,6 +93,7 @@ export const NavigationBar = () => {
                   variant="ghost"
                   size="sm"
                   className="text-primary hover:text-primary-dark text-red-500"
+                  onClick={handleManagePageClick}
                 >
                   계정 관리
                 </Button>
