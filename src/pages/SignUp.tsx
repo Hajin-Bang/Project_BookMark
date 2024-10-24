@@ -52,7 +52,10 @@ const SignUp = () => {
   return (
     <Layout authStatus={authStatusType.NEED_NOT_LOGIN}>
       <NavigationBar />
-      <div className="w-full h-screen max-w-md mx-auto space-y-8 flex flex-col justify-center">
+      <div className="w-full max-w-md mx-auto space-y-8 flex flex-col justify-center  mt-40">
+        <h2 className="scroll-m-20 pb-2 text-2xl font-semibold tracking-tight">
+          회원가입
+        </h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="nickname">닉네임</Label>

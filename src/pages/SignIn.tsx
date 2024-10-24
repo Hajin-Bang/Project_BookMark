@@ -45,7 +45,7 @@ const SignIn = () => {
   return (
     <Layout authStatus={authStatusType.NEED_NOT_LOGIN}>
       <NavigationBar />
-      <div className="-full h-screen max-w-md mx-auto space-y-5 flex flex-col justify-center">
+      <div className="-full  flex-grow max-w-md mx-auto space-y-5 flex flex-col justify-center mt-40">
         <h2 className="scroll-m-20 pb-2 text-2xl font-semibold tracking-tight">
           로그인
         </h2>
