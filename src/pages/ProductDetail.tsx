@@ -13,12 +13,15 @@ import {
 } from "@/components/ui/carousel";
 import { useAddCart } from "@/lib/cart/hooks/useAddCart";
 import { useFetchProducts } from "@/lib/product/hooks/useFetchProducts";
+import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ProductDetail = () => {
   const { productId } = useParams<{ productId: string }>();
   const { data } = useFetchProducts({ productId });
+  const { isLogin } = useAuthStore();
+  const navigate = useNavigate();
   const product = data?.pages
     ?.flatMap((page) => page.products)
     ?.find((product) => product.productId === productId);
@@ -27,6 +30,11 @@ const ProductDetail = () => {
   const [cartOpen, setCartOpen] = useState(false);
 
   const handleAddToCart = () => {
+    if (!isLogin) {
+      navigate("/signin");
+      return;
+    }
+
     if (product) {
       addCart(product);
       setCartOpen(true);
