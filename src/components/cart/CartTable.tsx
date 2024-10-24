@@ -1,11 +1,15 @@
 import { useDeleteCart } from "@/lib/cart/hooks/useDeleteCart";
-import { useFetchCart } from "@/lib/cart/hooks/useFetchCart";
 import { useUpdateCartQuantity } from "@/lib/cart/hooks/useUpdateCart";
-import { useCartStore } from "@/store/cart/useCartStore";
+import { CartItem, useCartStore } from "@/store/cart/useCartStore";
 import { useEffect } from "react";
 
-const CartTable = () => {
-  const { data: cartItems, isLoading, error } = useFetchCart();
+interface CartTableProps {
+  cartItems: CartItem[] | undefined;
+  isLoading: boolean;
+  error: Error | null;
+}
+
+const CartTable = ({ cartItems, isLoading, error }: CartTableProps) => {
   const { mutate: removeFromCart } = useDeleteCart();
   const { mutate: updateCartQuantity } = useUpdateCartQuantity();
   const setTotalQuantity = useCartStore((state) => state.setTotalQuantity);
@@ -98,7 +102,7 @@ const CartTable = () => {
           <p className="font-semibold">총 합계</p>
         </div>
         <div className="flex flex-col items-end gap-5">
-          <p>{totalQuantity}권</p>
+          <p>{totalQuantity}개</p>
           <p className="font-semibold">{totalPrice.toLocaleString()}원</p>
         </div>
       </div>

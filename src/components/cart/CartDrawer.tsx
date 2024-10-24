@@ -1,5 +1,7 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import CartTable from "./CartTable";
+import { useFetchCart } from "@/lib/cart/hooks/useFetchCart";
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -7,6 +9,14 @@ interface CartDrawerProps {
 }
 
 const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
+  const navigate = useNavigate();
+  const { data: cartItems, isLoading, error } = useFetchCart();
+
+  const handleBuyNow = () => {
+    if (cartItems && cartItems.length > 0) {
+      navigate("/checkout", { state: { items: cartItems } });
+    }
+  };
   return (
     <div
       className={`fixed top-[64px] right-0 h-full w-[50%] bg-white z-30 shadow-lg transition-transform duration-300 ${
@@ -23,10 +33,12 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
         <h2 className="text-xl font-bold">장바구니</h2>
       </div>
       <div className="overflow-y-auto max-h-[75vh]">
-        <CartTable />
+        <CartTable cartItems={cartItems} isLoading={isLoading} error={error} />
       </div>
       <div className="flex justify-end mr-4">
-        <Button className="w-1/3">구매하기</Button>
+        <Button className="w-1/3" onClick={handleBuyNow}>
+          구매하기
+        </Button>
       </div>
     </div>
   );

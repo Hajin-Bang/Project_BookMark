@@ -5,7 +5,7 @@ import { Skeleton } from "./components/ui/skeleton";
 const HomePage = lazy(() => import("./pages/HomePage"));
 const SignIn = lazy(() => import("./pages/SignIn"));
 const SignUp = lazy(() => import("./pages/SignUp"));
-const CheckoutPage = lazy(() => import("./pages/CheckoutPage"));
+const Checkout = lazy(() => import("./pages/Checkout"));
 const MyPage = lazy(() => import("./pages/MyPage"));
 const ProductsManage = lazy(() => import("./pages/ProductsManage"));
 const ProductAdd = lazy(() => import("./pages/ProductAdd"));
@@ -26,7 +26,7 @@ const AppRouter = () => {
           <Route path="/product/:productId" element={<ProductDetail />} />
 
           {/* 구매자 전용 페이지 */}
-          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/checkout" element={<Checkout />} />
           <Route path="/mypage" element={<MyPage />} />
 
           {/* 판매자 전용 페이지 */}
