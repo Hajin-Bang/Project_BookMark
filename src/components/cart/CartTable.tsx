@@ -13,6 +13,15 @@ const CartTable = () => {
   if (!cartItems || cartItems.length === 0)
     return <p>장바구니가 비어 있습니다.</p>;
 
+  const totalQuantity = cartItems.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
+  const totalPrice = cartItems.reduce(
+    (total, item) => total + item.productPrice * item.quantity,
+    0
+  );
+
   const handleQuantityChange = (productId: string, newQuantity: number) => {
     updateCartQuantity({ productId, newQuantity });
   };
@@ -20,20 +29,30 @@ const CartTable = () => {
   return (
     <div className="overflow-x-auto mt-7">
       <table className="min-w-full table-auto border-collapse">
-        <thead className="bg-gray-200">
+        <thead className="bg-slate-100">
           <tr>
-            <th className="p-4 text-left w-1/2 md:w-1/3">도서</th>
-            <th className="p-4 text-left w-1/6">수량</th>
-            <th className="p-4 text-left w-1/6">가격</th>
-            <th className="p-4 text-left w-1/6">삭제</th>
+            <th className="p-4 text-left w-1/2 md:w-1/3 pl-8">도서</th>
+            <th className="p-4 text-center w-1/6">수량</th>
+            <th className="p-4 text-center w-1/6">가격</th>
+            <th className="p-4 text-center w-1/6">삭제</th>
           </tr>
         </thead>
 
-        {/* 테이블 바디 */}
         <tbody>
           {cartItems.map((item, index) => (
             <tr key={`${item.productId}-${index}`} className="border-b">
-              <td className="p-4 whitespace-nowrap">{item.productName}</td>
+              <td className="p-4 whitespace-nowrap">
+                <div className="flex items-center">
+                  {item.productImage && (
+                    <img
+                      src={item.productImage[0]}
+                      alt={item.productName}
+                      className="w-16 h-16 object-cover mr-4"
+                    />
+                  )}
+                  <span>{item.productName}</span>
+                </div>
+              </td>
               <td className="p-4">
                 <input
                   type="number"
@@ -52,15 +71,25 @@ const CartTable = () => {
               <td className="p-4">
                 <button
                   onClick={() => removeFromCart(item.productId)}
-                  className="text-red-500 hover:text-red-700 transition-colors"
+                  className="text-gray-500 hover:text-gray-700 transition-colors text-2xl"
                 >
-                  삭제
+                  &times;
                 </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <div className="flex justify-end m-6 gap-20">
+        <div className="flex flex-col items-center gap-5">
+          <p>총 수량</p>
+          <p className="font-semibold">총 합계</p>
+        </div>
+        <div className="flex flex-col items-end gap-5">
+          <p>{totalQuantity}권</p>
+          <p className="font-semibold">{totalPrice.toLocaleString()}원</p>
+        </div>
+      </div>
     </div>
   );
 };
