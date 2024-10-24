@@ -1,17 +1,30 @@
 import { useDeleteCart } from "@/lib/cart/hooks/useDeleteCart";
 import { useFetchCart } from "@/lib/cart/hooks/useFetchCart";
 import { useUpdateCartQuantity } from "@/lib/cart/hooks/useUpdateCart";
+import { useCartStore } from "@/store/cart/useCartStore";
+import { useEffect } from "react";
 
 const CartTable = () => {
   const { data: cartItems, isLoading, error } = useFetchCart();
   const { mutate: removeFromCart } = useDeleteCart();
   const { mutate: updateCartQuantity } = useUpdateCartQuantity();
+  const setTotalQuantity = useCartStore((state) => state.setTotalQuantity);
+
+  useEffect(() => {
+    if (cartItems) {
+      const totalQuantity = cartItems.reduce(
+        (total, item) => total + item.quantity,
+        0
+      );
+      setTotalQuantity(totalQuantity);
+    }
+  }, [cartItems, setTotalQuantity]);
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error fetching cart items: {error.message}</p>;
 
   if (!cartItems || cartItems.length === 0)
-    return <p>장바구니가 비어 있습니다.</p>;
+    return <p className="m-20">장바구니가 비어 있습니다.</p>;
 
   const totalQuantity = cartItems.reduce(
     (total, item) => total + item.quantity,
@@ -67,7 +80,6 @@ const CartTable = () => {
               <td className="p-4 whitespace-nowrap">
                 {item.productPrice.toLocaleString()}원
               </td>
-              {/* 삭제 버튼 */}
               <td className="p-4">
                 <button
                   onClick={() => removeFromCart(item.productId)}

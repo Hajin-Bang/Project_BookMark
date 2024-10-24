@@ -4,11 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../../ui/button";
 import { useState } from "react";
 import CartDrawer from "@/components/cart/CartDrawer";
+import { useCartStore } from "@/store/cart/useCartStore";
 
 export const NavigationBar = () => {
   const navigate = useNavigate();
   const { isLogin, logout, user } = useAuthStore();
   const [cartOpen, setCartOpen] = useState(false);
+
+  const totalQuantity = useCartStore((state) => state.totalQuantity);
 
   const handleLogin = () => {
     navigate("/signin");
@@ -59,10 +62,17 @@ export const NavigationBar = () => {
             )}
             {isLogin && user && !user.isSeller && (
               <>
-                <ShoppingCart
-                  onClick={handleCartClick}
-                  className="h-5 w-5 cursor-pointer"
-                />
+                <div className="relative">
+                  <ShoppingCart
+                    onClick={handleCartClick}
+                    className="h-5 w-5 cursor-pointer"
+                  />
+                  {totalQuantity > 0 && (
+                    <span className="absolute top-[-6px] right-[-6px] bg-red-500 text-white rounded-full text-xs w-4 h-4 flex items-center justify-center">
+                      {totalQuantity}
+                    </span>
+                  )}
+                </div>
                 <User
                   className="h-5 w-5 cursor-pointer"
                   onClick={handleMyPageClick}
