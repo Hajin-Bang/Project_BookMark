@@ -1,3 +1,4 @@
+import { Button } from "../ui/button";
 import CartTable from "./CartTable";
 
 interface CartDrawerProps {
@@ -22,6 +23,9 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
         <h2 className="text-xl font-bold">장바구니</h2>
       </div>
       <CartTable />
+      <div className="flex justify-end mr-4">
+        <Button className="w-1/3">구매하기</Button>
+      </div>
     </div>
   );
 };
