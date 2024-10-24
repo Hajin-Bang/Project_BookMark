@@ -1,7 +1,7 @@
 import { authStatusType, Layout } from "@/components/common/components/Layout";
 import { NavigationBar } from "@/components/common/components/NavigationBar";
 import { ProductCard } from "@/components/product/ProductCard";
-import { useInfiniteScroll } from "@/lib/product/useInfiniteScroll";
+import { useInfiniteScroll } from "@/lib/product/hooks/useInfiniteScroll";
 import { useMemo, useState } from "react";
 import {
   Select,
@@ -11,7 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useNavigate, useParams } from "react-router-dom";
-import { useFetchProducts } from "@/lib/product/useFetchProducts";
+import { useFetchProducts } from "@/lib/product/hooks/useFetchProducts";
 
 const ProductCategory = () => {
   const { category } = useParams();

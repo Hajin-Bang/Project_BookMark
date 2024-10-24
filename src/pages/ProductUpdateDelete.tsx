@@ -6,8 +6,8 @@ import {
 } from "@/components/product/ProductForm";
 import { Button } from "@/components/ui/button";
 import { db } from "@/firebase";
-import { useDeleteProduct } from "@/lib/product/useDeleteProduct";
-import { useUpdateProduct } from "@/lib/product/useUpdateProduct";
+import { useDeleteProduct } from "@/lib/product/hooks/useDeleteProduct";
+import { useUpdateProduct } from "@/lib/product/hooks/useUpdateProduct";
 import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";

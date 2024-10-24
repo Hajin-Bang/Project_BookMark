@@ -3,10 +3,10 @@ import { authStatusType, Layout } from "@/components/common/components/Layout";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useMemo } from "react";
-import { useInfiniteScroll } from "@/lib/product/useInfiniteScroll";
+import { useInfiniteScroll } from "@/lib/product/hooks/useInfiniteScroll";
 import { NavigationBar } from "@/components/common/components/NavigationBar";
 import { ProductCard } from "@/components/product/ProductCard";
-import { useFetchProducts } from "@/lib/product/useFetchProducts";
+import { useFetchProducts } from "@/lib/product/hooks/useFetchProducts";
 
 const ProductsManage = () => {
   const { user } = useAuthStore();
