@@ -7,13 +7,16 @@ export interface CartItem extends Product {
 
 interface CartState {
   cartItems: CartItem[];
+  totalQuantity: number;
   addCart: (product: Product) => void;
   deleteCart: (productId: string) => void;
   updateQuantity: (productId: string, newQuantity: number) => void;
+  setTotalQuantity: (total: number) => void;
 }
 
 export const useCartStore = create<CartState>((set) => ({
   cartItems: [],
+  totalQuantity: 0,
 
   addCart: (product: Product) =>
     set((state) => {
@@ -49,4 +52,6 @@ export const useCartStore = create<CartState>((set) => ({
         item.productId === productId ? { ...item, quantity: newQuantity } : item
       ),
     })),
+
+  setTotalQuantity: (total: number) => set({ totalQuantity: total }),
 }));

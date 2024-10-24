@@ -22,7 +22,9 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
         </button>
         <h2 className="text-xl font-bold">장바구니</h2>
       </div>
-      <CartTable />
+      <div className="overflow-y-auto max-h-[75vh]">
+        <CartTable />
+      </div>
       <div className="flex justify-end mr-4">
         <Button className="w-1/3">구매하기</Button>
       </div>
