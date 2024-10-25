@@ -18,9 +18,9 @@ const SellerHistory = () => {
             <tr>
               <th className="p-4 text-left w-1/6 pl-10">주문 번호</th>
               <th className="p-4 pl-20 text-left w-1/3">상품 이름</th>
-              <th className="p-4 text-left w-1/6 pl-10">수량</th>
-              <th className="p-4 text-left w-1/6 pl-10">총 금액</th>
-              <th className="p-4 text-left w-1/6 pl-10">주문 상태</th>
+              <th className="p-4 text-left w-1/6 pl-14">수량</th>
+              <th className="p-4 text-left w-1/6 pl-14">총 금액</th>
+              <th className="p-4 text-left w-1/6 pl-12">주문 상태</th>
             </tr>
           </thead>
           <tbody>

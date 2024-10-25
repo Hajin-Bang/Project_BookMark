@@ -66,8 +66,6 @@ export const addOrderAPI = async (orderData: CreateOrderParams) => {
     new Set(productSnapshots.map((productItem) => productItem.sellerId))
   );
 
-  console.log("sellerIds 배열:", sellerIds);
-
   // 주문 데이터 생성
   const cleanedOrderData = {
     userId: orderData.userId ?? "알 수 없는 사용자",
@@ -146,5 +144,17 @@ export const cancelOrderAPI = async (orderId: string) => {
   await updateDoc(orderRef, {
     status: "주문 취소",
     canceledAt: new Date(),
+  });
+};
+
+export const updateOrderStatusAPI = async (
+  orderId: string,
+  newStatus: string
+) => {
+  const orderRef = doc(db, "orders", orderId);
+
+  await updateDoc(orderRef, {
+    status: newStatus,
+    updatedAt: new Date(),
   });
 };
