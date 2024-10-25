@@ -3,21 +3,14 @@ import {
   collection,
   doc,
   DocumentSnapshot,
+  getDoc,
+  getDocs,
+  query,
   runTransaction,
   Transaction,
+  where,
 } from "firebase/firestore";
-
-interface OrderItem {
-  productId: string;
-  quantity: number;
-  productPrice: number;
-}
-
-export interface CreateOrderParams {
-  userId: string;
-  orderItems: OrderItem[];
-  totalAmount: number;
-}
+import { CreateOrderParams, OrderItem } from "./types";
 
 // 상품 재고 감소
 export const decreaseProductStock = (
@@ -70,4 +63,65 @@ export const addOrderAPI = async (orderData: CreateOrderParams) => {
       status: "pending",
     });
   });
+};
+
+export const fetchOrdersAPI = async ({ uid }: { uid: string }) => {
+  const ordersRef = collection(db, "orders");
+  const q = query(ordersRef, where("userId", "==", uid));
+  const querySnapshot = await getDocs(q);
+
+  if (querySnapshot.empty) {
+    return [];
+  }
+
+  // 주문 목록에 대한 정보를 모두 가져옴
+  const orders = await Promise.all(
+    querySnapshot.docs.map(async (docSnapshot) => {
+      const data = docSnapshot.data();
+
+      // 주문된 각 상품에 대한 정보를 모두 가져옴
+      const items: OrderItem[] = await Promise.all(
+        data.orderItems.map(async (item: OrderItem) => {
+          // 각 상품에 대한 데이터 참조
+          const productDocRef = doc(db, "products", item.productId);
+          const productSnapshot = await getDoc(productDocRef);
+          const productData = productSnapshot.data();
+
+          if (!productData) {
+            throw new Error(`상품 정보를 찾을 수 없습니다: ${item.productId}`);
+          }
+
+          // 각 판매자에 대한 정보 참조
+          const sellerDocRef = doc(db, "users", productData.sellerId);
+          const sellerSnapshot = await getDoc(sellerDocRef);
+          const sellerData = sellerSnapshot.data();
+
+          if (!sellerData) {
+            throw new Error(
+              `판매자 정보를 찾을 수 없습니다: ${productData.sellerId}`
+            );
+          }
+
+          return {
+            productId: item.productId,
+            productName: productData.productName,
+            productImage: productData.productImage,
+            productPrice: item.productPrice,
+            quantity: item.quantity,
+            sellerName: sellerData.nickname || "판매자 정보 없음",
+          };
+        })
+      );
+
+      return {
+        orderId: docSnapshot.id,
+        items,
+        totalAmount: data.totalAmount,
+        createdAt: data.createdAt,
+        status: data.status,
+      };
+    })
+  );
+
+  return orders;
 };
