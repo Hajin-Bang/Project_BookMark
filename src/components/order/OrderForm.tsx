@@ -15,7 +15,6 @@ interface OrderFormValues {
   address: string;
   postalCode: string;
 }
-
 const OrderForm = () => {
   const navigate = useNavigate();
   const { orderItems, totalAmount } = useOrderStore();
@@ -33,7 +32,6 @@ const OrderForm = () => {
       return;
     }
 
-    // 주문 데이터를 생성할 때 정확한 타입을 맞춰서 넘김
     const orderData: CreateOrderParams = {
       userId: user.uid,
       orderItems: orderItems.map((item) => ({
@@ -42,8 +40,8 @@ const OrderForm = () => {
         productPrice: item.productPrice,
         quantity: item.quantity,
         productImage: item.productImage,
-        // 만약 sellerName이 필요 없다면 빼고 넘기거나 맞춰서 넘겨줍니다.
         sellerName: item.sellerName,
+        sellerId: item.sellerId,
       })),
       totalAmount,
     };

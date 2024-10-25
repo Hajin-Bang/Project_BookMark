@@ -15,6 +15,7 @@ const ProductDetail = lazy(() => import("./pages/ProductDetail"));
 const ManagementPage = lazy(() => import("./pages/ManagementPage"));
 const OrderHistory = lazy(() => import("./pages/OrderHistory"));
 const OrderDetail = lazy(() => import("./pages/OrderDetail"));
+const SellerHistory = lazy(() => import("./pages/SellerHistory"));
 
 const AppRouter = () => {
   return (
@@ -42,6 +43,7 @@ const AppRouter = () => {
             element={<ProductUpdateDelete />}
           />
           <Route path="/manage/options" element={<ManagementPage />} />
+          <Route path="/manage/orders" element={<SellerHistory />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
