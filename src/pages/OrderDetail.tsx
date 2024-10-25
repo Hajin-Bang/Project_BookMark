@@ -1,5 +1,7 @@
 import { authStatusType, Layout } from "@/components/common/components/Layout";
 import { NavigationBar } from "@/components/common/components/NavigationBar";
+import { Button } from "@/components/ui/button";
+import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { useCancelOrder } from "@/lib/order/hooks/useCancelOrder";
 import { useFetchOrder } from "@/lib/order/hooks/useFetchOrder";
 import { OrderItem } from "@/lib/order/types";
@@ -41,38 +43,57 @@ const OrderDetail = () => {
         <h2 className="scroll-m-20 pb-2 text-2xl font-semibold tracking-tight mt-2">
           주문 상세 정보
         </h2>
-        <div className="w-full p-4">
-          <p>
-            <strong>주문 번호:</strong> {order.orderId}
-          </p>
-          <p>
-            <strong>주문 상태:</strong> {order.status}
-          </p>
-          <p>
-            <strong>총 금액:</strong> {order.totalAmount.toLocaleString()}원
-          </p>
-          <p>
-            <strong>주문 날짜:</strong>{" "}
-            {new Date(order.createdAt).toLocaleString()}
-          </p>
+        <div className="w-full flex justify-center mt-6">
+          <div className="w-1/3 p-4 rounded-lg">
+            <p className="text-sm text-gray-600">
+              <strong>주문 번호:</strong> {order.orderId}
+            </p>
+            <p className="text-sm text-gray-600">
+              <strong>주문 날짜:</strong>{" "}
+              {order.createdAt && order.createdAt.toDate
+                ? order.createdAt.toDate().toLocaleString()
+                : "날짜 정보 없음"}
+            </p>
+            <p className="text-sm text-gray-600">
+              <strong>총 금액:</strong> {order.totalAmount.toLocaleString()}원
+            </p>
+            <p className="text-sm text-gray-600">
+              <strong>주문 상태:</strong> {order.status}
+            </p>
+          </div>
+        </div>
+        <div className="w-full mt-8">
           <ul>
             {(order.items || []).map((item: OrderItem) => (
-              <li key={item.productId}>
-                <p>상품 이름: {item.productName}</p>
-                <p>수량: {item.quantity}</p>
-                <p>판매자: {item.sellerName}</p>
-                <p>가격: {item.productPrice.toLocaleString()}원</p>
+              <li key={item.productId} className="mb-4">
+                <Card className="flex gap-4 items-center p-4">
+                  {item.productImage && (
+                    <img
+                      src={item.productImage[0]}
+                      alt={item.productName}
+                      className="w-20 h-20 object-cover"
+                    />
+                  )}
+                  <div className="flex flex-col items-start">
+                    <CardTitle className="text-lg font-medium">
+                      {item.productName}
+                    </CardTitle>
+                    <CardDescription className="text-sm">
+                      수량: {item.quantity}개
+                    </CardDescription>
+                    <span className="text-sm font-semibold text-gray-700">
+                      {(item.productPrice * item.quantity).toLocaleString()}원
+                    </span>
+                  </div>
+                </Card>
               </li>
             ))}
           </ul>
 
           {order.status !== "주문 취소" && (
-            <button
-              className="mt-4 px-4 py-2 bg-red-500 text-white rounded-md"
-              onClick={handleCancelOrder}
-            >
+            <Button className="mt-4 bg-red-400" onClick={handleCancelOrder}>
               주문 취소하기
-            </button>
+            </Button>
           )}
         </div>
       </main>
