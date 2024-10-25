@@ -15,7 +15,6 @@ const OrderDetail = () => {
 
   if (isLoading) return <div>로딩 중...</div>;
   if (error) return <div>오류가 발생했습니다: {error.message}</div>;
-  console.log(orders);
 
   const order = orders?.find((order) => order.orderId === orderId);
 
