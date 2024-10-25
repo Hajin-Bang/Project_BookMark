@@ -13,6 +13,8 @@ const ProductUpdateDelete = lazy(() => import("./pages/ProductUpdateDelete"));
 const ProductCategory = lazy(() => import("./pages/ProductCategory"));
 const ProductDetail = lazy(() => import("./pages/ProductDetail"));
 const ManagementPage = lazy(() => import("./pages/ManagementPage"));
+const OrderHistory = lazy(() => import("./pages/OrderHistory"));
+const OrderDetail = lazy(() => import("./pages/OrderDetail"));
 
 const AppRouter = () => {
   return (
@@ -29,6 +31,8 @@ const AppRouter = () => {
           {/* 구매자 전용 페이지 */}
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/mypage" element={<MyPage />} />
+          <Route path="/orders" element={<OrderHistory />} />
+          <Route path="/orders/:orderId" element={<OrderDetail />} />
 
           {/* 판매자 전용 페이지 */}
           <Route path="/manage" element={<ProductsManage />} />
