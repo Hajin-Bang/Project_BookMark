@@ -1,28 +1,26 @@
-import { Order } from "@/lib/order/types";
+import { useUpdateOrderStatus } from "@/lib/order/hooks/useUpdateOrderStatus";
+import { Order, OrderStatus } from "@/lib/order/types";
 import { useNavigate } from "react-router-dom";
 
 interface OrderTableRowProps {
   order: Order;
   isSeller: boolean;
-  onStatusChange?: (orderId: string, newStatus: string) => void;
 }
 
-const OrderTableRow = ({
-  order,
-  isSeller,
-  onStatusChange,
-}: OrderTableRowProps) => {
+const OrderTableRow = ({ order, isSeller }: OrderTableRowProps) => {
   const totalQuantity = (order.items || []).reduce(
     (sum, item) => sum + item.quantity,
     0
   );
 
   const navigate = useNavigate();
+  const { updateOrderStatus, isLoading, error } = useUpdateOrderStatus();
 
-  const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    if (onStatusChange) {
-      onStatusChange(order.orderId, e.target.value);
-    }
+  const handleStatusChange = async (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const newStatus = e.target.value;
+    await updateOrderStatus(order.orderId, newStatus); // Firestore에 직접 업데이트
   };
 
   const handleRowClick = () => {
@@ -50,17 +48,27 @@ const OrderTableRow = ({
           <select
             value={order.status}
             onChange={handleStatusChange}
+            disabled={isLoading}
             className="border border-gray-300 rounded-md p-1 text-center"
           >
-            <option value="주문완료">주문완료</option>
-            <option value="발송대기">발송대기</option>
-            <option value="발송시작">발송시작</option>
-            <option value="주문취소">주문취소</option>
+            <option value={OrderStatus.ORDER_COMPLETE}>
+              {OrderStatus.ORDER_COMPLETE}
+            </option>
+            <option value={OrderStatus.AWAITING_SHIPMENT}>
+              {OrderStatus.AWAITING_SHIPMENT}
+            </option>
+            <option value={OrderStatus.SHIPPING_STARTED}>
+              {OrderStatus.SHIPPING_STARTED}
+            </option>
+            <option value={OrderStatus.ORDER_CANCELLED}>
+              {OrderStatus.ORDER_CANCELLED}
+            </option>
           </select>
         ) : (
           order.status
         )}
       </td>
+      {error && <p className="text-red-500">상태 변경 실패: {error.message}</p>}
     </tr>
   );
 };
