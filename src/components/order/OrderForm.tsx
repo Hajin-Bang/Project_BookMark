@@ -3,6 +3,9 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
+import { useOrderStore } from "@/store/order/useOrderStore";
+import { useAuthStore } from "@/store/auth/useAuthStore";
+import { useCreateOrder } from "@/lib/order/hooks/useCreateOrder";
 
 interface OrderFormValues {
   name: string;
@@ -14,14 +17,37 @@ interface OrderFormValues {
 
 const OrderForm = () => {
   const navigate = useNavigate();
+  const { orderItems, totalAmount } = useOrderStore();
+  const createOrder = useCreateOrder();
+  const { user } = useAuthStore();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<OrderFormValues>();
 
-  const onSubmit = (data: OrderFormValues) => {
-    console.log("Order Submitted:", data);
+  const onSubmit = () => {
+    if (!user?.uid) {
+      navigate("/signin");
+      return;
+    }
+
+    const orderData = {
+      userId: user.uid,
+      orderItems,
+      totalAmount,
+    };
+
+    createOrder.mutate(orderData, {
+      onSuccess: () => {
+        alert("주문이 성공적으로 완료되었습니다!");
+        navigate("/mypage");
+      },
+      onError: (error) => {
+        console.error("주문 생성 중 에러 발생", error);
+        alert("주문을 실패하였습니다.");
+      },
+    });
   };
 
   const handleCancel = () => {

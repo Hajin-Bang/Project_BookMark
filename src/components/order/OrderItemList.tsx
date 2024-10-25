@@ -9,10 +9,6 @@ interface OrderItem {
 }
 
 const OrderItemList = ({ items }: { items: OrderItem[] }) => {
-  const totalAmount = items.reduce((acc, item) => {
-    return acc + item.productPrice * item.quantity;
-  }, 0);
-
   return (
     <div className="w-full">
       <ul>
@@ -40,11 +36,6 @@ const OrderItemList = ({ items }: { items: OrderItem[] }) => {
           </li>
         ))}
       </ul>
-      <div className="mt-6 flex justify-end">
-        <span className="text-lg font-semibold text-gray-700 mr-3">
-          결제 금액: {totalAmount.toLocaleString()}원
-        </span>
-      </div>
     </div>
   );
 };
