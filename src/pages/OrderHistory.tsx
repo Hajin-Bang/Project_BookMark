@@ -13,8 +13,6 @@ const OrderHistory = () => {
   if (isLoading) return <div>로딩 중...</div>;
   if (error) return <div>오류가 발생했습니다.</div>;
 
-  console.log("주문 데이터:", orders);
-
   if (!orders || orders.length === 0) {
     return <div>구매 내역이 없습니다.</div>;
   }
