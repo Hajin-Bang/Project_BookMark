@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useOrderStore } from "@/store/order/useOrderStore";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useCreateOrder } from "@/lib/order/hooks/useCreateOrder";
+import { CreateOrderParams } from "@/lib/order/types";
 
 interface OrderFormValues {
   name: string;
@@ -32,9 +33,18 @@ const OrderForm = () => {
       return;
     }
 
-    const orderData = {
+    // 주문 데이터를 생성할 때 정확한 타입을 맞춰서 넘김
+    const orderData: CreateOrderParams = {
       userId: user.uid,
-      orderItems,
+      orderItems: orderItems.map((item) => ({
+        productId: item.productId,
+        productName: item.productName,
+        productPrice: item.productPrice,
+        quantity: item.quantity,
+        productImage: item.productImage,
+        // 만약 sellerName이 필요 없다면 빼고 넘기거나 맞춰서 넘겨줍니다.
+        sellerName: item.sellerName,
+      })),
       totalAmount,
     };
 
