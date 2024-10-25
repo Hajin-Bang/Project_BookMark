@@ -8,6 +8,7 @@ import {
   query,
   runTransaction,
   Transaction,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import { CreateOrderParams, OrderItem } from "./types";
@@ -60,7 +61,7 @@ export const addOrderAPI = async (orderData: CreateOrderParams) => {
     transaction.set(orderRef, {
       ...orderData,
       createdAt: new Date(),
-      status: "pending",
+      status: "주문 완료",
     });
   });
 };
@@ -124,4 +125,13 @@ export const fetchOrdersAPI = async ({ uid }: { uid: string }) => {
   );
 
   return orders;
+};
+
+export const cancelOrderAPI = async (orderId: string) => {
+  const orderRef = doc(db, "orders", orderId);
+
+  await updateDoc(orderRef, {
+    status: "주문 취소",
+    canceledAt: new Date(),
+  });
 };

@@ -1,5 +1,13 @@
 import { create } from "zustand";
-import { OrderState } from "./types";
+import { OrderItem } from "@/lib/order/types";
+
+interface OrderState {
+  orderItems: OrderItem[];
+  totalAmount: number;
+  setOrderItems: (items: OrderItem[]) => void;
+  calculateTotalAmount: () => void;
+  clearOrder: () => void;
+}
 
 export const useOrderStore = create<OrderState>((set) => ({
   orderItems: [],
