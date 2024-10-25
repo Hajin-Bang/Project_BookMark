@@ -16,6 +16,9 @@ const ManagementPage = () => {
     navigate("/manage/add");
   };
 
+  const handleOrderManageClick = () => {
+    navigate("/manage/orders");
+  };
   const handleLogout = () => {
     logout();
   };
@@ -41,7 +44,12 @@ const ManagementPage = () => {
             >
               판매 도서 추가
             </Button>
-            <Button className="w-1/2 h-12 bg-slate-400">판매 내역 관리</Button>
+            <Button
+              className="w-1/2 h-12 bg-slate-400"
+              onClick={handleOrderManageClick}
+            >
+              판매 내역 관리
+            </Button>
             <Button className="w-1/2 h-12 bg-slate-400" onClick={handleLogout}>
               로그아웃
             </Button>

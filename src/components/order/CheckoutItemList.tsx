@@ -8,7 +8,7 @@ interface OrderItem {
   quantity: number;
 }
 
-const OrderItemList = ({ items }: { items: OrderItem[] }) => {
+const CheckoutItemList = ({ items }: { items: OrderItem[] }) => {
   return (
     <div className="w-full">
       <ul>
@@ -40,4 +40,4 @@ const OrderItemList = ({ items }: { items: OrderItem[] }) => {
   );
 };
 
-export default OrderItemList;
+export default CheckoutItemList;

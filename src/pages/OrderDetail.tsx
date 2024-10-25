@@ -2,16 +2,18 @@ import { authStatusType, Layout } from "@/components/common/components/Layout";
 import { NavigationBar } from "@/components/common/components/NavigationBar";
 import { useCancelOrder } from "@/lib/order/hooks/useCancelOrder";
 import { useFetchOrder } from "@/lib/order/hooks/useFetchOrder";
+import { OrderItem } from "@/lib/order/types";
 import { useNavigate, useParams } from "react-router-dom";
 
 const OrderDetail = () => {
   const { orderId } = useParams<{ orderId: string }>();
-  const { data: orders, isLoading, error } = useFetchOrder();
+  const { data: orders, isLoading, error } = useFetchOrder({ isSeller: false });
   const { mutate: cancelOrder } = useCancelOrder();
   const navigate = useNavigate();
 
   if (isLoading) return <div>로딩 중...</div>;
   if (error) return <div>오류가 발생했습니다: {error.message}</div>;
+  console.log(orders);
 
   const order = orders?.find((order) => order.orderId === orderId);
 
@@ -22,7 +24,7 @@ const OrderDetail = () => {
       cancelOrder(orderId, {
         onSuccess: () => {
           alert("주문이 취소되었습니다.");
-          navigate("/orders"); // 주문 목록으로 리다이렉트
+          navigate("/orders");
         },
         onError: (error) => {
           console.error("주문 취소 중 오류 발생:", error);
@@ -54,7 +56,7 @@ const OrderDetail = () => {
             {new Date(order.createdAt).toLocaleString()}
           </p>
           <ul>
-            {order.items.map((item) => (
+            {(order.items || []).map((item: OrderItem) => (
               <li key={item.productId}>
                 <p>상품 이름: {item.productName}</p>
                 <p>수량: {item.quantity}</p>

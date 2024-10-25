@@ -5,6 +5,7 @@ export interface OrderItem {
   productPrice: number;
   quantity: number;
   sellerName: string;
+  sellerId: string;
 }
 
 export interface CreateOrderParams {
