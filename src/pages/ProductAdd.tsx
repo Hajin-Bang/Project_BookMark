@@ -38,7 +38,6 @@ const ProductAdd = () => {
         navigate("/manage");
       },
     });
-    console.log("상품 등록 완료", data);
   };
 
   return (

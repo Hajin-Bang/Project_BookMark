@@ -45,6 +45,29 @@ const ProductDetail = () => {
     setCartOpen(false);
   };
 
+  const handleBuyNow = () => {
+    if (!isLogin) {
+      navigate("/signin");
+      return;
+    }
+
+    if (product) {
+      navigate("/checkout", {
+        state: {
+          items: [
+            {
+              productId: product.productId,
+              productName: product.productName,
+              productPrice: product.productPrice,
+              productImage: product.productImage,
+              quantity: 1,
+            },
+          ],
+        },
+      });
+    }
+  };
+
   return (
     <Layout authStatus={authStatusType.COMMON}>
       <NavigationBar />
@@ -107,7 +130,9 @@ const ProductDetail = () => {
               <Button className="w-1/2" onClick={handleAddToCart}>
                 장바구니
               </Button>
-              <Button className="w-1/2">구매하기</Button>
+              <Button className="w-1/2" onClick={handleBuyNow}>
+                구매하기
+              </Button>
             </div>
           </div>
         </div>
