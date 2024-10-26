@@ -55,6 +55,7 @@ const SignIn = () => {
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               <Input
+                id="email"
                 {...register("email", { required: "이메일을 입력하세요" })}
                 placeholder="이메일"
                 type="email"
@@ -70,6 +71,7 @@ const SignIn = () => {
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               <Input
+                id="password"
                 {...register("password", { required: "비밀번호를 입력하세요" })}
                 placeholder="비밀번호"
                 type="password"

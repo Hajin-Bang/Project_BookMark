@@ -62,6 +62,7 @@ const SignUp = () => {
             <div className="relative">
               <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               <Input
+                id="nickname"
                 {...register("nickname", { required: "닉네임을 입력하세요" })}
                 type="text"
                 placeholder="닉네임"
@@ -78,6 +79,7 @@ const SignUp = () => {
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               <Input
+                id="email"
                 {...register("email", emailValidation)}
                 placeholder="이메일"
                 className="pl-10"
@@ -92,6 +94,7 @@ const SignUp = () => {
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               <Input
+                id="password"
                 {...register("password", passwordValidation)}
                 placeholder="비밀번호"
                 className="pl-10"
