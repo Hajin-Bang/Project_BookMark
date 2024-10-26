@@ -4,6 +4,7 @@ import {
   doc,
   DocumentSnapshot,
   getDocs,
+  orderBy,
   query,
   runTransaction,
   Transaction,
@@ -48,7 +49,6 @@ export const addOrderAPI = async (orderData: CreateOrderParams) => {
           throw new Error(`상품이 존재하지 않습니다: ${item.productId}`);
         }
 
-        // 재고 감소 처리
         decreaseProductStock(productDoc, item.quantity, transaction);
 
         const productData = productDoc.data();
@@ -68,7 +68,6 @@ export const addOrderAPI = async (orderData: CreateOrderParams) => {
       new Set(productSnapshots.map((productItem) => productItem.sellerId))
     );
 
-    // 주문 데이터 생성
     const cleanedOrderData = {
       userId: orderData.userId ?? "알 수 없는 사용자",
       orderItems: productSnapshots,
@@ -78,7 +77,6 @@ export const addOrderAPI = async (orderData: CreateOrderParams) => {
       sellerIds,
     };
 
-    // 트랜잭션으로 주문 생성
     transaction.set(orderRef, cleanedOrderData);
   });
 };
@@ -90,49 +88,33 @@ export const fetchOrdersAPI = async ({
   userId?: string;
   sellerId?: string;
 }) => {
-  if (userId) {
-    const ordersRef = collection(db, "orders");
-    const q = query(ordersRef, where("userId", "==", userId));
-    const querySnapshot = await getDocs(q);
+  const ordersRef = collection(db, "orders");
 
-    if (querySnapshot.empty) {
-      return [];
-    }
-
-    const orders = querySnapshot.docs.map((docSnapshot) => {
-      const data = docSnapshot.data();
-      return {
-        orderId: docSnapshot.id,
-        items: data.orderItems || [],
-        totalAmount: data.totalAmount,
-        createdAt: data.createdAt,
-        status: data.status,
-      };
-    });
-
-    return orders;
-  } else if (sellerId) {
-    const ordersRef = collection(db, "orders");
-    const q = query(ordersRef, where("sellerIds", "array-contains", sellerId));
-    const querySnapshot = await getDocs(q);
-
-    if (querySnapshot.empty) {
-      return [];
-    }
-
-    return querySnapshot.docs.map((docSnapshot) => {
-      const data = docSnapshot.data();
-      return {
-        orderId: docSnapshot.id,
-        items: data.orderItems || [],
-        totalAmount: data.totalAmount,
-        status: data.status,
-        createdAt: data.createdAt,
-      };
-    });
-  } else {
+  if (!userId && !sellerId) {
     throw new Error("userId 또는 sellerId 중 하나는 필요합니다.");
   }
+
+  const condition = userId
+    ? where("userId", "==", userId)
+    : where("sellerIds", "array-contains", sellerId);
+  const q = query(ordersRef, condition, orderBy("createdAt", "desc"));
+
+  const querySnapshot = await getDocs(q);
+
+  if (querySnapshot.empty) {
+    return [];
+  }
+
+  return querySnapshot.docs.map((docSnapshot) => {
+    const data = docSnapshot.data();
+    return {
+      orderId: docSnapshot.id,
+      items: data.orderItems || [],
+      totalAmount: data.totalAmount,
+      createdAt: data.createdAt,
+      status: data.status,
+    };
+  });
 };
 
 export const cancelOrderAPI = async (orderId: string) => {
