@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { Skeleton } from "./components/ui/skeleton";
+import ScrollToTop from "./components/common/components/ScrollToTop";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const SignIn = lazy(() => import("./pages/SignIn"));
@@ -20,6 +21,7 @@ const SellerHistory = lazy(() => import("./pages/SellerHistory"));
 const AppRouter = () => {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Suspense fallback={<Skeleton className="w-24 h-8" />}>
         <Routes>
           {/* 누구나 접근 가능한 공용 페이지 */}
