@@ -77,6 +77,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           책 제목
         </Label>
         <Input
+          id="productName"
           {...register("productName", { required: "책 제목을 입력하세요" })}
           type="text"
           placeholder="책 제목을 입력하세요."
@@ -88,6 +89,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         {/* 작가명 */}
         <Label htmlFor="productAuthor">작가명</Label>
         <Input
+          id="productAuthor"
           {...register("productAuthor", { required: "작가를 입력하세요" })}
           type="text"
           placeholder="작가를 입력하세요."
@@ -133,6 +135,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         {/* 가격 */}
         <Label htmlFor="productPrice">상품 가격</Label>
         <Input
+          id="productPrice"
           {...register("productPrice", {
             required: "판매 가격을 입력하세요.",
             pattern: {
@@ -150,6 +153,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         {/* 수량 */}
         <Label htmlFor="productQuantity">상품 수량</Label>
         <Input
+          id="productQuantity"
           {...register("productQuantity", {
             required: "판매 수량을 입력하세요.",
             pattern: {
@@ -167,6 +171,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         {/* 설명 */}
         <Label htmlFor="productDescription">상품 상세 설명</Label>
         <Textarea
+          id="productDescription"
           {...register("productDescription", {
             required: "도서 상세 설명을 입력하세요.",
           })}
