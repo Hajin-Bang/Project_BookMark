@@ -51,7 +51,7 @@ const ProductCategory = () => {
             </SelectContent>
           </Select>
         </div>
-        <div className="grid grid-cols-4 gap-4 justify-center">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center">
           {products.map((product) => (
             <ProductCard
               key={product.productId}

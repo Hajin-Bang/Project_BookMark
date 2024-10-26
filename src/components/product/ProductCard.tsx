@@ -17,7 +17,7 @@ interface ProductCardProps {
 export const ProductCard = ({ product, onClick }: ProductCardProps) => {
   return (
     <Card
-      className="w-full flex flex-col p-4 h-fit gap-2 bg-white cursor-pointer flex-grow flex-shrink"
+      className="w-full flex flex-col p-4 h-fit gap-2 bg-white cursor-pointer flex-grow flex-shrink min-w-[230px]"
       onClick={() => onClick(product.productId)}
     >
       <ProductCarousel images={product.productImage} />
