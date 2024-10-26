@@ -35,11 +35,13 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
       <div className="overflow-y-auto max-h-[75vh]">
         <CartTable cartItems={cartItems} isLoading={isLoading} error={error} />
       </div>
-      <div className="flex justify-end mr-4">
-        <Button className="w-1/3" onClick={handleBuyNow}>
-          구매하기
-        </Button>
-      </div>
+      {cartItems && cartItems.length > 0 && (
+        <div className="flex justify-end mr-4 mt-4">
+          <Button className="w-1/3" onClick={handleBuyNow}>
+            구매하기
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
