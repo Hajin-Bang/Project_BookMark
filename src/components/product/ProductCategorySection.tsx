@@ -6,10 +6,12 @@ import { useFetchProducts } from "@/lib/product/hooks/useFetchProducts";
 
 interface ProductCategorySectionProps {
   category: string;
+  className?: string;
 }
 
 export const ProductCategorySection = ({
   category,
+  className,
 }: ProductCategorySectionProps) => {
   const order = "createdAt/desc";
   const { data, isError } = useFetchProducts({ category, order, limit: 4 });
@@ -27,7 +29,7 @@ export const ProductCategorySection = ({
   if (isError) return <div>Error loading products</div>;
 
   return (
-    <section className="w-full h-fit min-h-[300px] bg-white p-5">
+    <section className={`w-full h-fit min-h-[300px] p-5 bg-white ${className}`}>
       <h3
         onClick={() =>
           navigate(`/category/${encodeURIComponent(category || "")}`)
