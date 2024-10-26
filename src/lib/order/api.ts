@@ -3,10 +3,9 @@ import {
   collection,
   doc,
   DocumentSnapshot,
-  getDoc,
   getDocs,
   query,
-  setDoc,
+  runTransaction,
   Transaction,
   updateDoc,
   where,
@@ -33,57 +32,55 @@ export const decreaseProductStock = (
   });
 };
 
+// 주문 생성 및 재고 감소 트랜잭션 처리
 export const addOrderAPI = async (orderData: CreateOrderParams) => {
   const orderCollectionRef = collection(db, "orders");
   const orderRef = doc(orderCollectionRef);
 
-  const productSnapshots = await Promise.all(
-    orderData.orderItems.map(async (item) => {
-      const productDoc = await getDoc(doc(db, "products", item.productId));
+  // 트랜잭션 실행
+  await runTransaction(db, async (transaction) => {
+    const productSnapshots = await Promise.all(
+      orderData.orderItems.map(async (item) => {
+        const productRef = doc(db, "products", item.productId);
+        const productDoc = await transaction.get(productRef);
 
-      if (!productDoc.exists()) {
-        throw new Error(`상품이 존재하지 않습니다: ${item.productId}`);
-      }
+        if (!productDoc.exists()) {
+          throw new Error(`상품이 존재하지 않습니다: ${item.productId}`);
+        }
 
-      const productData = productDoc.data();
+        // 재고 감소 처리
+        decreaseProductStock(productDoc, item.quantity, transaction);
 
-      if (!productData?.sellerId) {
-        throw new Error(`상품의 판매자 ID가 없습니다: ${item.productId}`);
-      }
+        const productData = productDoc.data();
 
-      return {
-        productId: item.productId,
-        productName: item.productName ?? "상품 이름 없음",
-        productPrice: item.productPrice ?? 0,
-        quantity: item.quantity ?? 1,
-        productImage: item.productImage || [],
-        sellerId: productData.sellerId ?? "알 수 없는 판매자",
-      };
-    })
-  );
+        return {
+          productId: item.productId,
+          productName: item.productName ?? "상품 이름 없음",
+          productPrice: item.productPrice ?? 0,
+          quantity: item.quantity ?? 1,
+          productImage: item.productImage || [],
+          sellerId: productData?.sellerId ?? "알 수 없는 판매자",
+        };
+      })
+    );
 
-  const sellerIds = Array.from(
-    new Set(productSnapshots.map((productItem) => productItem.sellerId))
-  );
+    const sellerIds = Array.from(
+      new Set(productSnapshots.map((productItem) => productItem.sellerId))
+    );
 
-  // 주문 데이터 생성
-  const cleanedOrderData = {
-    userId: orderData.userId ?? "알 수 없는 사용자",
-    orderItems: productSnapshots.map((productItem) => ({
-      productId: productItem.productId,
-      productName: productItem.productName,
-      productPrice: productItem.productPrice,
-      quantity: productItem.quantity,
-      sellerId: productItem.sellerId,
-      productImage: productItem.productImage,
-    })),
-    totalAmount: orderData.totalAmount ?? 0,
-    createdAt: new Date(),
-    status: "주문 완료",
-    sellerIds,
-  };
+    // 주문 데이터 생성
+    const cleanedOrderData = {
+      userId: orderData.userId ?? "알 수 없는 사용자",
+      orderItems: productSnapshots,
+      totalAmount: orderData.totalAmount ?? 0,
+      createdAt: new Date(),
+      status: "주문 완료",
+      sellerIds,
+    };
 
-  await setDoc(orderRef, cleanedOrderData);
+    // 트랜잭션으로 주문 생성
+    transaction.set(orderRef, cleanedOrderData);
+  });
 };
 
 export const fetchOrdersAPI = async ({
