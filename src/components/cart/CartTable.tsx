@@ -28,7 +28,7 @@ const CartTable = ({ cartItems, isLoading, error }: CartTableProps) => {
   if (error) return <p>Error fetching cart items: {error.message}</p>;
 
   if (!cartItems || cartItems.length === 0)
-    return <p className="m-20">장바구니가 비어 있습니다.</p>;
+    return <p className="m-20">장바구니가 비어있습니다.</p>;
 
   const totalQuantity = cartItems.reduce(
     (total, item) => total + item.quantity,
