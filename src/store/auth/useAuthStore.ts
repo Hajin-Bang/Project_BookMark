@@ -3,18 +3,13 @@ import Cookies from "js-cookie";
 import { getAuth } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/firebase";
+import { UserData } from "@/lib/auth/types";
 
-export interface User {
-  uid: string;
-  nickname: string;
-  email: string;
-  isSeller: boolean;
-}
 interface AuthState {
-  user: User | null;
+  user: UserData | null;
   isLogin: boolean;
   loading: boolean;
-  setUser: (userData: User) => void;
+  setUser: (userData: UserData) => void;
   setIsLogin: (isLogin: boolean) => void;
   logout: () => void;
   checkLoginStatus: () => void;
@@ -44,6 +39,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       isLogin: false,
       loading: false,
     });
+    // Toast
   },
 
   checkLoginStatus: async () => {
