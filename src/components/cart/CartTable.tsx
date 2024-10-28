@@ -1,7 +1,7 @@
 import { useDeleteCart } from "@/lib/cart/hooks/useDeleteCart";
+import { useFetchCart } from "@/lib/cart/hooks/useFetchCart";
 import { useUpdateCartQuantity } from "@/lib/cart/hooks/useUpdateCart";
-import { CartItem, useCartStore } from "@/store/cart/useCartStore";
-import { useEffect } from "react";
+import { CartItem } from "@/lib/cart/types";
 
 interface CartTableProps {
   cartItems: CartItem[] | undefined;
@@ -12,32 +12,13 @@ interface CartTableProps {
 const CartTable = ({ cartItems, isLoading, error }: CartTableProps) => {
   const { mutate: removeFromCart } = useDeleteCart();
   const { mutate: updateCartQuantity } = useUpdateCartQuantity();
-  const setTotalQuantity = useCartStore((state) => state.setTotalQuantity);
-
-  useEffect(() => {
-    if (cartItems) {
-      const totalQuantity = cartItems.reduce(
-        (total, item) => total + item.quantity,
-        0
-      );
-      setTotalQuantity(totalQuantity);
-    }
-  }, [cartItems, setTotalQuantity]);
+  const { totalQuantity, totalPrice } = useFetchCart();
 
   if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error fetching cart items: {error.message}</p>;
+  if (error) return <p>{error.message}</p>;
 
   if (!cartItems || cartItems.length === 0)
     return <p className="m-20">장바구니가 비어있습니다.</p>;
-
-  const totalQuantity = cartItems.reduce(
-    (total, item) => total + item.quantity,
-    0
-  );
-  const totalPrice = cartItems.reduce(
-    (total, item) => total + item.productPrice * item.quantity,
-    0
-  );
 
   const handleQuantityChange = (productId: string, newQuantity: number) => {
     updateCartQuantity({ productId, newQuantity });

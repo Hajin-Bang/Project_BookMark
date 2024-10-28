@@ -1,5 +1,4 @@
 import { db } from "@/firebase";
-import { CartItem } from "@/store/cart/useCartStore";
 import {
   collection,
   deleteDoc,
@@ -10,6 +9,7 @@ import {
 } from "firebase/firestore";
 import { UserData } from "../auth/types";
 import { Product } from "../product/types";
+import { CartItem } from "./types";
 
 export const addCartAPI = async (
   product: Product,
