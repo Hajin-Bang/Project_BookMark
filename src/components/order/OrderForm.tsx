@@ -3,10 +3,9 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
-import { useOrderStore } from "@/store/order/useOrderStore";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useCreateOrder } from "@/lib/order/hooks/useCreateOrder";
-import { CreateOrderParams } from "@/lib/order/types";
+import { CreateOrderParams, OrderItem } from "@/lib/order/types";
 
 interface OrderFormValues {
   name: string;
@@ -15,9 +14,14 @@ interface OrderFormValues {
   address: string;
   postalCode: string;
 }
-const OrderForm = () => {
+
+interface OrderFormProps {
+  orderItems: OrderItem[];
+  totalAmount: number;
+}
+
+const OrderForm = ({ orderItems, totalAmount }: OrderFormProps) => {
   const navigate = useNavigate();
-  const { orderItems, totalAmount } = useOrderStore();
   const createOrder = useCreateOrder();
   const { user } = useAuthStore();
   const {
@@ -43,17 +47,12 @@ const OrderForm = () => {
         sellerName: item.sellerName,
         sellerId: item.sellerId,
       })),
-      totalAmount,
+      totalAmount: totalAmount,
     };
 
     createOrder.mutate(orderData, {
       onSuccess: () => {
-        alert("주문이 성공적으로 완료되었습니다!");
         navigate("/mypage");
-      },
-      onError: (error) => {
-        console.error("주문 생성 중 에러 발생", error);
-        alert("주문을 실패하였습니다.");
       },
     });
   };
