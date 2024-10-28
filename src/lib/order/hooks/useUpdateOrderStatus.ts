@@ -14,6 +14,7 @@ export const useUpdateOrderStatus = () => {
       await updateOrderStatusAPI(orderId, newStatus);
       queryClient.invalidateQueries({ queryKey: ["sellerOrders"] });
       queryClient.invalidateQueries({ queryKey: ["orders"] });
+      // toast
     } catch (err) {
       console.error("주문 상태 업데이트 오류:", err);
       setError(err as Error);

@@ -1,19 +1,17 @@
 import { authStatusType, Layout } from "@/components/common/components/Layout";
 import OrderForm from "@/components/order/OrderForm";
 import CheckoutItemList from "@/components/order/CheckoutItemList";
-import { useOrderStore } from "@/store/order/useOrderStore";
-import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { OrderItem } from "@/lib/order/types";
 
 const Checkout = () => {
   const location = useLocation();
   const { items } = location.state as { items: OrderItem[] };
-  const { setOrderItems, totalAmount } = useOrderStore();
 
-  useEffect(() => {
-    setOrderItems(items);
-  }, [items, setOrderItems]);
+  const totalAmount = items.reduce(
+    (acc, item) => acc + item.productPrice * item.quantity,
+    0
+  );
 
   return (
     <Layout authStatus={authStatusType.ONLY_BUYER}>
@@ -27,7 +25,7 @@ const Checkout = () => {
             결제 금액: {totalAmount.toLocaleString()}원
           </span>
         </div>
-        <OrderForm />
+        <OrderForm orderItems={items} totalAmount={totalAmount} />
       </main>
     </Layout>
   );
