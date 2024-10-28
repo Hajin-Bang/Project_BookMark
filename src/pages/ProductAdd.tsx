@@ -1,4 +1,3 @@
-import { useProductStore } from "@/store/product/useProductStore";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { authStatusType, Layout } from "@/components/common/components/Layout";
 import {
@@ -13,7 +12,6 @@ import { useAddProduct } from "@/lib/product/hooks/useAddProduct";
 const ProductAdd = () => {
   const { user } = useAuthStore();
   const { mutate } = useAddProduct();
-  const addProduct = useProductStore((state) => state.addProduct);
   const navigate = useNavigate();
 
   const handleProductAdd = (data: ProductAddFormValues) => {
@@ -33,8 +31,7 @@ const ProductAdd = () => {
     };
 
     mutate(productData, {
-      onSuccess: (newProduct) => {
-        addProduct(newProduct);
+      onSuccess: () => {
         navigate("/manage");
       },
     });

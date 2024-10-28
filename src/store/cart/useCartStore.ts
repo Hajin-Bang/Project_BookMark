@@ -1,5 +1,5 @@
+import { Product } from "@/lib/product/types";
 import { create } from "zustand";
-import { Product } from "../product/useProductStore";
 
 export interface CartItem extends Product {
   quantity: number;

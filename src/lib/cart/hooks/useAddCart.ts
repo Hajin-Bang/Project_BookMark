@@ -1,8 +1,8 @@
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { CartItem, useCartStore } from "@/store/cart/useCartStore";
-import { Product } from "@/store/product/useProductStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addCartAPI } from "../api";
+import { Product } from "@/lib/product/types";
 
 export const useAddCart = () => {
   const queryClient = useQueryClient();
