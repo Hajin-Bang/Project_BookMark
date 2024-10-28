@@ -1,7 +1,5 @@
 import { db } from "@/firebase";
-import { User } from "@/store/auth/useAuthStore";
 import { CartItem } from "@/store/cart/useCartStore";
-import { Product } from "@/store/product/useProductStore";
 import {
   collection,
   deleteDoc,
@@ -10,10 +8,12 @@ import {
   runTransaction,
   serverTimestamp,
 } from "firebase/firestore";
+import { UserData } from "../auth/types";
+import { Product } from "../product/types";
 
 export const addCartAPI = async (
   product: Product,
-  user: User
+  user: UserData
 ): Promise<CartItem> => {
   return await runTransaction(db, async (transaction) => {
     const newCartItemRef = doc(
@@ -54,7 +54,7 @@ export const deleteCartAPI = async (
   }
 };
 
-export const fetchCartItems = async (user: User): Promise<CartItem[]> => {
+export const fetchCartItems = async (user: UserData): Promise<CartItem[]> => {
   const cartRef = collection(db, "carts", user.uid, "cartItems");
   const cartSnapshot = await getDocs(cartRef);
   const cartItems: CartItem[] = cartSnapshot.docs.map(
@@ -66,7 +66,7 @@ export const fetchCartItems = async (user: User): Promise<CartItem[]> => {
 
 export const updateCartQuantityAPI = async (
   productId: string,
-  user: User,
+  user: UserData,
   newQuantity: number
 ): Promise<void> => {
   const cartItemRef = doc(db, "carts", user.uid, "cartItems", productId);

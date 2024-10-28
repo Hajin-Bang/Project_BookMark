@@ -1,5 +1,4 @@
 import { db } from "@/firebase";
-import { Product } from "@/store/product/useProductStore";
 import {
   collection,
   DocumentData,
@@ -12,7 +11,23 @@ import {
   Timestamp,
   where,
   OrderByDirection,
+  serverTimestamp,
+  addDoc,
+  doc,
+  updateDoc,
 } from "firebase/firestore";
+import { Product } from "./types";
+
+export const addProductAPI = async (product: Product): Promise<Product> => {
+  const productRef = collection(db, "products");
+  const newDocRef = await addDoc(productRef, {
+    ...product,
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  });
+
+  return { ...product, productId: newDocRef.id };
+};
 
 export const fetchProducts = async (
   options: {
@@ -87,4 +102,25 @@ export const fetchProducts = async (
     console.error("Firestore 쿼리 중 오류 발생:", error);
     return { products: [], lastVisible: null };
   }
+};
+
+export const updateProductAPI = async (product: Partial<Product>) => {
+  const productRef = doc(db, "products", product.productId!);
+
+  await updateDoc(productRef, {
+    ...(product.productName && { productName: product.productName }),
+    ...(product.productAuthor && { productAuthor: product.productAuthor }),
+    ...(product.productPrice && { productPrice: product.productPrice }),
+    ...(product.productQuantity && {
+      productQuantity: product.productQuantity,
+    }),
+    ...(product.productDescription && {
+      productDescription: product.productDescription,
+    }),
+    ...(product.productCategory && {
+      productCategory: product.productCategory,
+    }),
+    ...(product.productImage && { productImage: product.productImage }),
+    updatedAt: new Date(),
+  });
 };
