@@ -29,7 +29,7 @@ export const ProductCategorySection = ({
   if (isError) return <div>Error loading products</div>;
 
   return (
-    <section className={`w-full h-fit min-h-[300px] p-5 bg-white ${className}`}>
+    <section className={`w-full h-fit min-h-[300px] p-5 ${className}`}>
       <h3
         onClick={() =>
           navigate(`/category/${encodeURIComponent(category || "")}`)
