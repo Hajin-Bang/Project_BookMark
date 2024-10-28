@@ -1,18 +1,16 @@
 import { useAuthStore } from "@/store/auth/useAuthStore";
-import { CartItem, useCartStore } from "@/store/cart/useCartStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addCartAPI } from "../api";
 import { Product } from "@/lib/product/types";
+import { CartItem } from "../types";
 
 export const useAddCart = () => {
   const queryClient = useQueryClient();
-  const addCartItem = useCartStore((state) => state.addCart);
   const { user } = useAuthStore();
 
   return useMutation<CartItem, Error, Product>({
     mutationFn: (product) => addCartAPI(product, user!),
-    onSuccess: (newCartItem) => {
-      addCartItem(newCartItem);
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cartItems"] });
     },
     onError: (error) => {

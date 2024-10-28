@@ -4,14 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../../ui/button";
 import { useState } from "react";
 import CartDrawer from "@/components/cart/CartDrawer";
-import { useCartStore } from "@/store/cart/useCartStore";
+import { useFetchCart } from "@/lib/cart/hooks/useFetchCart";
 
 export const NavigationBar = () => {
   const navigate = useNavigate();
   const { isLogin, logout, user } = useAuthStore();
   const [cartOpen, setCartOpen] = useState(false);
-
-  const totalQuantity = useCartStore((state) => state.totalQuantity);
+  const { totalQuantity } = useFetchCart();
 
   const handleLogin = () => {
     navigate("/signin");

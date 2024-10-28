@@ -10,13 +10,14 @@ interface CartDrawerProps {
 
 const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
   const navigate = useNavigate();
-  const { data: cartItems, isLoading, error } = useFetchCart();
+  const { cartItems, totalQuantity, isLoading, error } = useFetchCart();
 
   const handleBuyNow = () => {
     if (cartItems && cartItems.length > 0) {
       navigate("/checkout", { state: { items: cartItems } });
     }
   };
+
   return (
     <div
       className={`fixed top-[64px] right-0 h-full w-[50%] bg-white z-30 shadow-lg transition-transform duration-300 ${
@@ -35,7 +36,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
       <div className="overflow-y-auto max-h-[75vh]">
         <CartTable cartItems={cartItems} isLoading={isLoading} error={error} />
       </div>
-      {cartItems && cartItems.length > 0 && (
+      {totalQuantity > 0 && (
         <div className="flex justify-end mr-4 mt-4">
           <Button className="w-1/3" onClick={handleBuyNow}>
             구매하기
