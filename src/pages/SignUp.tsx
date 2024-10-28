@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import { Lock, Mail, User } from "lucide-react";
-import { useSignUp } from "@/lib/auth/useSignUp";
+import { useSignUp } from "@/lib/auth/hooks/useSignUp";
 import { authStatusType, Layout } from "@/components/common/components/Layout";
 import { NavigationBar } from "@/components/common/components/NavigationBar";
 

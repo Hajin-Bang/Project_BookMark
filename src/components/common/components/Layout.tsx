@@ -1,5 +1,5 @@
 import { useAuthStore } from "@/store/auth/useAuthStore";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 
 export const authStatusType = {
@@ -21,10 +21,14 @@ export const Layout: React.FC<LayoutProps> = ({
   containerClassName = "",
   authStatus = authStatusType.COMMON,
 }) => {
-  const { isLogin, user, loading } = useAuthStore();
+  const { isLogin, user, loading, checkLoginStatus } = useAuthStore();
+
+  useEffect(() => {
+    checkLoginStatus();
+  }, [checkLoginStatus]);
 
   if (loading) {
-    return <div>로딩 중...</div>; // 로딩 중일 때 화면 표시
+    return <div>로딩 중...</div>;
   }
 
   // 로그인 필요하고 로그인 안 되어 있으면 로그인 페이지로 이동
