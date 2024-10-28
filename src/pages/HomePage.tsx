@@ -20,7 +20,13 @@ const HomePage = () => {
       <NavigationBar />
       <main className="w-full flex flex-col items-center gap-6 mt-12 px-8">
         {categories.map((category) => {
-          return <ProductCategorySection key={category} category={category} />;
+          return (
+            <ProductCategorySection
+              key={category}
+              category={category}
+              className="bg-white"
+            />
+          );
         })}
       </main>
     </Layout>
