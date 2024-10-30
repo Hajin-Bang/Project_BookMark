@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { Skeleton } from "./components/ui/skeleton";
 import ScrollToTop from "./components/common/components/ScrollToTop";
+import DesignTestPage from "./pages/DesignTestPage";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const SignIn = lazy(() => import("./pages/SignIn"));
@@ -30,6 +31,7 @@ const AppRouter = () => {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/category/:category" element={<ProductCategory />} />
           <Route path="/product/:productId" element={<ProductDetail />} />
+          <Route path="/test" element={<DesignTestPage />} />
 
           {/* 구매자 전용 페이지 */}
           <Route path="/checkout" element={<Checkout />} />
