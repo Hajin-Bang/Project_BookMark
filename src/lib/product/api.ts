@@ -12,21 +12,30 @@ import {
   where,
   OrderByDirection,
   serverTimestamp,
-  addDoc,
   doc,
   updateDoc,
+  runTransaction,
+  Transaction,
 } from "firebase/firestore";
 import { Product } from "./types";
 
 export const addProductAPI = async (product: Product): Promise<Product> => {
   const productRef = collection(db, "products");
-  const newDocRef = await addDoc(productRef, {
-    ...product,
-    createdAt: serverTimestamp(),
-    updatedAt: serverTimestamp(),
-  });
 
-  return { ...product, productId: newDocRef.id };
+  return await runTransaction(db, async (transaction: Transaction) => {
+    const newDocRef = doc(productRef);
+
+    const newProductData = {
+      ...product,
+      productId: newDocRef.id,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    };
+
+    transaction.set(newDocRef, newProductData);
+
+    return newProductData;
+  });
 };
 
 export const fetchProducts = async (
