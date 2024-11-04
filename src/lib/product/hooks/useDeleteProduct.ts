@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { doc, deleteDoc } from "firebase/firestore";
 import { db } from "@/firebase";
+import { QUERY_KEYS } from "@/lib/queryKeys";
 
 export const useDeleteProduct = () => {
   const queryClient = useQueryClient();
@@ -11,8 +12,11 @@ export const useDeleteProduct = () => {
       await deleteDoc(productRef);
       return productId;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["products"] });
+    onSuccess: (productId) => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.PRODUCTS] });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.PRODUCT, productId],
+      });
       // toast
     },
     onError: (error) => {

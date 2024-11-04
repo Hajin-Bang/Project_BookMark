@@ -12,13 +12,19 @@ interface ProductCardProps {
     productCategory: string;
   };
   onClick: (productId: string) => void;
+  onMouseEnter?: (productId: string) => void;
 }
 
-export const ProductCard = ({ product, onClick }: ProductCardProps) => {
+export const ProductCard = ({
+  product,
+  onClick,
+  onMouseEnter,
+}: ProductCardProps) => {
   return (
     <Card
       className="w-full flex flex-col p-4 h-fit gap-2 bg-white cursor-pointer flex-grow flex-shrink min-w-[230px]"
       onClick={() => onClick(product.productId)}
+      onMouseEnter={() => onMouseEnter && onMouseEnter(product.productId)}
     >
       <ProductCarousel images={product.productImage} />
       <CardTitle className="pt-2 text-lg line-clamp-1">

@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CreateOrderParams } from "../types";
 import { addOrderAPI } from "../api";
+import { QUERY_KEYS } from "@/lib/queryKeys";
 
 export const useCreateOrder = () => {
   const queryClient = useQueryClient();
@@ -8,8 +9,8 @@ export const useCreateOrder = () => {
   return useMutation<void, Error, CreateOrderParams>({
     mutationFn: addOrderAPI,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["orders"] });
-      queryClient.invalidateQueries({ queryKey: ["products"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.ORDERS] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.PRODUCTS] });
       // toast
     },
     onError: (error) => {
