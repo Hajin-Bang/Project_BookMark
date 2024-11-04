@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { ProductCard } from "./ProductCard";
 import { ChevronRight } from "lucide-react";
 import { useFetchProducts } from "@/lib/product/hooks/useFetchProducts";
+import { useQueryClient } from "@tanstack/react-query";
+import { fetchProductDetailsAPI } from "@/lib/product/api";
 
 interface ProductCategorySectionProps {
   category: string;
@@ -16,6 +18,7 @@ export const ProductCategorySection = ({
   const order = "createdAt/desc";
   const { data, isError } = useFetchProducts({ category, order, limit: 4 });
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const products = useMemo(() => {
     const loadedProducts = data?.pages.flatMap((page) => page.products) || [];
@@ -27,6 +30,15 @@ export const ProductCategorySection = ({
   };
 
   if (isError) return <div>Error loading products</div>;
+
+  const handlePrefetch = (productId: string) => {
+    if (!queryClient.getQueryData(["product", productId])) {
+      queryClient.prefetchQuery({
+        queryKey: ["product", productId],
+        queryFn: () => fetchProductDetailsAPI(productId),
+      });
+    }
+  };
 
   return (
     <section className={`w-full h-fit min-h-[300px] p-5 ${className}`}>
@@ -44,6 +56,7 @@ export const ProductCategorySection = ({
             key={product.productId}
             product={product}
             onClick={handleProductClick}
+            onMouseEnter={() => handlePrefetch(product.productId)}
           />
         ))}
       </div>

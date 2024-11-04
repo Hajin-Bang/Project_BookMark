@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/select";
 import { useNavigate, useParams } from "react-router-dom";
 import { useFetchProducts } from "@/lib/product/hooks/useFetchProducts";
+import { useQueryClient } from "@tanstack/react-query";
+import { fetchProductDetailsAPI } from "@/lib/product/api";
 
 const ProductCategory = () => {
   const { category } = useParams();
@@ -19,6 +21,7 @@ const ProductCategory = () => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useFetchProducts({ category, order });
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const products = useMemo(() => {
     return data?.pages.flatMap((page) => page.products) || [];
@@ -29,6 +32,15 @@ const ProductCategory = () => {
     hasNextPage: hasNextPage || false,
     isFetchingNextPage,
   });
+
+  const handlePrefetch = (productId: string) => {
+    if (!queryClient.getQueryData(["product", productId])) {
+      queryClient.prefetchQuery({
+        queryKey: ["product", productId],
+        queryFn: () => fetchProductDetailsAPI(productId),
+      });
+    }
+  };
 
   return (
     <Layout authStatus={authStatusType.COMMON}>
@@ -57,6 +69,7 @@ const ProductCategory = () => {
               key={product.productId}
               product={product}
               onClick={() => navigate(`/product/${product.productId}`)}
+              onMouseEnter={() => handlePrefetch(product.productId)}
             />
           ))}
         </div>
