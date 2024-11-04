@@ -7,8 +7,12 @@ export const useUpdateProduct = () => {
 
   return useMutation({
     mutationFn: updateProductAPI,
-    onSuccess: () => {
+    onSuccess: (updatedProduct) => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.PRODUCTS] });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.PRODUCT, updatedProduct.productId],
+      });
+
       // toast
     },
     onError: (error) => {

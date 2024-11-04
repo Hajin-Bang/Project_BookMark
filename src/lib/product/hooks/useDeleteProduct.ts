@@ -12,8 +12,11 @@ export const useDeleteProduct = () => {
       await deleteDoc(productRef);
       return productId;
     },
-    onSuccess: () => {
+    onSuccess: (productId) => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.PRODUCTS] });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.PRODUCT, productId],
+      });
       // toast
     },
     onError: (error) => {

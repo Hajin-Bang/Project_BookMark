@@ -133,6 +133,16 @@ export const updateProductAPI = async (product: Partial<Product>) => {
     ...(product.productImage && { productImage: product.productImage }),
     updatedAt: new Date(),
   });
+
+  const updatedDoc = await getDoc(productRef);
+  if (updatedDoc.exists()) {
+    return {
+      ...updatedDoc.data(),
+      productId: updatedDoc.id,
+    } as Product;
+  } else {
+    throw new Error("업데이트된 제품 데이터를 찾을 수 없습니다.");
+  }
 };
 
 export const fetchProductDetailsAPI = async (
