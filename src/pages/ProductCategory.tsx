@@ -14,6 +14,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useFetchProducts } from "@/lib/product/hooks/useFetchProducts";
 import { useQueryClient } from "@tanstack/react-query";
 import { fetchProductDetailsAPI } from "@/lib/product/api";
+import { QUERY_KEYS } from "@/lib/queryKeys";
 
 const ProductCategory = () => {
   const { category } = useParams();
@@ -34,9 +35,9 @@ const ProductCategory = () => {
   });
 
   const handlePrefetch = (productId: string) => {
-    if (!queryClient.getQueryData(["product", productId])) {
+    if (!queryClient.getQueryData([QUERY_KEYS.PRODUCT, productId])) {
       queryClient.prefetchQuery({
-        queryKey: ["product", productId],
+        queryKey: [QUERY_KEYS.PRODUCT, productId],
         queryFn: () => fetchProductDetailsAPI(productId),
       });
     }

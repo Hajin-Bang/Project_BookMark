@@ -5,6 +5,7 @@ import { ChevronRight } from "lucide-react";
 import { useFetchProducts } from "@/lib/product/hooks/useFetchProducts";
 import { useQueryClient } from "@tanstack/react-query";
 import { fetchProductDetailsAPI } from "@/lib/product/api";
+import { QUERY_KEYS } from "@/lib/queryKeys";
 
 interface ProductCategorySectionProps {
   category: string;
@@ -32,9 +33,9 @@ export const ProductCategorySection = ({
   if (isError) return <div>Error loading products</div>;
 
   const handlePrefetch = (productId: string) => {
-    if (!queryClient.getQueryData(["product", productId])) {
+    if (!queryClient.getQueryData([QUERY_KEYS.PRODUCT, productId])) {
       queryClient.prefetchQuery({
-        queryKey: ["product", productId],
+        queryKey: [QUERY_KEYS.PRODUCT, productId],
         queryFn: () => fetchProductDetailsAPI(productId),
       });
     }

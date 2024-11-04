@@ -1,6 +1,7 @@
 import { authStatusType, Layout } from "@/components/common/components/Layout";
 import { NavigationBar } from "@/components/common/components/NavigationBar";
 import { ProductCategorySection } from "@/components/product/ProductCategorySection";
+import { QUERY_KEYS } from "@/lib/queryKeys";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 
@@ -11,7 +12,7 @@ const Home = () => {
 
   useEffect(() => {
     return () => {
-      queryClient.removeQueries({ queryKey: ["products"] });
+      queryClient.removeQueries({ queryKey: [QUERY_KEYS.PRODUCTS] });
     };
   }, [queryClient]);
 

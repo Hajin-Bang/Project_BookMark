@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateProductAPI } from "../api";
+import { QUERY_KEYS } from "@/lib/queryKeys";
 
 export const useUpdateProduct = () => {
   const queryClient = useQueryClient();
@@ -7,7 +8,7 @@ export const useUpdateProduct = () => {
   return useMutation({
     mutationFn: updateProductAPI,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["products"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.PRODUCTS] });
       // toast
     },
     onError: (error) => {

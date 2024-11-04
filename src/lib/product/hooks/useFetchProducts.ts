@@ -1,6 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { DocumentData, QueryDocumentSnapshot } from "firebase/firestore";
 import { fetchProducts } from "../api";
+import { QUERY_KEYS } from "@/lib/queryKeys";
 
 export const useFetchProducts = (options: {
   category?: string;
@@ -10,7 +11,7 @@ export const useFetchProducts = (options: {
   limit?: number;
 }) => {
   return useInfiniteQuery({
-    queryKey: ["products", options],
+    queryKey: [QUERY_KEYS.PRODUCTS, options],
     queryFn: async ({
       pageParam,
     }: {
