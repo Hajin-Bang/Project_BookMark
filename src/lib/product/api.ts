@@ -16,6 +16,7 @@ import {
   updateDoc,
   runTransaction,
   Transaction,
+  getDoc,
 } from "firebase/firestore";
 import { Product } from "./types";
 
@@ -132,4 +133,28 @@ export const updateProductAPI = async (product: Partial<Product>) => {
     ...(product.productImage && { productImage: product.productImage }),
     updatedAt: new Date(),
   });
+};
+
+export const fetchProductDetailsAPI = async (
+  productId: string
+): Promise<Product | null> => {
+  try {
+    const productDocRef = doc(db, "products", productId);
+    const productDoc = await getDoc(productDocRef);
+
+    if (!productDoc.exists()) {
+      console.error("해당 상품이 존재하지 않습니다.");
+      return null;
+    }
+
+    const data = productDoc.data();
+
+    return {
+      ...data,
+      productId: productDoc.id,
+    } as Product;
+  } catch (error) {
+    console.error("상품 조회 중 오류 발생", error);
+    return null;
+  }
 };
