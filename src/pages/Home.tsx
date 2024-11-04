@@ -4,7 +4,7 @@ import { ProductCategorySection } from "@/components/product/ProductCategorySect
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 
-const HomePage = () => {
+const Home = () => {
   const categories = ["시/소설", "에세이/인문", "그림책/일러스트", "사진"];
 
   const queryClient = useQueryClient();
@@ -33,4 +33,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Home;
