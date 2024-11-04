@@ -8,7 +8,7 @@ export const authStatusType = {
   ONLY_SELLER: "ONLY_SELLER",
   ONLY_BUYER: "ONLY_BUYER",
   COMMON: "COMMON",
-};
+} as const;
 
 interface LayoutProps {
   children: ReactNode;
