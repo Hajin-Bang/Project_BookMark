@@ -1,4 +1,4 @@
-import { db } from "@/firebase";
+import { db, storage } from "@/firebase";
 import {
   collection,
   DocumentData,
@@ -17,8 +17,10 @@ import {
   runTransaction,
   Transaction,
   getDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import { Product } from "./types";
+import { deleteObject, ref } from "firebase/storage";
 
 export const addProductAPI = async (product: Product): Promise<Product> => {
   const productRef = collection(db, "products");
@@ -117,6 +119,32 @@ export const fetchProducts = async (
 export const updateProductAPI = async (product: Partial<Product>) => {
   const productRef = doc(db, "products", product.productId!);
 
+  const existingProductSnapshot = await getDoc(productRef);
+  if (!existingProductSnapshot.exists()) {
+    throw new Error("수정할 상품을 찾을 수 없습니다.");
+  }
+
+  const existingProductData = existingProductSnapshot.data();
+  const existingImageUrls: string[] = existingProductData.productImage || [];
+  const newImageUrls: string[] = product.productImage || [];
+
+  // 삭제된 이미지 URL 찾기
+  const imagesToDelete = existingImageUrls.filter(
+    (url) => !newImageUrls.includes(url)
+  );
+
+  // Firebase Storage에서 삭제된 이미지 파일 제거
+  const deleteImagePromises = imagesToDelete.map(async (url) => {
+    const imageRef = ref(storage, url);
+    try {
+      await deleteObject(imageRef);
+    } catch (error) {
+      console.error(`이미지 삭제 실패: ${url}`, error);
+    }
+  });
+
+  await Promise.all(deleteImagePromises);
+
   await updateDoc(productRef, {
     ...(product.productName && { productName: product.productName }),
     ...(product.productAuthor && { productAuthor: product.productAuthor }),
@@ -167,4 +195,31 @@ export const fetchProductDetailsAPI = async (
     console.error("상품 조회 중 오류 발생", error);
     return null;
   }
+};
+
+export const deleteProductAPI = async (productId: string) => {
+  const productRef = doc(db, "products", productId);
+  const productSnapshot = await getDoc(productRef);
+
+  if (!productSnapshot.exists()) {
+    throw new Error("삭제할 상품을 찾을 수 없습니다.");
+  }
+
+  const productData = productSnapshot.data();
+  const imageUrls: string[] = productData.productImage || [];
+
+  const deleteImagePromises = imageUrls.map(async (url) => {
+    const imageRef = ref(storage, url);
+    try {
+      await deleteObject(imageRef);
+    } catch (error) {
+      console.error(`이미지 삭제 실패 ${url}`, error);
+    }
+  });
+
+  await Promise.all(deleteImagePromises);
+
+  await deleteDoc(productRef);
+
+  return productId;
 };
