@@ -1,3 +1,4 @@
+import Badge from "@/design-system/badge/Badge";
 import Button from "@/design-system/button/Button";
 import Input from "@/design-system/input/Input";
 import Textarea from "@/design-system/textarea/Textarea";
@@ -103,6 +104,54 @@ const DesignTestPage = () => {
       {/* Label */}
       <h3>Label</h3>
       <Textarea label="Description" placeholder="Textarea with a label" />
+
+      {/* -----------------Badge Test----------------- */}
+      <h2 className="text-xl font-bold mt-8">Badge Component Test</h2>
+      <h3>Variants</h3>
+      <div className="flex gap-4">
+        <Badge variant="default">default</Badge>
+        <Badge variant="primary">Primary</Badge>
+        <Badge variant="secondary">Secondary</Badge>
+        <Badge variant="accent">accent</Badge>
+      </div>
+
+      <h3>Appearance</h3>
+      <div className="flex gap-4">
+        <Badge variant="primary" appearance="solid">
+          Solid Primary
+        </Badge>
+        <Badge variant="primary" appearance="outline">
+          Outline Primary
+        </Badge>
+        <Badge variant="secondary" appearance="solid">
+          Solid Secondary
+        </Badge>
+        <Badge variant="secondary" appearance="outline">
+          Outline Secondary
+        </Badge>
+        <Badge variant="accent" appearance="solid">
+          Solid Accent
+        </Badge>
+        <Badge variant="accent" appearance="outline">
+          Outline Accent
+        </Badge>
+      </div>
+
+      <h3>Shapes</h3>
+      <div className="flex gap-4">
+        <Badge variant="default" shape="rounded">
+          Rounded Default
+        </Badge>
+        <Badge variant="primary" shape="rounded">
+          Rounded Primary
+        </Badge>
+        <Badge variant="secondary" shape="rounded">
+          Rounded Secondary
+        </Badge>
+        <Badge variant="accent" shape="rounded">
+          Pill Accent
+        </Badge>
+      </div>
     </div>
   );
 };
