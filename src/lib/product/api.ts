@@ -1,4 +1,4 @@
-import { db } from "@/firebase";
+import { db, storage } from "@/firebase";
 import {
   collection,
   DocumentData,
@@ -17,8 +17,10 @@ import {
   runTransaction,
   Transaction,
   getDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import { Product } from "./types";
+import { deleteObject, ref } from "firebase/storage";
 
 export const addProductAPI = async (product: Product): Promise<Product> => {
   const productRef = collection(db, "products");
@@ -167,4 +169,31 @@ export const fetchProductDetailsAPI = async (
     console.error("상품 조회 중 오류 발생", error);
     return null;
   }
+};
+
+export const deleteProductAPI = async (productId: string) => {
+  const productRef = doc(db, "products", productId);
+  const productSnapshot = await getDoc(productRef);
+
+  if (!productSnapshot.exists()) {
+    throw new Error("삭제할 상품을 찾을 수 없습니다.");
+  }
+
+  const productData = productSnapshot.data();
+  const imageUrls: string[] = productData.productImage || [];
+
+  const deleteImagePromises = imageUrls.map(async (url) => {
+    const imageRef = ref(storage, url);
+    try {
+      await deleteObject(imageRef);
+    } catch (error) {
+      console.error(`이미지 삭제 실패 ${url}`, error);
+    }
+  });
+
+  await Promise.all(deleteImagePromises);
+
+  await deleteDoc(productRef);
+
+  return productId;
 };

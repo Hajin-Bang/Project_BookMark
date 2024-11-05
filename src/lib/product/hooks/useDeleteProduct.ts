@@ -1,17 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { doc, deleteDoc } from "firebase/firestore";
-import { db } from "@/firebase";
 import { QUERY_KEYS } from "@/lib/queryKeys";
+import { deleteProductAPI } from "../api";
 
 export const useDeleteProduct = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (productId: string) => {
-      const productRef = doc(db, "products", productId);
-      await deleteDoc(productRef);
-      return productId;
-    },
+    mutationFn: deleteProductAPI,
     onSuccess: (productId) => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.PRODUCTS] });
       queryClient.invalidateQueries({
