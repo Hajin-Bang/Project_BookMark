@@ -1,10 +1,11 @@
 import Button from "@/design-system/button/Button";
 import Input from "@/design-system/input/Input";
+import Textarea from "@/design-system/textarea/Textarea";
 import { Lock, Mail } from "lucide-react";
 
 const DesignTestPage = () => {
   return (
-    // Button test
+    // -----------------Button test-----------------
     <div className="flex flex-col gap-5 items-start">
       <h1 className="text-xl font-bold">Button Component Test</h1>
       <h2>Variants</h2>
@@ -26,7 +27,7 @@ const DesignTestPage = () => {
         Disabled Button
       </Button>
 
-      {/* Input test */}
+      {/* -----------------Input test----------------- */}
       <h2 className="text-xl font-bold mt-8">Input Component Test</h2>
       {/* Size Variants */}
       <h3>Sizes</h3>
@@ -69,6 +70,39 @@ const DesignTestPage = () => {
         multiple
         placeholder="Select files"
       />
+
+      {/* -----------------Textarea Test----------------- */}
+      <h2 className="text-xl font-bold mt-8">Textarea Component Test</h2>
+      {/* Resize */}
+      <h3>Resize</h3>
+      <div className="flex flex-col gap-4">
+        <Textarea placeholder="No Resize" resize="none" />
+        <Textarea placeholder="Vertical Resize" resize="vertical" />
+        <Textarea placeholder="Horizontal Resize" resize="horizontal" />
+        <Textarea placeholder="Both Resize" resize="both" />
+      </div>
+
+      {/* Appearance */}
+      <h3>Appearance Options</h3>
+      <div className="flex flex-col gap-4">
+        <Textarea placeholder="Standard Appearance" appearance="standard" />
+        <Textarea placeholder="No Border Appearance" appearance="none" />
+      </div>
+
+      {/* Disabled */}
+      <h3>Disabled</h3>
+      <Textarea placeholder="Disabled Textarea" disabled />
+
+      {/* Error */}
+      <h3>Error</h3>
+      <Textarea
+        placeholder="Error Textarea"
+        error="This is an error message for the textarea"
+      />
+
+      {/* Label */}
+      <h3>Label</h3>
+      <Textarea label="Description" placeholder="Textarea with a label" />
     </div>
   );
 };
