@@ -119,6 +119,32 @@ export const fetchProducts = async (
 export const updateProductAPI = async (product: Partial<Product>) => {
   const productRef = doc(db, "products", product.productId!);
 
+  const existingProductSnapshot = await getDoc(productRef);
+  if (!existingProductSnapshot.exists()) {
+    throw new Error("수정할 상품을 찾을 수 없습니다.");
+  }
+
+  const existingProductData = existingProductSnapshot.data();
+  const existingImageUrls: string[] = existingProductData.productImage || [];
+  const newImageUrls: string[] = product.productImage || [];
+
+  // 삭제된 이미지 URL 찾기
+  const imagesToDelete = existingImageUrls.filter(
+    (url) => !newImageUrls.includes(url)
+  );
+
+  // Firebase Storage에서 삭제된 이미지 파일 제거
+  const deleteImagePromises = imagesToDelete.map(async (url) => {
+    const imageRef = ref(storage, url);
+    try {
+      await deleteObject(imageRef);
+    } catch (error) {
+      console.error(`이미지 삭제 실패: ${url}`, error);
+    }
+  });
+
+  await Promise.all(deleteImagePromises);
+
   await updateDoc(productRef, {
     ...(product.productName && { productName: product.productName }),
     ...(product.productAuthor && { productAuthor: product.productAuthor }),
