@@ -4,7 +4,7 @@ import { Skeleton } from "./components/ui/skeleton";
 import ScrollToTop from "./components/common/components/ScrollToTop";
 import DesignTestPage from "./pages/DesignTestPage";
 
-const HomePage = lazy(() => import("./pages/HomePage"));
+const Home = lazy(() => import("./pages/Home"));
 const SignIn = lazy(() => import("./pages/SignIn"));
 const SignUp = lazy(() => import("./pages/SignUp"));
 const Checkout = lazy(() => import("./pages/Checkout"));
@@ -14,7 +14,7 @@ const ProductAdd = lazy(() => import("./pages/ProductAdd"));
 const ProductUpdateDelete = lazy(() => import("./pages/ProductUpdateDelete"));
 const ProductCategory = lazy(() => import("./pages/ProductCategory"));
 const ProductDetail = lazy(() => import("./pages/ProductDetail"));
-const ManagementPage = lazy(() => import("./pages/ManagementPage"));
+const Management = lazy(() => import("./pages/Management"));
 const OrderHistory = lazy(() => import("./pages/OrderHistory"));
 const OrderDetail = lazy(() => import("./pages/OrderDetail"));
 const SellerHistory = lazy(() => import("./pages/SellerHistory"));
@@ -26,7 +26,7 @@ const AppRouter = () => {
       <Suspense fallback={<Skeleton className="w-24 h-8" />}>
         <Routes>
           {/* 누구나 접근 가능한 공용 페이지 */}
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<Home />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/category/:category" element={<ProductCategory />} />
@@ -46,7 +46,7 @@ const AppRouter = () => {
             path="/manage/edit/:productId"
             element={<ProductUpdateDelete />}
           />
-          <Route path="/manage/options" element={<ManagementPage />} />
+          <Route path="/manage/options" element={<Management />} />
           <Route path="/manage/orders" element={<SellerHistory />} />
         </Routes>
       </Suspense>
