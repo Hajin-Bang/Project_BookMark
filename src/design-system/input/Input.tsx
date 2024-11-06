@@ -4,10 +4,10 @@ import {
   IconWrapper,
   InputContainer,
   InputWrapper,
-  Label,
   StyledInput,
 } from "./styles";
 import { InputProps } from "./types";
+import Label from "../label/Label";
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (

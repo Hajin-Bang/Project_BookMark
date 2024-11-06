@@ -7,13 +7,6 @@ export const StyledTextareaContainer = styled.div`
   width: 100%;
 `;
 
-export const Label = styled.label`
-  font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 2px;
-  color: #333;
-`;
-
 const resizeStyles = (resize: TextareaResize = "both") => {
   switch (resize) {
     case "vertical":

@@ -7,13 +7,6 @@ export const InputContainer = styled.div<{ full: boolean }>`
   width: ${({ full }) => (full ? "100%" : "auto")};
 `;
 
-export const Label = styled.label`
-  font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 2px;
-  color: #333;
-`;
-
 export const InputWrapper = styled.div<{ full: boolean }>`
   position: relative;
   display: flex;

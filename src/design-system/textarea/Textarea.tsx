@@ -1,6 +1,7 @@
 import React from "react";
 import { TextareaProps } from "./types";
-import { Label, StyledTextarea, StyledTextareaContainer } from "./styles";
+import { StyledTextarea, StyledTextareaContainer } from "./styles";
+import Label from "../label/Label";
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   (
