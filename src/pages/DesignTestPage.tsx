@@ -159,9 +159,9 @@ const DesignTestPage = () => {
       <Select className="w-[300px]">
         <Select.Trigger placeholder="카테고리 선택" />
         <Select.Content>
-          <Select.Option value="최신순">최신순</Select.Option>
-          <Select.Option value="높은 가격순">높은 가격순</Select.Option>
-          <Select.Option value="낮은 가격순">낮은 가격순</Select.Option>
+          <Select.Option value="A">최신순</Select.Option>
+          <Select.Option value="B">높은 가격순</Select.Option>
+          <Select.Option value="C">낮은 가격순</Select.Option>
         </Select.Content>
       </Select>
     </div>

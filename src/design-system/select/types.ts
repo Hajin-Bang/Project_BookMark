@@ -1,8 +1,8 @@
 export interface SelectContextType {
   isOpen?: boolean;
-  selectedValue?: string | null;
+  selectedValue?: { value: string; label: string } | null;
   toggleOpen?: () => void;
-  selectOption?: (value: string) => void;
+  selectOption?: (value: string, label: string) => void;
   value?: string | null;
   onValueChange?: (value: string) => void;
 }

@@ -15,20 +15,26 @@ export const SelectProvider: React.FC<
   SelectContextType & { children: React.ReactNode }
 > = ({ children, value: controlledValue, onValueChange }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState<string | null>(null);
+  const [selectedValue, setSelectedValue] = useState<{
+    value: string;
+    label: string;
+  } | null>(null);
 
   const isControlled = controlledValue !== undefined;
 
   useEffect(() => {
     if (isControlled) {
-      setSelectedValue(controlledValue);
+      setSelectedValue({
+        value: controlledValue || "",
+        label: selectedValue?.label || "",
+      });
     }
   }, [controlledValue]);
 
   const toggleOpen = () => setIsOpen((prev) => !prev);
-  const selectOption = (value: string) => {
+  const selectOption = (value: string, label: string) => {
     if (onValueChange) onValueChange(value);
-    setSelectedValue(value);
+    setSelectedValue({ value, label });
     setIsOpen(false);
   };
 

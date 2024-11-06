@@ -11,7 +11,7 @@ export const SelectTrigger: React.FC<SelectTriggerProps> = ({
   const { toggleOpen, selectedValue } = useSelectContext();
   return (
     <StyledTrigger onClick={toggleOpen} className={className}>
-      {selectedValue || placeholder}
+      {selectedValue?.label || placeholder}
       <ChevronDown />
     </StyledTrigger>
   );
