@@ -1,6 +1,11 @@
 import styled from "styled-components";
 import Button from "../button/Button";
 
+export const StyledSelectWrapper = styled.div`
+  position: relative;
+  width: 100%; /* Select 컴포넌트의 기본 너비 설정 */
+`;
+
 export const StyledTrigger = styled(Button)`
   width: 100%;
   display: flex;

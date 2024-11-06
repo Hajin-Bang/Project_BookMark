@@ -9,6 +9,7 @@ import {
 import { SelectTrigger } from "./SelectTrigger";
 import { SelectContent } from "./SelectContent";
 import { SelectOption } from "./SelectOption";
+import { StyledSelectWrapper } from "../styles";
 
 const Select: React.FC<SelectProps> & {
   Trigger: React.FC<SelectTriggerProps>;
@@ -17,7 +18,9 @@ const Select: React.FC<SelectProps> & {
 } = ({ children, className, value, onValueChange }) => {
   return (
     <SelectProvider value={value} onValueChange={onValueChange}>
-      <div className={className}>{children}</div>
+      <StyledSelectWrapper className={className}>
+        {children}
+      </StyledSelectWrapper>
     </SelectProvider>
   );
 };
