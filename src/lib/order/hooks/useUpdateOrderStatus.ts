@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { updateOrderStatusAPI } from "../api";
 import { useQueryClient } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/lib/queryKeys";
 
 export const useUpdateOrderStatus = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -12,8 +13,8 @@ export const useUpdateOrderStatus = () => {
     setError(null);
     try {
       await updateOrderStatusAPI(orderId, newStatus);
-      queryClient.invalidateQueries({ queryKey: ["sellerOrders"] });
-      queryClient.invalidateQueries({ queryKey: ["orders"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.SELLER_ORDERS] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.ORDERS] });
       // toast
     } catch (err) {
       console.error("주문 상태 업데이트 오류:", err);

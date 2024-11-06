@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
-import {
-  deleteObject,
-  getDownloadURL,
-  ref,
-  uploadBytes,
-} from "firebase/storage";
 import { Input } from "../ui/input";
-import { storage } from "@/firebase";
+import {
+  compressAndConvertImage,
+  deleteImageFormFirebaes,
+  uploadImageToFirebase,
+} from "@/lib/product/utils";
 
 type ImageUploaderProps = {
   onImageChange: (urls: string[]) => void;
@@ -31,12 +29,6 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
     onImageChange(firebaseImageURLs);
   }, [firebaseImageURLs, onImageChange]);
 
-  const uploadImageToFirebase = async (file: File): Promise<string> => {
-    const storageRef = ref(storage, `images/${file.name}`);
-    await uploadBytes(storageRef, file);
-    return await getDownloadURL(storageRef);
-  };
-
   const handleImageUpload = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -48,11 +40,17 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      const blobUrl = URL.createObjectURL(file); // 미리보기용 blob URL 생성
-      newImageUrls.push(blobUrl);
 
       try {
-        const firebaseUrl = await uploadImageToFirebase(file);
+        const compressedImage = await compressAndConvertImage(file);
+
+        const blobUrl = URL.createObjectURL(compressedImage);
+        newImageUrls.push(blobUrl);
+
+        const firebaseUrl = await uploadImageToFirebase(
+          compressedImage,
+          file.name.split(".")[0]
+        );
         firebaseUrls.push(firebaseUrl);
       } catch (error) {
         console.error("이미지 업로드 중 에러:", error);
@@ -77,11 +75,9 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 
     // Firebase에서 이미지 삭제 처리
     try {
-      const imageRef = ref(storage, imageUrlToDelete);
-      await deleteObject(imageRef);
+      await deleteImageFormFirebaes(imageUrlToDelete);
     } catch (error) {
       console.error("이미지 삭제 중 에러 발생:", error);
-      return;
     }
   };
 

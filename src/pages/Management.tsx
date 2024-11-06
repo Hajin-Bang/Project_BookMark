@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useNavigate } from "react-router-dom";
 
-const ManagementPage = () => {
+const Management = () => {
   const { logout } = useAuthStore();
   const navigate = useNavigate();
 
@@ -60,4 +60,4 @@ const ManagementPage = () => {
   );
 };
 
-export default ManagementPage;
+export default Management;

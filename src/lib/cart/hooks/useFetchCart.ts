@@ -2,6 +2,7 @@ import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCartItems } from "../api";
 import { CartItem } from "../types";
+import { QUERY_KEYS } from "@/lib/queryKeys";
 
 export const useFetchCart = () => {
   const { user } = useAuthStore();
@@ -11,7 +12,7 @@ export const useFetchCart = () => {
     isLoading,
     error,
   } = useQuery<CartItem[]>({
-    queryKey: ["cartItems", user?.uid],
+    queryKey: [QUERY_KEYS.CART_ITEMS, user?.uid],
     queryFn: () => fetchCartItems(user!),
     enabled: !!user,
   });

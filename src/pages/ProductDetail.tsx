@@ -5,19 +5,16 @@ import ProductCarousel from "@/components/product/ProductCarousel";
 import { ProductCategorySection } from "@/components/product/ProductCategorySection";
 import { Button } from "@/components/ui/button";
 import { useAddCart } from "@/lib/cart/hooks/useAddCart";
-import { useFetchProducts } from "@/lib/product/hooks/useFetchProducts";
+import { useFetchProductDetails } from "@/lib/product/hooks/useFetchProductDetails";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const ProductDetail = () => {
   const { productId } = useParams<{ productId: string }>();
-  const { data } = useFetchProducts({ productId });
+  const { data: product } = useFetchProductDetails(productId!);
   const { isLogin } = useAuthStore();
   const navigate = useNavigate();
-  const product = data?.pages
-    ?.flatMap((page) => page.products)
-    ?.find((product) => product.productId === productId);
 
   const { mutate: addCart } = useAddCart();
   const [cartOpen, setCartOpen] = useState(false);
