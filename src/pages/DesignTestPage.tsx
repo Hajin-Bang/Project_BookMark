@@ -1,6 +1,7 @@
 import Badge from "@/design-system/badge/Badge";
 import Button from "@/design-system/button/Button";
 import Input from "@/design-system/input/Input";
+import Select from "@/design-system/select/components/Select";
 import Textarea from "@/design-system/textarea/Textarea";
 import { Lock, Mail } from "lucide-react";
 
@@ -152,6 +153,17 @@ const DesignTestPage = () => {
           Pill Accent
         </Badge>
       </div>
+
+      {/* -----------------Select Test----------------- */}
+      <h2 className="text-xl font-bold mt-8">Textarea Component Test</h2>
+      <Select className="w-[300px]">
+        <Select.Trigger placeholder="카테고리 선택" />
+        <Select.Content>
+          <Select.Option value="최신순">최신순</Select.Option>
+          <Select.Option value="높은 가격순">높은 가격순</Select.Option>
+          <Select.Option value="낮은 가격순">낮은 가격순</Select.Option>
+        </Select.Content>
+      </Select>
     </div>
   );
 };
