@@ -1,5 +1,8 @@
 import Badge from "@/design-system/badge/Badge";
 import Button from "@/design-system/button/Button";
+import { Card } from "@/design-system/card/components/Card";
+import { CardContent } from "@/design-system/card/components/CardContent";
+import { CardTitle } from "@/design-system/card/components/CardTitle";
 import Input from "@/design-system/input/Input";
 import Select from "@/design-system/select/components/Select";
 import Textarea from "@/design-system/textarea/Textarea";
@@ -193,6 +196,16 @@ const DesignTestPage = () => {
           정보 토스트 열기
         </Button>
       </div>
+
+      {/* -----------------Card Test----------------- */}
+      <h2 className="text-xl font-bold mt-8">Card Component Test</h2>
+      <Card className="hover:scale-105 w-1/3 flex-col p-4 cursor-pointer min-w-[230px]">
+        <CardTitle>Product Name</CardTitle>
+        <CardContent>
+          <p className="mb-3">This is some content</p>
+          <Button onClick={() => showToast("토스트", "success")}>버튼</Button>
+        </CardContent>
+      </Card>
     </div>
   );
 };
