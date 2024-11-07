@@ -3,9 +3,24 @@ import Button from "@/design-system/button/Button";
 import Input from "@/design-system/input/Input";
 import Select from "@/design-system/select/components/Select";
 import Textarea from "@/design-system/textarea/Textarea";
+import { useToast } from "@/design-system/toast/ToastContext";
 import { Lock, Mail } from "lucide-react";
 
 const DesignTestPage = () => {
+  const { addToast } = useToast();
+
+  const showToast = (
+    title: string,
+    variant: "success" | "error" | "info",
+    duration = 3000
+  ) => {
+    addToast({
+      title,
+      variant,
+      duration,
+    });
+  };
+
   return (
     // -----------------Button test-----------------
     <div className="flex flex-col gap-5 items-start">
@@ -155,7 +170,7 @@ const DesignTestPage = () => {
       </div>
 
       {/* -----------------Select Test----------------- */}
-      <h2 className="text-xl font-bold mt-8">Textarea Component Test</h2>
+      <h2 className="text-xl font-bold mt-8">Select Component Test</h2>
       <Select className="w-[300px]">
         <Select.Trigger placeholder="카테고리 선택" />
         <Select.Content>
@@ -164,6 +179,20 @@ const DesignTestPage = () => {
           <Select.Option value="C">낮은 가격순</Select.Option>
         </Select.Content>
       </Select>
+
+      {/* -----------------Toast Test----------------- */}
+      <h2 className="text-xl font-bold mt-8">Toast Component Test</h2>
+      <div className="flex gap-4">
+        <Button onClick={() => showToast("성공 메세지", "success")}>
+          성공 토스트 열기
+        </Button>
+        <Button onClick={() => showToast("에러 메세지", "error")}>
+          에러 토스트 열기
+        </Button>
+        <Button onClick={() => showToast("정보 메세지", "info")}>
+          정보 토스트 열기
+        </Button>
+      </div>
     </div>
   );
 };
