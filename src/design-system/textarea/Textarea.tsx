@@ -1,10 +1,6 @@
 import React from "react";
 import { TextareaProps } from "./types";
-import {
-  ErrorMessage,
-  StyledTextarea,
-  StyledTextareaContainer,
-} from "./styles";
+import { StyledTextarea, StyledTextareaContainer } from "./styles";
 import Label from "../label/Label";
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
@@ -32,7 +28,6 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           hasError={!!error}
           {...rest}
         />
-        {error && <ErrorMessage>{error}</ErrorMessage>}
       </StyledTextareaContainer>
     );
   }

@@ -1,5 +1,3 @@
-import { ButtonPriority } from "../button/types";
-
 export interface ModalContextType {
   isOpen: boolean;
   openModal: () => void;
@@ -33,12 +31,11 @@ export interface ModalDescriptionProps {
 export interface ModalCancelProps {
   children?: React.ReactNode;
   className?: string;
-  priority?: ButtonPriority;
 }
 
 export interface ModalActionProps {
   children: React.ReactNode;
   onClick: () => void;
   className?: string;
-  priority?: ButtonPriority;
+  color?: string;
 }

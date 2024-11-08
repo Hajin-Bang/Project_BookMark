@@ -1,30 +1,28 @@
 import styled, { css } from "styled-components";
 import { BadgeAppearance, BadgeProps, BadgeShape, BadgeVariant } from "./types";
-import { typography } from "../tokens/typography";
-import { palette } from "../tokens/palette";
 
 const variantStyles = (variant: BadgeVariant = "default") => {
   switch (variant) {
     case "primary":
       return css`
-        background-color: ${palette.blue[600]};
-        color: ${palette.white};
+        background-color: #1055ff;
+        color: #ffffff;
       `;
     case "secondary":
       return css`
-        background-color: ${palette.gray[100]};
-        color: ${palette.gray[500]};
+        background-color: #f1f3f5;
+        color: #6b7280;
       `;
 
     case "accent":
       return css`
-        background-color: ${palette.red[400]};
-        color: ${palette.white};
+        background-color: #ef4444;
+        color: #ffffff;
       `;
     default: // default
       return css`
-        background-color: ${palette.blue[100]};
-        color: ${palette.gray[500]};
+        background-color: #dde6ff;
+        color: #6b7280;
       `;
   }
 };
@@ -32,7 +30,7 @@ const variantStyles = (variant: BadgeVariant = "default") => {
 const appearanceStyles = (appearance: BadgeAppearance = "solid") => {
   if (appearance === "outline") {
     return css`
-      background-color: ${palette.transparent};
+      background-color: transparent;
       border: 1px solid currentColor;
     `;
   }
@@ -56,7 +54,7 @@ export const StyledBadge = styled.span<BadgeProps>`
   line-height: 1;
   white-space: nowrap;
   font-weight: 600;
-  font-size: ${typography.fontSizeXS};
+  font-size: 10px;
   border-radius: 8px;
   padding: 4px 8px;
 

@@ -1,7 +1,5 @@
 import styled, { css, keyframes } from "styled-components";
 import { ToastVariant } from "./types";
-import { typography } from "../tokens/typography";
-import { palette } from "../tokens/palette";
 
 const floatUp = keyframes`
   from {
@@ -27,18 +25,18 @@ const variantStyles = (variant: ToastVariant) => {
   switch (variant) {
     case "info":
       return css`
-        background-color: ${palette.blue[400]};
-        color: ${palette.white};
+        background-color: #2196f3;
+        color: white;
       `;
     case "success":
       return css`
-        background-color: ${palette.green[500]};
-        color: ${palette.white};
+        background-color: #4caf50;
+        color: white;
       `;
     case "error":
       return css`
-        background-color: ${palette.red[400]};
-        color: ${palette.white};
+        background-color: #f44336;
+        color: white;
       `;
   }
 };
@@ -59,6 +57,7 @@ export const StyledIcon = styled.div<{ variant: ToastVariant }>`
   align-items: center;
   justify-content: center;
   margin-right: 12px;
+  font-size: 1.5em;
   ${({ variant }) => variantStyles(variant)};
   border-radius: 50%;
   width: 24px;
@@ -72,6 +71,6 @@ export const StyledToast = styled.div<{ variant: ToastVariant }>`
   display: flex;
   align-items: center;
   max-width: 320px;
-  font-size: ${typography.fontSizeMD};
+  font-size: 14px;
   animation: ${floatUp} 0.5s ease-out, ${fadeOut} 1s ease-in 3s forwards;
 `;

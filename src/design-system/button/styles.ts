@@ -1,13 +1,11 @@
 import styled, { css } from "styled-components";
-import { ButtonPriority, ButtonSize, ButtonVariant } from "./types";
-import { typography } from "../tokens/typography";
-import { palette } from "../tokens/palette";
+import { ButtonSize, ButtonVariant } from "./types";
 
 export interface StyledButtonProps {
   size: ButtonSize;
   variant: ButtonVariant;
-  priority?: ButtonPriority;
   disabled: boolean;
+  color?: string;
   full?: boolean;
 }
 
@@ -17,25 +15,25 @@ const sizeStyles = (size: ButtonSize) => {
     case "sm":
       return css`
         height: 36px;
-        font-size: ${typography.fontSizeSM};
+        font-size: 12px;
         padding: 0 12px;
       `;
     case "lg":
       return css`
         height: 48px;
-        font-size: ${typography.fontSizeLG};
+        font-size: 16px;
         padding: 0 20px;
       `;
     case "xl":
       return css`
         height: 56px;
-        font-size: ${typography.fontSizeXL};
+        font-size: 18px;
         padding: 0 24px;
       `;
     default: // md
       return css`
         height: 40px;
-        font-size: ${typography.fontSizeMD};
+        font-size: 14px;
         padding: 0 16px;
       `;
   }
@@ -44,26 +42,16 @@ const sizeStyles = (size: ButtonSize) => {
 /* Variant */
 const variantStyles = (
   variant: ButtonVariant,
-  priority: ButtonPriority = "default",
+  color: string = "#000000",
   disabled: boolean
 ) => {
-  if (priority === "custom") {
-    return css``;
-  }
-
-  const baseColor = disabled
-    ? palette.gray[400]
-    : priority === "important"
-    ? palette.red[300]
-    : priority === "dark"
-    ? palette.black
-    : palette.blue[400];
+  const baseColor = disabled ? "#B0B0B0" : color;
   switch (variant) {
     case "outline":
       return css`
         border: 1px solid ${baseColor};
         color: ${baseColor};
-        background-color: ${palette.transparent};
+        background-color: transparent;
         &:hover {
           background-color: ${baseColor}10;
         }
@@ -71,7 +59,7 @@ const variantStyles = (
     case "ghost":
       return css`
         color: ${baseColor};
-        background-color: ${palette.transparent};
+        background-color: transparent;
         &:hover {
           background-color: ${baseColor}10;
         }
@@ -79,13 +67,13 @@ const variantStyles = (
     case "link":
       return css`
         color: ${baseColor};
-        background-color: ${palette.transparent};
+        background-color: transparent;
         text-decoration: underline;
       `;
     default: // solid
       return css`
         background-color: ${baseColor};
-        color: ${palette.white};
+        color: white;
         &:hover {
           background-color: ${baseColor}cc;
         }
@@ -111,8 +99,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
   width: ${({ full }) => (full ? "100%" : "auto")};
 
   ${({ size }) => sizeStyles(size)}
-  ${({ variant, priority, disabled }) =>
-    variantStyles(variant, priority, disabled)}
+  ${({ variant, color, disabled }) => variantStyles(variant, color, disabled)}
 `;
 
 export const IconWrapper = styled.span`

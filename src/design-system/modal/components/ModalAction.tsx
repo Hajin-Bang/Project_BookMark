@@ -6,10 +6,10 @@ export const ModalAction: React.FC<ModalActionProps> = ({
   children,
   onClick,
   className,
-  priority = "default",
+  color,
 }) => {
   return (
-    <Button onClick={onClick} className={className} priority={priority}>
+    <Button onClick={onClick} className={className} color={color}>
       {children}
     </Button>
   );
