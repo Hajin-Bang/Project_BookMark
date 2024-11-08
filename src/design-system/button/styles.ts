@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 import { ButtonPriority, ButtonSize, ButtonVariant } from "./types";
 import { typography } from "../tokens/typography";
+import { palette } from "../tokens/palette";
 
 export interface StyledButtonProps {
   size: ButtonSize;
@@ -47,22 +48,22 @@ const variantStyles = (
   disabled: boolean
 ) => {
   if (priority === "custom") {
-    return css``; // custom일 경우 스타일 없음
+    return css``;
   }
 
   const baseColor = disabled
-    ? "#B0B0B0"
+    ? palette.gray[400]
     : priority === "important"
-    ? "#ee8484"
+    ? palette.red[300]
     : priority === "dark"
-    ? "#000000"
-    : "#598fe8";
+    ? palette.black
+    : palette.blue[400];
   switch (variant) {
     case "outline":
       return css`
         border: 1px solid ${baseColor};
         color: ${baseColor};
-        background-color: transparent;
+        background-color: ${palette.transparent};
         &:hover {
           background-color: ${baseColor}10;
         }
@@ -70,7 +71,7 @@ const variantStyles = (
     case "ghost":
       return css`
         color: ${baseColor};
-        background-color: transparent;
+        background-color: ${palette.transparent};
         &:hover {
           background-color: ${baseColor}10;
         }
@@ -78,13 +79,13 @@ const variantStyles = (
     case "link":
       return css`
         color: ${baseColor};
-        background-color: transparent;
+        background-color: ${palette.transparent};
         text-decoration: underline;
       `;
     default: // solid
       return css`
         background-color: ${baseColor};
-        color: white;
+        color: ${palette.white};
         &:hover {
           background-color: ${baseColor}cc;
         }

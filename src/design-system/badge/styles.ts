@@ -1,29 +1,30 @@
 import styled, { css } from "styled-components";
 import { BadgeAppearance, BadgeProps, BadgeShape, BadgeVariant } from "./types";
 import { typography } from "../tokens/typography";
+import { palette } from "../tokens/palette";
 
 const variantStyles = (variant: BadgeVariant = "default") => {
   switch (variant) {
     case "primary":
       return css`
-        background-color: #1055ff;
-        color: #ffffff;
+        background-color: ${palette.blue[600]};
+        color: ${palette.white};
       `;
     case "secondary":
       return css`
-        background-color: #f1f3f5;
-        color: #6b7280;
+        background-color: ${palette.gray[100]};
+        color: ${palette.gray[500]};
       `;
 
     case "accent":
       return css`
-        background-color: #ef4444;
-        color: #ffffff;
+        background-color: ${palette.red[400]};
+        color: ${palette.white};
       `;
     default: // default
       return css`
-        background-color: #dde6ff;
-        color: #6b7280;
+        background-color: ${palette.blue[100]};
+        color: ${palette.gray[500]};
       `;
   }
 };
@@ -31,7 +32,7 @@ const variantStyles = (variant: BadgeVariant = "default") => {
 const appearanceStyles = (appearance: BadgeAppearance = "solid") => {
   if (appearance === "outline") {
     return css`
-      background-color: transparent;
+      background-color: ${palette.transparent};
       border: 1px solid currentColor;
     `;
   }

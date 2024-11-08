@@ -1,6 +1,7 @@
 import styled, { css, keyframes } from "styled-components";
 import { ToastVariant } from "./types";
 import { typography } from "../tokens/typography";
+import { palette } from "../tokens/palette";
 
 const floatUp = keyframes`
   from {
@@ -26,18 +27,18 @@ const variantStyles = (variant: ToastVariant) => {
   switch (variant) {
     case "info":
       return css`
-        background-color: #2196f3;
-        color: white;
+        background-color: ${palette.blue[400]};
+        color: ${palette.white};
       `;
     case "success":
       return css`
-        background-color: #4caf50;
-        color: white;
+        background-color: ${palette.green[500]};
+        color: ${palette.white};
       `;
     case "error":
       return css`
-        background-color: #f44336;
-        color: white;
+        background-color: ${palette.red[400]};
+        color: ${palette.white};
       `;
   }
 };

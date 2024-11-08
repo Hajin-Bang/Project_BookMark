@@ -38,6 +38,27 @@ const DesignTestPage = () => {
         <Button variant="ghost">Ghost Button</Button>
         <Button variant="link">Link Button</Button>
       </div>
+
+      <h2>Priorities</h2>
+      <div className="flex gap-3">
+        <Button variant="solid" priority="default">
+          Default Priority
+        </Button>
+        <Button variant="solid" priority="important">
+          Important Priority
+        </Button>
+        <Button variant="solid" priority="dark">
+          Dark Priority
+        </Button>
+        <Button
+          variant="solid"
+          priority="custom"
+          className="bg-purple-500 text-white"
+        >
+          Custom Priority
+        </Button>
+      </div>
+
       <h2>Sizes</h2>
       <div className="flex gap-3">
         <Button size="sm">Small Button</Button>
