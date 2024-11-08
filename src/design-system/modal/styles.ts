@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { typography } from "../tokens/typography";
 
 export const StyledModalOverlay = styled.div`
   position: fixed;
@@ -24,11 +25,11 @@ export const StyledModalContent = styled.div`
 `;
 
 export const StyledModalTitle = styled.p`
-  font-size: 1.1rem;
+  font-size: ${typography.fontSizeXL};
   font-weight: bold;
 `;
 
 export const StyledModalDescription = styled.p`
-  font-size: 0.9rem;
+  font-size: ${typography.fontSizeMD};
   color: #666;
 `;

@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { BadgeAppearance, BadgeProps, BadgeShape, BadgeVariant } from "./types";
+import { typography } from "../tokens/typography";
 
 const variantStyles = (variant: BadgeVariant = "default") => {
   switch (variant) {
@@ -54,10 +55,9 @@ export const StyledBadge = styled.span<BadgeProps>`
   line-height: 1;
   white-space: nowrap;
   font-weight: 600;
-  font-size: 10px;
+  font-size: ${typography.fontSizeXS};
   border-radius: 8px;
   padding: 4px 8px;
-
   ${({ variant }) => variantStyles(variant)}
   ${({ appearance }) => appearanceStyles(appearance)}
   ${({ shape }) => shapeStyles(shape)}

@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { InputSize } from "./types";
+import { typography } from "../tokens/typography";
 
 export const InputContainer = styled.div<{ full: boolean }>`
   display: flex;
@@ -27,23 +28,23 @@ const sizeStyles = (size: InputSize) => {
     case "sm":
       return {
         padding: "6px 6px 6px 36px",
-        fontSize: "13px",
+        fontSize: typography.fontSizeSM,
       };
     case "lg":
       return {
         padding: "12px 12px 12px 36px",
-        fontSize: "14px",
+        fontSize: typography.fontSizeLG,
       };
     case "xl":
       return {
         padding: "12px 12px 12px 36px",
-        fontSize: "16px",
+        fontSize: typography.fontSizeXL,
       };
     default:
       // "md"
       return {
         padding: "8px 12px 8px 36px",
-        fontSize: "14px",
+        fontSize: typography.fontSizeMD,
       };
   }
 };
@@ -66,7 +67,6 @@ export const StyledInput = styled.input.withConfig({
   border-radius: 5px;
   background-color: transparent;
   outline: none;
-
   ${({ disabled }) =>
     disabled &&
     css`
@@ -77,6 +77,6 @@ export const StyledInput = styled.input.withConfig({
 
 export const ErrorMessage = styled.p`
   color: red;
-  font-size: 13px;
+  font-size: ${typography.fontSizeSM};
   margin-top: 2px;
 `;
