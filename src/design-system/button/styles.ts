@@ -1,12 +1,12 @@
 import styled, { css } from "styled-components";
-import { ButtonSize, ButtonVariant } from "./types";
+import { ButtonPriority, ButtonSize, ButtonVariant } from "./types";
 import { typography } from "../tokens/typography";
 
 export interface StyledButtonProps {
   size: ButtonSize;
   variant: ButtonVariant;
+  priority?: ButtonPriority;
   disabled: boolean;
-  color?: string;
   full?: boolean;
 }
 
@@ -43,10 +43,20 @@ const sizeStyles = (size: ButtonSize) => {
 /* Variant */
 const variantStyles = (
   variant: ButtonVariant,
-  color: string = "#000000",
+  priority: ButtonPriority = "default",
   disabled: boolean
 ) => {
-  const baseColor = disabled ? "#B0B0B0" : color;
+  if (priority === "custom") {
+    return css``; // custom일 경우 스타일 없음
+  }
+
+  const baseColor = disabled
+    ? "#B0B0B0"
+    : priority === "important"
+    ? "#ee8484"
+    : priority === "dark"
+    ? "#000000"
+    : "#598fe8";
   switch (variant) {
     case "outline":
       return css`
@@ -100,7 +110,8 @@ export const StyledButton = styled.button<StyledButtonProps>`
   width: ${({ full }) => (full ? "100%" : "auto")};
 
   ${({ size }) => sizeStyles(size)}
-  ${({ variant, color, disabled }) => variantStyles(variant, color, disabled)}
+  ${({ variant, priority, disabled }) =>
+    variantStyles(variant, priority, disabled)}
 `;
 
 export const IconWrapper = styled.span`
