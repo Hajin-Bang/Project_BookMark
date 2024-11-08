@@ -5,6 +5,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import "./index.css";
 import App from "./App";
 import { ToastProvider } from "./design-system/toast/ToastContext";
+import { ModalProvider } from "./design-system/modal/ModalContext";
 
 const queryClient = new QueryClient();
 
@@ -12,7 +13,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <ToastProvider>
-        <App />
+        <ModalProvider>
+          <App />
+        </ModalProvider>
       </ToastProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

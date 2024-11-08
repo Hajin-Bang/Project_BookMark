@@ -4,12 +4,15 @@ import { Card } from "@/design-system/card/components/Card";
 import { CardContent } from "@/design-system/card/components/CardContent";
 import { CardTitle } from "@/design-system/card/components/CardTitle";
 import Input from "@/design-system/input/Input";
+import Modal from "@/design-system/modal/components/Modal";
 import Select from "@/design-system/select/components/Select";
 import Textarea from "@/design-system/textarea/Textarea";
 import { useToast } from "@/design-system/toast/ToastContext";
 import { Lock, Mail } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const DesignTestPage = () => {
+  const navigate = useNavigate();
   const { addToast } = useToast();
 
   const showToast = (
@@ -206,6 +209,26 @@ const DesignTestPage = () => {
           <Button onClick={() => showToast("토스트", "success")}>버튼</Button>
         </CardContent>
       </Card>
+
+      {/* -----------------Modal Test----------------- */}
+      <h2 className="text-xl font-bold mt-8">Modal Component Test</h2>
+      <div>
+        <Modal>
+          <Modal.Trigger>Open Modal</Modal.Trigger>
+          <Modal.Content>
+            <Modal.Title>상품 삭제</Modal.Title>
+            <Modal.Description>
+              삭제하시겠습니까? <br /> 삭제된 상품은 복구할 수 없습니다.
+            </Modal.Description>
+            <div className="flex justify-center gap-2">
+              <Modal.Cancel>취소</Modal.Cancel>
+              <Modal.Action onClick={() => navigate("/")} color="red">
+                삭제하기
+              </Modal.Action>
+            </div>
+          </Modal.Content>
+        </Modal>
+      </div>
     </div>
   );
 };
