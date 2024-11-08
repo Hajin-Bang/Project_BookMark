@@ -1,5 +1,7 @@
 import styled, { css } from "styled-components";
 import { InputSize } from "./types";
+import { typography } from "../tokens/typography";
+import { palette } from "../tokens/palette";
 
 export const InputContainer = styled.div<{ full: boolean }>`
   display: flex;
@@ -19,7 +21,7 @@ export const IconWrapper = styled.span`
   left: 10px;
   display: flex;
   align-items: center;
-  color: #999ba1;
+  color: ${palette.gray[500]};
 `;
 
 const sizeStyles = (size: InputSize) => {
@@ -27,23 +29,23 @@ const sizeStyles = (size: InputSize) => {
     case "sm":
       return {
         padding: "6px 6px 6px 36px",
-        fontSize: "13px",
+        fontSize: typography.fontSizeSM,
       };
     case "lg":
       return {
         padding: "12px 12px 12px 36px",
-        fontSize: "14px",
+        fontSize: typography.fontSizeLG,
       };
     case "xl":
       return {
         padding: "12px 12px 12px 36px",
-        fontSize: "16px",
+        fontSize: typography.fontSizeXL,
       };
     default:
       // "md"
       return {
         padding: "8px 12px 8px 36px",
-        fontSize: "14px",
+        fontSize: typography.fontSizeMD,
       };
   }
 };
@@ -62,21 +64,21 @@ export const StyledInput = styled.input.withConfig({
       ? sizeStyles(size).padding
       : sizeStyles(size).padding.replace("36px", "12px")};
   font-size: ${({ size }) => sizeStyles(size).fontSize};
-  border: 1px solid #ccc;
+  border: 1px solid ${palette.gray[300]};
   border-radius: 5px;
-  background-color: transparent;
+  background-color: ${palette.transparent};
   outline: none;
 
   ${({ disabled }) =>
     disabled &&
     css`
-      background-color: #f0f0f0;
+      background-color: ${palette.gray[100]};
       cursor: not-allowed;
     `}
 `;
 
 export const ErrorMessage = styled.p`
-  color: red;
-  font-size: 13px;
+  color: ${palette.red[400]};
+  font-size: ${typography.fontSizeSM};
   margin-top: 2px;
 `;

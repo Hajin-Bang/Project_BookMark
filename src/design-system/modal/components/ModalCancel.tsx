@@ -6,6 +6,7 @@ import Button from "@/design-system/button/Button";
 export const ModalCancel: React.FC<ModalCancelProps> = ({
   children = "Cancel",
   className,
+  priority = "default",
 }) => {
   const { closeModal } = useModalContext();
 
@@ -13,8 +14,8 @@ export const ModalCancel: React.FC<ModalCancelProps> = ({
     <Button
       onClick={closeModal}
       className={className}
-      color="#6a6868"
       variant="outline"
+      priority={priority}
     >
       {children}
     </Button>
