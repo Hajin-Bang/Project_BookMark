@@ -243,7 +243,7 @@ const DesignTestPage = () => {
             </Modal.Description>
             <div className="flex justify-center gap-2">
               <Modal.Cancel>취소</Modal.Cancel>
-              <Modal.Action onClick={() => navigate("/")} color="red">
+              <Modal.Action onClick={() => navigate("/")}>
                 삭제하기
               </Modal.Action>
             </div>
