@@ -1,5 +1,6 @@
 import styled, { css, keyframes } from "styled-components";
 import { ToastVariant } from "./types";
+import { typography } from "../tokens/typography";
 
 const floatUp = keyframes`
   from {
@@ -57,7 +58,6 @@ export const StyledIcon = styled.div<{ variant: ToastVariant }>`
   align-items: center;
   justify-content: center;
   margin-right: 12px;
-  font-size: 1.5em;
   ${({ variant }) => variantStyles(variant)};
   border-radius: 50%;
   width: 24px;
@@ -71,6 +71,6 @@ export const StyledToast = styled.div<{ variant: ToastVariant }>`
   display: flex;
   align-items: center;
   max-width: 320px;
-  font-size: 14px;
+  font-size: ${typography.fontSizeMD};
   animation: ${floatUp} 0.5s ease-out, ${fadeOut} 1s ease-in 3s forwards;
 `;

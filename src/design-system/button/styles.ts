@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { ButtonSize, ButtonVariant } from "./types";
+import { typography } from "../tokens/typography";
 
 export interface StyledButtonProps {
   size: ButtonSize;
@@ -15,25 +16,25 @@ const sizeStyles = (size: ButtonSize) => {
     case "sm":
       return css`
         height: 36px;
-        font-size: 12px;
+        font-size: ${typography.fontSizeSM};
         padding: 0 12px;
       `;
     case "lg":
       return css`
         height: 48px;
-        font-size: 16px;
+        font-size: ${typography.fontSizeLG};
         padding: 0 20px;
       `;
     case "xl":
       return css`
         height: 56px;
-        font-size: 18px;
+        font-size: ${typography.fontSizeXL};
         padding: 0 24px;
       `;
     default: // md
       return css`
         height: 40px;
-        font-size: 14px;
+        font-size: ${typography.fontSizeMD};
         padding: 0 16px;
       `;
   }
