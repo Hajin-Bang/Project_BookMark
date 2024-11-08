@@ -1,5 +1,7 @@
 import styled, { css } from "styled-components";
 import { TextareaProps, TextareaResize } from "./types";
+import { typography } from "../tokens/typography";
+import { palette } from "../tokens/palette";
 
 export const StyledTextareaContainer = styled.div`
   display: flex;
@@ -37,30 +39,24 @@ export const StyledTextarea = styled.textarea.withConfig({
     css`
       width: 100%;
       padding: 10px;
-      font-size: 14px;
+      font-size: ${typography.fontSizeMD};
       border-radius: 5px;
       outline: none;
-      background-color: transparent;
+      background-color: ${palette.transparent};
     `};
-
   ${({ appearance }) =>
-    appearance === "none" ? { border: "none" } : { border: "1px solid #ccc" }}
-
-  ${({ hasError }) =>
-    hasError && {
-      borderColor: "red",
-    }}
-  
-    ${({ resize }) => resizeStyles(resize)};
-
+    appearance === "none"
+      ? { border: "none" }
+      : { border: `1px solid ${palette.gray[300]}` }}
+  ${({ resize }) => resizeStyles(resize)};
   &:disabled {
-    background-color: #f0f0f0;
+    background-color: ${palette.gray[100]};
     cursor: not-allowed;
   }
 `;
 
 export const ErrorMessage = styled.p`
-  color: red;
-  font-size: 13px;
-  margin-top: 4px;
+  color: ${palette.red[400]};
+  font-size: ${typography.fontSizeSM};
+  margin-top: 2px;
 `;
