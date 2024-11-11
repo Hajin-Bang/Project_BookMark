@@ -2,6 +2,7 @@ import React from "react";
 import { TextareaProps } from "./types";
 import {
   ErrorMessage,
+  LabelWrapper,
   StyledTextarea,
   StyledTextareaContainer,
 } from "./styles";
@@ -22,7 +23,11 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   ) => {
     return (
       <StyledTextareaContainer>
-        {label && <Label htmlFor={rest.id}>{label}</Label>}
+        {label && (
+          <LabelWrapper>
+            <Label htmlFor={rest.id}>{label}</Label>
+          </LabelWrapper>
+        )}
         <StyledTextarea
           ref={ref}
           resize={resize}

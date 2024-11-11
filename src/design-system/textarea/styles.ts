@@ -30,6 +30,10 @@ const resizeStyles = (resize: TextareaResize = "both") => {
   }
 };
 
+export const LabelWrapper = styled.div`
+  padding-left: 0.2em;
+`;
+
 export const StyledTextarea = styled.textarea.withConfig({
   shouldForwardProp: (prop) =>
     !["resize", "appearance", "hasError"].includes(prop),
@@ -59,4 +63,5 @@ export const ErrorMessage = styled.p`
   color: ${palette.red[400]};
   font-size: ${typography.fontSizeSM};
   margin-top: 2px;
+  padding-left: 0.3em;
 `;
