@@ -10,8 +10,6 @@ export interface StyledButtonProps {
   disabled: boolean;
   full?: boolean;
 }
-
-/* Size */
 const sizeStyles = (size: ButtonSize) => {
   switch (size) {
     case "sm":
@@ -41,7 +39,6 @@ const sizeStyles = (size: ButtonSize) => {
   }
 };
 
-/* Variant */
 const variantStyles = (
   variant: ButtonVariant,
   priority: ButtonPriority = "default",
@@ -56,7 +53,7 @@ const variantStyles = (
     : priority === "important"
     ? palette.red[300]
     : priority === "dark"
-    ? palette.black
+    ? palette.black[500]
     : palette.blue[400];
   switch (variant) {
     case "outline":
@@ -70,6 +67,7 @@ const variantStyles = (
       `;
     case "ghost":
       return css`
+        border: none;
         color: ${baseColor};
         background-color: ${palette.transparent};
         &:hover {
@@ -78,12 +76,14 @@ const variantStyles = (
       `;
     case "link":
       return css`
+        border: none;
         color: ${baseColor};
         background-color: ${palette.transparent};
         text-decoration: underline;
       `;
     default: // solid
       return css`
+        border: 1px solid ${baseColor};
         background-color: ${baseColor};
         color: ${palette.white};
         &:hover {
