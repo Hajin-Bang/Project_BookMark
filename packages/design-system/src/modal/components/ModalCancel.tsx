@@ -1,7 +1,7 @@
 import React from "react";
 import { ModalCancelProps } from "../types";
 import { useModalContext } from "../ModalContext";
-import Button from "@/design-system/button/Button";
+import Button from "@design-system/button/Button";
 
 export const ModalCancel: React.FC<ModalCancelProps> = ({
   children = "Cancel",

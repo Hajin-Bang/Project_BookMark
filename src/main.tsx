@@ -4,8 +4,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import "./index.css";
 import App from "./App";
-import { ToastProvider } from "./design-system/toast/ToastContext";
-import { ModalProvider } from "./design-system/modal/ModalContext";
+import { ToastProvider } from "../packages/design-system/src/toast/ToastContext";
+import { ModalProvider } from "../packages/design-system/src/modal/ModalContext";
 
 const queryClient = new QueryClient();
 
