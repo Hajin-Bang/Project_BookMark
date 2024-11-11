@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "../ui/select";
 import { Textarea } from "../ui/textarea";
-import { ImageUploader } from "./ImageUploader";
+import { ImageUploader } from "../common/components/ImageUploader";
 
 type ProductFormProps = {
   onSubmit: (data: ProductAddFormValues) => void;
