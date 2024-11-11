@@ -4,7 +4,6 @@ import { palette } from "../tokens/palette";
 
 export const StyledSelectWrapper = styled.div`
   position: relative;
-  width: 100%;
 `;
 
 export const StyledTrigger = styled(Button)`
@@ -24,7 +23,7 @@ export const StyledTrigger = styled(Button)`
 
 export const StyledContent = styled.div`
   position: absolute;
-  width: inherit;
+  width: 100%;
   background-color: ${palette.white};
   border: 1px solid ${palette.gray[300]};
   border-radius: 5px;
