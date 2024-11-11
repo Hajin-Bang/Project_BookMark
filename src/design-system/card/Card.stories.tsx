@@ -1,4 +1,3 @@
-// Card.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import { Card } from "./components/Card";
 import { CardContent } from "./components/CardContent";
