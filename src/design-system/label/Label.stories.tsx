@@ -7,17 +7,12 @@ const meta: Meta<typeof Label> = {
   argTypes: {
     children: {
       control: { type: "text" },
-      description: "Label text content",
-      defaultValue: "Label",
       table: {
         type: { summary: "string" },
-        defaultValue: { summary: "Label" },
       },
     },
     htmlFor: {
       control: { type: "text" },
-      description:
-        "Specifies the ID of the input element associated with the label",
       table: {
         type: { summary: "string" },
       },
@@ -39,6 +34,7 @@ const meta: Meta<typeof Label> = {
       </div>
     ),
   ],
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -47,5 +43,6 @@ type Story = StoryObj<typeof meta>;
 export const Basic: Story = {
   args: {
     children: "Label",
+    htmlFor: "input-id",
   },
 };
