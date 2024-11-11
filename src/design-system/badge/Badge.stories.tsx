@@ -1,10 +1,47 @@
-// Badge.stories.tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import Badge from "./Badge";
 
 const meta: Meta<typeof Badge> = {
   title: "Design System/Badge",
   component: Badge,
+  argTypes: {
+    variant: {
+      control: { type: "radio" },
+      options: ["default", "primary", "secondary", "accent"],
+      table: {
+        type: { summary: "'default' | 'primary' | 'secondary' | 'accent'" },
+        defaultValue: { summary: "default" },
+      },
+    },
+    appearance: {
+      control: { type: "radio" },
+      options: ["solid", "outline"],
+      table: {
+        type: { summary: "'solid' | 'outline'" },
+        defaultValue: { summary: "solid" },
+      },
+    },
+    shape: {
+      control: { type: "radio" },
+      options: ["pill", "rounded"],
+      table: {
+        type: { summary: "'pill' | 'rounded'" },
+        defaultValue: { summary: "pill" },
+      },
+    },
+    children: {
+      control: { type: "text" },
+      table: {
+        type: { summary: "string" },
+      },
+    },
+    className: {
+      control: { type: "text" },
+      table: {
+        type: { summary: "string" },
+      },
+    },
+  },
   parameters: {
     layout: "centered",
   },
@@ -31,14 +68,14 @@ type Story = StoryObj<typeof meta>;
 
 export const Basic: Story = {
   args: {
-    children: "Default Badge",
+    children: "Badge",
     variant: "default",
     appearance: "solid",
     shape: "pill",
   },
 };
 
-export const Variants = () => (
+export const Variant = () => (
   <>
     <Badge variant="default">Default</Badge>
     <Badge variant="primary">Primary</Badge>
@@ -47,7 +84,7 @@ export const Variants = () => (
   </>
 );
 
-export const Appearances = () => (
+export const Appearance = () => (
   <>
     <Badge appearance="solid">Solid default</Badge>
     <Badge appearance="outline">Outline default</Badge>
@@ -60,23 +97,9 @@ export const Appearances = () => (
   </>
 );
 
-export const Shapes = () => (
+export const Shape = () => (
   <>
     <Badge shape="pill">Pill Shape</Badge>
     <Badge shape="rounded">Rounded Shape</Badge>
-  </>
-);
-
-export const CombinedStyles = () => (
-  <>
-    <Badge variant="primary" appearance="solid" shape="pill">
-      Primary Pill Solid
-    </Badge>
-    <Badge variant="secondary" appearance="outline" shape="rounded">
-      Secondary Rounded Outline
-    </Badge>
-    <Badge variant="accent" appearance="solid" shape="rounded">
-      Accent Rounded Solid
-    </Badge>
   </>
 );
