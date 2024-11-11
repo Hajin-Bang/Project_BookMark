@@ -4,8 +4,12 @@ import { StyledCardContent } from "../styles";
 export const CardContent = forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => {
-  return <StyledCardContent ref={ref} className={className} {...props} />;
+>(({ className, children, ...props }, ref) => {
+  return (
+    <StyledCardContent ref={ref} className={className} {...props}>
+      {children}
+    </StyledCardContent>
+  );
 });
 
 CardContent.displayName = "CardContent";
