@@ -9,6 +9,10 @@ export const InputContainer = styled.div<{ full: boolean }>`
   width: ${({ full }) => (full ? "100%" : "auto")};
 `;
 
+export const LabelWrapper = styled.div`
+  padding-left: 0.2em;
+`;
+
 export const InputWrapper = styled.div<{ full: boolean }>`
   position: relative;
   display: flex;
@@ -80,4 +84,5 @@ export const ErrorMessage = styled.p`
   color: ${palette.red[400]};
   font-size: ${typography.fontSizeSM};
   margin-top: 2px;
+  padding-left: 0.3em;
 `;

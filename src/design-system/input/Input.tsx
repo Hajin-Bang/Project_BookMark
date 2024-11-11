@@ -4,6 +4,7 @@ import {
   IconWrapper,
   InputContainer,
   InputWrapper,
+  LabelWrapper,
   StyledInput,
 } from "./styles";
 import { InputProps } from "./types";
@@ -17,7 +18,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       icon,
       error,
       label,
-      full = true,
+      full = false,
       className,
       onChange,
       ...rest
@@ -26,7 +27,11 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ) => {
     return (
       <InputContainer full={full}>
-        {label && <Label htmlFor={rest.id}>{label}</Label>}
+        {label && (
+          <LabelWrapper>
+            <Label htmlFor={rest.id}>{label}</Label>
+          </LabelWrapper>
+        )}
         <InputWrapper full={full}>
           {icon && <IconWrapper>{icon}</IconWrapper>}
           <StyledInput
