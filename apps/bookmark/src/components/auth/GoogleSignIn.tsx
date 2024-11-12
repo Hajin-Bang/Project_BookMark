@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
 import { db } from "@/firebase";
 import { useAuthStore } from "@/store/auth/useAuthStore";
+import Button from "@design-system/button/Button";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import Cookies from "js-cookie";
@@ -63,11 +63,7 @@ export const GoogleSignIn = () => {
   };
 
   return (
-    <Button
-      onClick={handleGoogleSignIn}
-      variant="outline"
-      className="w-full border-slate-600"
-    >
+    <Button onClick={handleGoogleSignIn} priority="dark" variant="outline">
       구글 이메일로 로그인하기
     </Button>
   );

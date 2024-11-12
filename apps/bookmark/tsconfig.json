@@ -4,12 +4,8 @@
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "src/*"
-      ],
-      "@design-system/*": [
-        "../../packages/design-system/src/*"
-      ]
+      "@/*": ["src/*"],
+      "@design-system/*": ["../../packages/design-system/src/*"]
     },
     "allowJs": true,
     "noEmit": true,
@@ -18,12 +14,6 @@
     "isolatedModules": true,
     "jsx": "preserve"
   },
-  "include": [
-    "src",
-    "vite-env.d.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "include": ["src", "vite-env.d.ts"],
+  "exclude": ["node_modules", "dist"]
 }

@@ -13,7 +13,6 @@ export const useSignUp = () => {
     onSuccess: (userData: UserData) => {
       setUser(userData);
       setIsLogin(true);
-      // Toast
 
       if (userData.isSeller) {
         navigate("/manage");
@@ -23,7 +22,6 @@ export const useSignUp = () => {
     },
     onError: (error: Error) => {
       console.error("회원가입 중 오류가 발생했습니다.", error.message);
-      // Toast
     },
   });
 };

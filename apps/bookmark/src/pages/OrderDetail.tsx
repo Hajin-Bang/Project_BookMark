@@ -1,17 +1,24 @@
 import { authStatusType, Layout } from "@/components/common/components/Layout";
 import { NavigationBar } from "@/components/common/components/NavigationBar";
-import { Button } from "@/components/ui/button";
-import { Card, CardDescription, CardTitle } from "@/components/ui/card";
+import { Card } from "@design-system/card/components/Card";
+import { CardTitle } from "@design-system/card/components/CardTitle";
+import { CardContent } from "@design-system/card/components/CardContent";
 import { useCancelOrder } from "@/lib/order/hooks/useCancelOrder";
 import { useFetchOrder } from "@/lib/order/hooks/useFetchOrder";
 import { OrderItem } from "@/lib/order/types";
+import Button from "@design-system/button/Button";
 import { useNavigate, useParams } from "react-router-dom";
+import { useModalContext } from "@design-system/modal/ModalContext";
+import CancelOrderModal from "@/components/order/CancelOrderModal";
+import { useToast } from "@design-system/toast/ToastContext";
 
 const OrderDetail = () => {
   const { orderId } = useParams<{ orderId: string }>();
   const { data: orders, isLoading, error } = useFetchOrder({ isSeller: false });
   const { mutate: cancelOrder } = useCancelOrder();
   const navigate = useNavigate();
+  const { openModal } = useModalContext();
+  const { addToast } = useToast();
 
   if (isLoading) return <div>로딩 중...</div>;
   if (error) return <div>오류가 발생했습니다: {error.message}</div>;
@@ -20,16 +27,28 @@ const OrderDetail = () => {
 
   if (!order) return <div>해당 주문을 찾을 수 없습니다.</div>;
 
+  const handleClickOrder = () => {
+    openModal();
+  };
+
   const handleCancelOrder = () => {
     if (orderId) {
       cancelOrder(orderId, {
         onSuccess: () => {
-          alert("주문이 취소되었습니다.");
           navigate("/orders");
+          addToast({
+            title: "주문이 취소되었습니다.",
+            variant: "success",
+            duration: 3000,
+          });
         },
         onError: (error) => {
           console.error("주문 취소 중 오류 발생:", error);
-          alert("주문 취소에 실패하였습니다.");
+          addToast({
+            title: "주문이 취소 중 오류가 발생했습니다.",
+            variant: "error",
+            duration: 3000,
+          });
         },
       });
     }
@@ -65,7 +84,7 @@ const OrderDetail = () => {
           <ul>
             {(order.items || []).map((item: OrderItem) => (
               <li key={item.productId} className="mb-4">
-                <Card className="flex gap-4 items-center p-4">
+                <Card direction="row">
                   {item.productImage && (
                     <img
                       src={item.productImage[0]}
@@ -74,12 +93,12 @@ const OrderDetail = () => {
                     />
                   )}
                   <div className="flex flex-col items-start">
-                    <CardTitle className="text-lg font-medium">
+                    <CardTitle className="text-md">
                       {item.productName}
                     </CardTitle>
-                    <CardDescription className="text-sm">
+                    <CardContent className="text-sm">
                       수량: {item.quantity}개
-                    </CardDescription>
+                    </CardContent>
                     <span className="text-sm font-semibold text-gray-700">
                       {(item.productPrice * item.quantity).toLocaleString()}원
                     </span>
@@ -90,12 +109,18 @@ const OrderDetail = () => {
           </ul>
 
           {order.status !== "주문 취소" && (
-            <Button className="mt-4 bg-red-400" onClick={handleCancelOrder}>
+            <Button
+              className="mt-4"
+              priority="important"
+              onClick={handleClickOrder}
+            >
               주문 취소하기
             </Button>
           )}
         </div>
       </main>
+
+      <CancelOrderModal cancelOrder={handleCancelOrder} />
     </Layout>
   );
 };

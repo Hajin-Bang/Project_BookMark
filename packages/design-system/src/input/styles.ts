@@ -68,7 +68,7 @@ export const StyledInput = styled.input.withConfig({
       ? sizeStyles(size).padding
       : sizeStyles(size).padding.replace("36px", "12px")};
   font-size: ${({ size }) => sizeStyles(size).fontSize};
-  border: 1px solid ${palette.gray[300]};
+  border: 1px solid ${palette.gray[200]};
   border-radius: 5px;
   background-color: ${palette.transparent};
   outline: none;

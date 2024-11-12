@@ -9,7 +9,6 @@ export const useCancelOrder = () => {
     mutationFn: (orderId: string) => cancelOrderAPI(orderId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.ORDERS] });
-      // toast
     },
     onError: (error) => {
       console.error("주문 취소 중 오류 발생", error);

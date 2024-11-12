@@ -1,6 +1,8 @@
-import { Card, CardDescription, CardTitle } from "../ui/card";
-import { Badge } from "../ui/badge";
 import ProductCarousel from "./ProductCarousel";
+import Badge from "@design-system/badge/Badge";
+import { Card } from "@design-system/card/components/Card";
+import { CardTitle } from "@design-system/card/components/CardTitle";
+import { CardContent } from "@design-system/card/components/CardContent";
 
 interface ProductCardProps {
   product: {
@@ -22,24 +24,20 @@ export const ProductCard = ({
 }: ProductCardProps) => {
   return (
     <Card
-      className="w-full flex flex-col p-4 h-fit gap-2 bg-white cursor-pointer flex-grow flex-shrink min-w-[230px]"
+      className="hover:scale-105 transform transition duration-200 ease-in-out w-full flex flex-col  p-4 h-fit gap-2 cursor-pointer flex-grow flex-shrink min-w-[230px]"
       onClick={() => onClick(product.productId)}
       onMouseEnter={() => onMouseEnter && onMouseEnter(product.productId)}
     >
       <ProductCarousel images={product.productImage} />
-      <CardTitle className="pt-2 text-lg line-clamp-1">
-        {product.productName}
-      </CardTitle>
-      <CardDescription className="text-sm text-gray-600 line-clamp-1">
+      <CardTitle className="pt-2 line-clamp-1">{product.productName}</CardTitle>
+      <CardContent className="text-sm text-gray-600 line-clamp-1">
         {product.productAuthor}
-      </CardDescription>
+      </CardContent>
       <span className="text-sm font-semibold text-gray-700">
         {product.productPrice}원
       </span>
       <div className="pl-4 pr-4">
-        <Badge variant="secondary" className="mb-2 inline-block text-gray-500">
-          {product.productCategory}
-        </Badge>
+        <Badge>{product.productCategory}</Badge>
       </div>
     </Card>
   );

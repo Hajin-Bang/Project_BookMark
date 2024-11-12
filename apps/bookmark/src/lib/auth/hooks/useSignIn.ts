@@ -11,11 +11,9 @@ const useSignIn = () => {
     onSuccess: (userData: UserData) => {
       setIsLogin(true);
       setUser(userData);
-      // Toast
     },
     onError: (error: Error) => {
       console.error("로그인 실패", error);
-      // Toast
     },
   });
 };

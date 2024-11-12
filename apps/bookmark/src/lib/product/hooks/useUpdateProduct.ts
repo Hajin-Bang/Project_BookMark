@@ -12,12 +12,9 @@ export const useUpdateProduct = () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.PRODUCT, updatedProduct.productId],
       });
-
-      // toast
     },
     onError: (error) => {
       console.error("상품 업데이트 중 에러 발생:", error);
-      // toast
     },
   });
 };

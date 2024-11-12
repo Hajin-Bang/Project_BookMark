@@ -3,18 +3,12 @@ import { NavigationBar } from "@/components/common/components/NavigationBar";
 import { ProductCard } from "@/components/product/ProductCard";
 import { useInfiniteScroll } from "@/lib/product/hooks/useInfiniteScroll";
 import { useMemo, useState } from "react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useNavigate, useParams } from "react-router-dom";
 import { useFetchProducts } from "@/lib/product/hooks/useFetchProducts";
 import { useQueryClient } from "@tanstack/react-query";
 import { fetchProductDetailsAPI } from "@/lib/product/api";
 import { QUERY_KEYS } from "@/lib/queryKeys";
+import Select from "@design-system/select/components/Select";
 
 const ProductCategory = () => {
   const { category } = useParams();
@@ -53,15 +47,21 @@ const ProductCategory = () => {
           </h2>
         </div>
         <div>
-          <Select value={order} onValueChange={(value) => setOrder(value)}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="선택" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="createdAt/desc">최신순</SelectItem>
-              <SelectItem value="productPrice/desc">높은 가격순</SelectItem>
-              <SelectItem value="productPrice/asc">낮은 가격순</SelectItem>
-            </SelectContent>
+          <Select
+            value={order}
+            onValueChange={(value) => setOrder(value)}
+            className="w-[180px]"
+          >
+            <Select.Trigger placeholder="선택" />
+            <Select.Content>
+              <Select.Option value="createdAt/desc">최신순</Select.Option>
+              <Select.Option value="productPrice/desc">
+                높은 가격순
+              </Select.Option>
+              <Select.Option value="productPrice/asc">
+                낮은 가격순
+              </Select.Option>
+            </Select.Content>
           </Select>
         </div>
         <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center">

@@ -12,8 +12,7 @@ export const StyledCard = styled.div<CardProps>`
   flex-direction: ${({ direction = "column" }) => direction};
   padding: 1em;
   gap: ${({ direction }) => (direction === "row" ? "1em" : "0.5em")};
-  align-items: ${({ direction }) =>
-    direction === "row" ? "center" : "flex-start"};
+  align-items: center;
 `;
 
 export const StyledCardTitle = styled.p`

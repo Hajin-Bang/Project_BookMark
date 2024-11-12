@@ -55,8 +55,8 @@ export const StyledBadge = styled.span<BadgeProps>`
   font-weight: 500;
   line-height: 1;
   white-space: nowrap;
-  font-weight: 600;
-  font-size: ${typography.fontSizeXS};
+  font-weight: ${typography.fontWeightMedium};
+  font-size: ${typography.fontSizeSM};
   border-radius: 8px;
   padding: 4px 8px;
   ${({ variant }) => variantStyles(variant)}
