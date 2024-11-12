@@ -1,4 +1,6 @@
-import { Card, CardDescription, CardTitle } from "../ui/card";
+import { Card } from "@design-system/card/components/Card";
+import { CardTitle } from "@design-system/card/components/CardTitle";
+import { CardContent } from "@design-system/card/components/CardContent";
 
 interface OrderItem {
   productId: string;
@@ -14,7 +16,7 @@ const CheckoutItemList = ({ items }: { items: OrderItem[] }) => {
       <ul>
         {items.map((item) => (
           <li key={item.productId}>
-            <Card className="flex gap-4 items-center mb-4 p-3">
+            <Card direction="row" className=" mb-4 p-3">
               {item.productImage && (
                 <img
                   src={item.productImage[0]}
@@ -25,9 +27,9 @@ const CheckoutItemList = ({ items }: { items: OrderItem[] }) => {
 
               <div className="flex flex-col items-start">
                 <CardTitle className="text-sm">{item.productName}</CardTitle>
-                <CardDescription className="text-sm">
+                <CardContent className="text-sm">
                   수량: {item.quantity}개
-                </CardDescription>
+                </CardContent>
                 <span className="text-sm font-semibold text-gray-700">
                   {(item.productPrice * item.quantity).toLocaleString()}원
                 </span>
