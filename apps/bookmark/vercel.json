@@ -1,0 +1,11 @@
+{
+  "builds": [
+    {
+      "src": "apps/bookmark/package.json",
+      "use": "@vercel/node"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
+}

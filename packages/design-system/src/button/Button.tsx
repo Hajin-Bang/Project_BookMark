@@ -1,3 +1,4 @@
+import React from 'react'
 import { IconWrapper, StyledButton } from "./styles";
 import { ButtonProps } from "./types";
 

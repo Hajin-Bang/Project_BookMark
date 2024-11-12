@@ -1,3 +1,4 @@
+import React from 'react'
 import { StyledModalContent } from "../styles";
 import { ModalContentProps } from "../types";
 

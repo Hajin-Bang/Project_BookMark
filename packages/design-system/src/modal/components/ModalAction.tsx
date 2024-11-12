@@ -1,6 +1,6 @@
 import React from "react";
 import { ModalActionProps } from "../types";
-import Button from "@design-system/button/Button";
+import Button from "../../button/Button";
 
 export const ModalAction: React.FC<ModalActionProps> = ({
   children,
