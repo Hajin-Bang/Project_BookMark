@@ -1,0 +1,18 @@
+{
+  "builds": [
+    {
+      "src": "apps/bookmark/package.json",
+      "use": "@vercel/node",
+      "config": { "distDir": "apps/bookmark/dist" }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "apps/bookmark/dist/$1"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
+}
