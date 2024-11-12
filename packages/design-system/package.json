@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc -b",
-    "lint": "eslint . --max-warnings 0"
+    "lint": "eslint . --max-warnings 0",
+    "build-storybook": "storybook build --config-dir packages/design-system/.storybook --output-dir packages/design-system/dist/storybook"
   },
   "dependencies": {
     "react": "^18.2.0",
