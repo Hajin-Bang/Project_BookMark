@@ -4,10 +4,10 @@ import {
   ProductAddFormValues,
   ProductForm,
 } from "@/components/product/ProductForm";
-import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { NavigationBar } from "@/components/common/components/NavigationBar";
 import { useAddProduct } from "@/lib/product/hooks/useAddProduct";
+import Button from "@design-system/button/Button";
 
 const ProductAdd = () => {
   const { user } = useAuthStore();
@@ -23,7 +23,7 @@ const ProductAdd = () => {
     const productData = {
       ...data,
       productId: "",
-      sellerId: user.uid, // 로그인된 사용자의 uid를 sellerId로 설정
+      sellerId: user.uid,
       productPrice: Number(data.productPrice),
       productQuantity: Number(data.productQuantity),
       createdAt: new Date().toISOString(),

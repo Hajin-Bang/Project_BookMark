@@ -1,11 +1,11 @@
 import { useForm } from "react-hook-form";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useCreateOrder } from "@/lib/order/hooks/useCreateOrder";
 import { CreateOrderParams, OrderItem } from "@/lib/order/types";
+import Button from "@design-system/button/Button";
 
 interface OrderFormValues {
   name: string;
@@ -152,10 +152,15 @@ const OrderForm = ({ orderItems, totalAmount }: OrderFormProps) => {
 
       {/* 버튼 */}
       <div className="w-full flex gap-2 mt-2">
-        <Button type="button" onClick={handleCancel} className="flex-grow">
+        <Button
+          type="button"
+          priority="dark"
+          onClick={handleCancel}
+          className="flex-grow"
+        >
           주문 취소하기
         </Button>
-        <Button type="submit" className="flex-grow  bg-blue-400">
+        <Button type="submit" priority="important" className="flex-grow">
           결제하기
         </Button>
       </div>

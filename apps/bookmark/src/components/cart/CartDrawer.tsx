@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { Button } from "../ui/button";
 import CartTable from "./CartTable";
 import { useFetchCart } from "@/lib/cart/hooks/useFetchCart";
+import Button from "@design-system/button/Button";
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -38,7 +38,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
       </div>
       {totalQuantity > 0 && (
         <div className="flex justify-end mr-4 mt-4">
-          <Button className="w-1/3" onClick={handleBuyNow}>
+          <Button onClick={handleBuyNow} priority="dark">
             구매하기
           </Button>
         </div>

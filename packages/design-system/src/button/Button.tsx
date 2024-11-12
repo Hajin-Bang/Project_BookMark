@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import { IconWrapper, StyledButton } from "./styles";
 import { ButtonProps } from "./types";
 
@@ -14,6 +14,7 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   children,
   className,
+  form,
 }) => {
   return (
     <StyledButton
@@ -26,6 +27,7 @@ const Button: React.FC<ButtonProps> = ({
       full={full}
       onClick={onClick}
       className={className}
+      form={form}
     >
       {icon && <IconWrapper>{icon}</IconWrapper>}
       {children}

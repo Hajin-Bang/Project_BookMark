@@ -1,10 +1,11 @@
 import { authStatusType, Layout } from "@/components/common/components/Layout";
 import { NavigationBar } from "@/components/common/components/NavigationBar";
-import { Button } from "@/components/ui/button";
+
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { useCancelOrder } from "@/lib/order/hooks/useCancelOrder";
 import { useFetchOrder } from "@/lib/order/hooks/useFetchOrder";
 import { OrderItem } from "@/lib/order/types";
+import Button from "@design-system/button/Button";
 import { useNavigate, useParams } from "react-router-dom";
 
 const OrderDetail = () => {
@@ -90,7 +91,11 @@ const OrderDetail = () => {
           </ul>
 
           {order.status !== "주문 취소" && (
-            <Button className="mt-4 bg-red-400" onClick={handleCancelOrder}>
+            <Button
+              className="mt-4"
+              priority="important"
+              onClick={handleCancelOrder}
+            >
               주문 취소하기
             </Button>
           )}

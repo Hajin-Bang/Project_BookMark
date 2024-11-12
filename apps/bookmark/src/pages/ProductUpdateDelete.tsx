@@ -4,10 +4,10 @@ import {
   ProductAddFormValues,
   ProductForm,
 } from "@/components/product/ProductForm";
-import { Button } from "@/components/ui/button";
 import { db } from "@/firebase";
 import { useDeleteProduct } from "@/lib/product/hooks/useDeleteProduct";
 import { useUpdateProduct } from "@/lib/product/hooks/useUpdateProduct";
+import Button from "@design-system/button/Button";
 import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -76,12 +76,18 @@ const ProductUpdateDelete = () => {
             defaultValues={productData}
           />
           <div className="w-full flex gap-2 mt-2">
-            <Button type="submit" form="productForm" className="flex-grow">
+            <Button
+              type="submit"
+              form="productForm"
+              className="flex-grow"
+              priority="dark"
+            >
               수정하기
             </Button>
             <Button
               onClick={handleProductDelete}
-              className="flex-grow bg-red-300"
+              className="flex-grow"
+              priority="important"
             >
               삭제하기
             </Button>

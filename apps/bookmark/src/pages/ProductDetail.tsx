@@ -3,10 +3,10 @@ import { authStatusType, Layout } from "@/components/common/components/Layout";
 import { NavigationBar } from "@/components/common/components/NavigationBar";
 import ProductCarousel from "@/components/product/ProductCarousel";
 import { ProductCategorySection } from "@/components/product/ProductCategorySection";
-import { Button } from "@/components/ui/button";
 import { useAddCart } from "@/lib/cart/hooks/useAddCart";
 import { useFetchProductDetails } from "@/lib/product/hooks/useFetchProductDetails";
 import { useAuthStore } from "@/store/auth/useAuthStore";
+import Button from "@design-system/button/Button";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -98,11 +98,11 @@ const ProductDetail = () => {
                 </p>
               </div>
             </section>
-            <div className="w-full flex gap-3 mt-10">
-              <Button className="w-1/2 bg-slate-400" onClick={handleAddToCart}>
+            <div className="w-1/2 flex gap-3 mt-10">
+              <Button full variant="outline" onClick={handleAddToCart}>
                 장바구니
               </Button>
-              <Button className="w-1/2 bg-blue-500" onClick={handleBuyNow}>
+              <Button full onClick={handleBuyNow}>
                 구매하기
               </Button>
             </div>

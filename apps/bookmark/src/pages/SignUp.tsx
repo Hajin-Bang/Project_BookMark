@@ -1,11 +1,11 @@
 import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import { Lock, Mail, User } from "lucide-react";
 import { useSignUp } from "@/lib/auth/hooks/useSignUp";
 import { authStatusType, Layout } from "@/components/common/components/Layout";
 import { NavigationBar } from "@/components/common/components/NavigationBar";
+import Button from "@design-system/button/Button";
 
 type SignUpFormValues = {
   nickname: string;
@@ -117,7 +117,7 @@ const SignUp = () => {
               className="ml-2 accent-slate-500"
             />
           </div>
-          <Button type="submit" className="w-full">
+          <Button type="submit" full>
             {isLoading ? "가입 중..." : "회원가입"}
           </Button>
         </form>

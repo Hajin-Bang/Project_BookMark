@@ -5,7 +5,7 @@ import useSignIn from "@/lib/auth/hooks/useSignIn";
 import { authStatusType, Layout } from "@/components/common/components/Layout";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import Button from "@design-system/button/Button";
 import { GoogleSignIn } from "@/components/auth/GoogleSignIn";
 import { NavigationBar } from "@/components/common/components/NavigationBar";
 
@@ -83,16 +83,12 @@ const SignIn = () => {
             )}
           </div>
 
-          <Button type="submit" className="w-full">
+          <Button type="submit" full>
             {isLoading ? "로그인 중..." : "로그인"}
           </Button>
         </form>
         <GoogleSignIn />
-        <Button
-          variant="outline"
-          className="w-full"
-          onClick={handleClickSignUp}
-        >
+        <Button priority="dark" onClick={handleClickSignUp}>
           회원가입
         </Button>
       </div>
