@@ -1,6 +1,6 @@
 import { Card, CardDescription, CardTitle } from "../ui/card";
-import { Badge } from "../ui/badge";
 import ProductCarousel from "./ProductCarousel";
+import Badge from "@design-system/badge/Badge";
 
 interface ProductCardProps {
   product: {
@@ -37,9 +37,7 @@ export const ProductCard = ({
         {product.productPrice}원
       </span>
       <div className="pl-4 pr-4">
-        <Badge variant="secondary" className="mb-2 inline-block text-gray-500">
-          {product.productCategory}
-        </Badge>
+        <Badge>{product.productCategory}</Badge>
       </div>
     </Card>
   );
