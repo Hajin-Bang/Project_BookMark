@@ -14,4 +14,10 @@ export default defineConfig({
       "@design-system": path.resolve(__dirname, "packages/design-system/src"),
     },
   },
+  build: {
+    outDir: "dist",
+  },
+  css: {
+    postcss: path.resolve(__dirname, "apps/bookmark/postcss.config.js"),
+  },
 });

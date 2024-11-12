@@ -1,9 +1,9 @@
 import React from "react";
 import type { Preview } from "@storybook/react";
 import { ThemeProvider } from "styled-components";
-import { palette } from "../packages/design-system/src/tokens/palette";
-import { typography } from "../packages/design-system/src/tokens/typography";
-import "../packages/design-system/src/tailwind.css";
+import { palette } from "../src/tokens/palette";
+import { typography } from "../src/tokens/typography";
+import "../src/tailwind.css";
 
 const theme = {
   colors: palette,
