@@ -1,11 +1,11 @@
 import { useForm } from "react-hook-form";
-import { Input } from "@/components/ui/input";
-import { Label } from "@radix-ui/react-label";
-import { Lock, Mail, User } from "lucide-react";
+import { Lock, Mail, User, User2 } from "lucide-react";
 import { useSignUp } from "@/lib/auth/hooks/useSignUp";
 import { authStatusType, Layout } from "@/components/common/components/Layout";
 import { NavigationBar } from "@/components/common/components/NavigationBar";
 import Button from "@design-system/button/Button";
+import Input from "@design-system/input/Input";
+import Label from "@design-system/label/Label";
 
 type SignUpFormValues = {
   nickname: string;
@@ -60,49 +60,46 @@ const SignUp = () => {
           <div className="space-y-2">
             <Label htmlFor="nickname">닉네임</Label>
             <div className="relative">
-              <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               <Input
+                full
+                icon={<User2 />}
                 id="nickname"
                 {...register("nickname", { required: "닉네임을 입력하세요" })}
                 type="text"
                 placeholder="닉네임"
                 className="pl-10"
+                error={errors.nickname?.message}
               />
             </div>
-            {errors.nickname && (
-              <p className="text-sm text-red-500">{errors.nickname.message}</p>
-            )}
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="email">이메일</Label>
             <div className="relative">
-              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               <Input
+                full
+                icon={<Mail />}
                 id="email"
                 {...register("email", emailValidation)}
                 placeholder="이메일"
                 className="pl-10"
+                error={errors.email?.message}
               />
             </div>
-            {errors.email && (
-              <p className="text-sm text-red-500">{errors.email.message}</p>
-            )}
           </div>
           <div className="space-y-2">
             <Label htmlFor="password">비밀번호</Label>
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               <Input
+                full
+                icon={<Lock />}
                 id="password"
                 {...register("password", passwordValidation)}
                 placeholder="비밀번호"
                 className="pl-10"
+                error={errors.password?.message}
               />
             </div>
-            {errors.password && (
-              <p className="text-sm text-red-500">{errors.password.message}</p>
-            )}
           </div>
           <div className="space-y-2">
             <Label

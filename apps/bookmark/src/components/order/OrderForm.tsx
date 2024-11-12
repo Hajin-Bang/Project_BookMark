@@ -1,11 +1,11 @@
 import { useForm } from "react-hook-form";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 import { useCreateOrder } from "@/lib/order/hooks/useCreateOrder";
 import { CreateOrderParams, OrderItem } from "@/lib/order/types";
 import Button from "@design-system/button/Button";
+import Input from "@design-system/input/Input";
+import Label from "@design-system/label/Label";
 
 interface OrderFormValues {
   name: string;
@@ -97,60 +97,60 @@ const OrderForm = ({ orderItems, totalAmount }: OrderFormProps) => {
       <div>
         <Label htmlFor="name">이름</Label>
         <Input
+          full
           id="name"
           {...register("name", nameValidation)}
           type="text"
           placeholder="이름을 입력하세요."
+          error={errors.name?.message}
         />
-        {errors.name && <p className="text-red-400">{errors.name.message}</p>}
       </div>
       <div>
         <Label htmlFor="address">주소</Label>
         <Input
+          full
           id="address"
           {...register("address", addressValidation)}
           type="text"
           placeholder="주소를 입력하세요."
+          error={errors.address?.message}
         />
-        {errors.address && (
-          <p className="text-red-400">{errors.address.message}</p>
-        )}
       </div>
 
       <div>
         <Label htmlFor="postalCode">우편번호</Label>
         <Input
+          full
           id="postalCode"
           {...register("postalCode", postalCodeValidation)}
           type="text"
           placeholder="우편번호를 입력하세요."
+          error={errors.postalCode?.message}
         />
-        {errors.postalCode && (
-          <p className="text-red-400">{errors.postalCode.message}</p>
-        )}
       </div>
       <div>
         <Label htmlFor="phone">전화번호</Label>
         <Input
+          full
           id="phone"
           {...register("phone", phoneValidation)}
           type="text"
           placeholder="01012345678"
+          error={errors.phone?.message}
         />
-        {errors.phone && <p className="text-red-400">{errors.phone.message}</p>}
       </div>
       <div>
         <Label htmlFor="email">이메일</Label>
         <Input
+          full
           id="email"
           {...register("email", emailValidation)}
           type="text"
           placeholder="example@example.com"
+          error={errors.email?.message}
         />
-        {errors.email && <p className="text-red-400">{errors.email.message}</p>}
       </div>
 
-      {/* 버튼 */}
       <div className="w-full flex gap-2 mt-2">
         <Button
           type="button"

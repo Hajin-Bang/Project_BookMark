@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
 import {
   Select,
   SelectContent,
@@ -11,6 +9,8 @@ import {
 } from "../ui/select";
 import { Textarea } from "../ui/textarea";
 import { ImageUploader } from "./ImageUploader";
+import Input from "@design-system/input/Input";
+import Label from "@design-system/label/Label";
 
 type ProductFormProps = {
   onSubmit: (data: ProductAddFormValues) => void;
@@ -77,26 +77,24 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           책 제목
         </Label>
         <Input
+          full
           id="productName"
           {...register("productName", { required: "책 제목을 입력하세요" })}
           type="text"
           placeholder="책 제목을 입력하세요."
+          error={errors.productName?.message}
         />
-        {errors.productName && (
-          <p className="text-red-400">{errors.productName.message}</p>
-        )}
 
         {/* 작가명 */}
         <Label htmlFor="productAuthor">작가명</Label>
         <Input
+          full
           id="productAuthor"
           {...register("productAuthor", { required: "작가를 입력하세요" })}
           type="text"
           placeholder="작가를 입력하세요."
+          error={errors.productAuthor?.message}
         />
-        {errors.productAuthor && (
-          <p className="text-red-400">{errors.productAuthor.message}</p>
-        )}
 
         {/* 카테고리 */}
         <Label htmlFor="productCategory">카테고리</Label>
@@ -135,6 +133,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         {/* 가격 */}
         <Label htmlFor="productPrice">상품 가격</Label>
         <Input
+          full
           id="productPrice"
           {...register("productPrice", {
             required: "판매 가격을 입력하세요.",
@@ -145,14 +144,13 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           })}
           type="number"
           placeholder="상품 가격을 입력하세요."
+          error={errors.productPrice?.message}
         />
-        {errors.productPrice && (
-          <p className="text-red-400">{errors.productPrice.message}</p>
-        )}
 
         {/* 수량 */}
         <Label htmlFor="productQuantity">상품 수량</Label>
         <Input
+          full
           id="productQuantity"
           {...register("productQuantity", {
             required: "판매 수량을 입력하세요.",
@@ -163,10 +161,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           })}
           type="number"
           placeholder="상품 수량을 입력하세요."
+          error={errors.productQuantity?.message}
         />
-        {errors.productQuantity && (
-          <p className="text-red-400">{errors.productQuantity.message}</p>
-        )}
 
         {/* 설명 */}
         <Label htmlFor="productDescription">상품 상세 설명</Label>

@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { Input } from "../ui/input";
 import {
   compressAndConvertImage,
   deleteImageFormFirebaes,
   uploadImageToFirebase,
 } from "@/lib/product/utils";
+import Input from "@design-system/input/Input";
 
 type ImageUploaderProps = {
   onImageChange: (urls: string[]) => void;
@@ -104,13 +104,16 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
       ) : (
         <p className="text-gray-500 text-center">사진을 추가해주세요</p>
       )}
-      <Input
-        type="file"
-        accept="image/*"
-        multiple
-        onChange={handleImageUpload}
-        className="absolute bottom-0 w-full text-center text-white p-2 rounded-b-md cursor-pointer"
-      />
+      <div className="absolute bottom-0 w-full p-2">
+        <Input
+          full
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={handleImageUpload}
+          className=" text-white cursor-pointer"
+        />
+      </div>
     </div>
   );
 };
