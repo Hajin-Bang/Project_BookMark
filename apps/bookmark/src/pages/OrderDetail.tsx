@@ -8,12 +8,15 @@ import { useFetchOrder } from "@/lib/order/hooks/useFetchOrder";
 import { OrderItem } from "@/lib/order/types";
 import Button from "@design-system/button/Button";
 import { useNavigate, useParams } from "react-router-dom";
+import { useModalContext } from "@design-system/modal/ModalContext";
+import CancelOrderModal from "@/components/order/CancelOrderModal";
 
 const OrderDetail = () => {
   const { orderId } = useParams<{ orderId: string }>();
   const { data: orders, isLoading, error } = useFetchOrder({ isSeller: false });
   const { mutate: cancelOrder } = useCancelOrder();
   const navigate = useNavigate();
+  const { openModal } = useModalContext();
 
   if (isLoading) return <div>로딩 중...</div>;
   if (error) return <div>오류가 발생했습니다: {error.message}</div>;
@@ -21,6 +24,10 @@ const OrderDetail = () => {
   const order = orders?.find((order) => order.orderId === orderId);
 
   if (!order) return <div>해당 주문을 찾을 수 없습니다.</div>;
+
+  const handleClickOrder = () => {
+    openModal();
+  };
 
   const handleCancelOrder = () => {
     if (orderId) {
@@ -95,13 +102,15 @@ const OrderDetail = () => {
             <Button
               className="mt-4"
               priority="important"
-              onClick={handleCancelOrder}
+              onClick={handleClickOrder}
             >
               주문 취소하기
             </Button>
           )}
         </div>
       </main>
+
+      <CancelOrderModal cancelOrder={handleCancelOrder} />
     </Layout>
   );
 };

@@ -5,19 +5,21 @@ import { useState } from "react";
 import CartDrawer from "@/components/cart/CartDrawer";
 import { useFetchCart } from "@/lib/cart/hooks/useFetchCart";
 import Button from "@design-system/button/Button";
+import { useModalContext } from "@design-system/modal/ModalContext";
+import LogoutModal from "@/components/auth/LogoutModal";
 
 export const NavigationBar = () => {
   const navigate = useNavigate();
   const { isLogin, logout, user } = useAuthStore();
   const [cartOpen, setCartOpen] = useState(false);
   const { totalQuantity } = useFetchCart();
+  const { openModal } = useModalContext();
 
   const handleLogin = () => {
     navigate("/signin");
   };
   const handleLogout = () => {
-    logout();
-    navigate("/signin");
+    openModal();
   };
 
   const handleCartClick = () => {
@@ -110,6 +112,8 @@ export const NavigationBar = () => {
       <div className="mt-16">
         <CartDrawer isOpen={cartOpen} onClose={handleCartClose} />
       </div>
+
+      <LogoutModal />
     </>
   );
 };

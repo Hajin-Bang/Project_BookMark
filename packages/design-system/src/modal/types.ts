@@ -12,7 +12,7 @@ export interface ModalRootProps {
 }
 
 export interface ModalTriggerProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export interface ModalContentProps {

@@ -8,6 +8,8 @@ import { db } from "@/firebase";
 import { useDeleteProduct } from "@/lib/product/hooks/useDeleteProduct";
 import { useUpdateProduct } from "@/lib/product/hooks/useUpdateProduct";
 import Button from "@design-system/button/Button";
+import Modal from "@design-system/modal/components/Modal";
+import { useModalContext } from "@design-system/modal/ModalContext";
 import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -20,6 +22,7 @@ const ProductUpdateDelete = () => {
   const updateProduct = useUpdateProduct();
   const deleteProduct = useDeleteProduct();
   const navigate = useNavigate();
+  const { openModal } = useModalContext();
 
   useEffect(() => {
     if (productId) {
@@ -49,6 +52,10 @@ const ProductUpdateDelete = () => {
         },
       }
     );
+  };
+
+  const handleDeleteClick = () => {
+    openModal();
   };
 
   const handleProductDelete = () => {
@@ -85,7 +92,7 @@ const ProductUpdateDelete = () => {
               수정하기
             </Button>
             <Button
-              onClick={handleProductDelete}
+              onClick={handleDeleteClick}
               className="flex-grow"
               priority="important"
             >
@@ -94,6 +101,22 @@ const ProductUpdateDelete = () => {
           </div>
         </div>
       </main>
+
+      <Modal>
+        <Modal.Content>
+          <Modal.Title>삭제 확인</Modal.Title>
+          <Modal.Description>
+            정말로 이 상품을 삭제하시겠습니까? <br /> 삭제된 상품은 복구할 수
+            없습니다.
+          </Modal.Description>
+          <div className="flex justify-center gap-2">
+            <Modal.Cancel priority="important">취소</Modal.Cancel>
+            <Modal.Action priority="important" onClick={handleProductDelete}>
+              확인
+            </Modal.Action>
+          </div>
+        </Modal.Content>
+      </Modal>
     </Layout>
   );
 };

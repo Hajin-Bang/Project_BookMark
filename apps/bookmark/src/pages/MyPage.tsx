@@ -1,15 +1,16 @@
+import LogoutModal from "@/components/auth/LogoutModal";
 import { authStatusType, Layout } from "@/components/common/components/Layout";
 import { NavigationBar } from "@/components/common/components/NavigationBar";
-import { useAuthStore } from "@/store/auth/useAuthStore";
 import Button from "@design-system/button/Button";
+import { useModalContext } from "@design-system/modal/ModalContext";
 import { useNavigate } from "react-router-dom";
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const { logout } = useAuthStore();
+  const { openModal } = useModalContext();
 
   const handleLogout = () => {
-    logout();
+    openModal();
   };
 
   const handleOrderList = () => {
@@ -43,6 +44,8 @@ const MyPage = () => {
           </div>
         </div>
       </main>
+
+      <LogoutModal />
     </Layout>
   );
 };
