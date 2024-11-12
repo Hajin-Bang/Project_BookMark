@@ -1,16 +1,10 @@
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
-import { Textarea } from "../ui/textarea";
 import { ImageUploader } from "./ImageUploader";
 import Input from "@design-system/input/Input";
 import Label from "@design-system/label/Label";
+import Select from "@design-system/select/components/Select";
+import Textarea from "@design-system/textarea/Textarea";
 
 type ProductFormProps = {
   onSubmit: (data: ProductAddFormValues) => void;
@@ -109,17 +103,15 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                 onValueChange={(value) => field.onChange(value)}
                 value={field.value}
               >
-                <SelectTrigger>
-                  <SelectValue placeholder="카테고리 선택" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="시/소설">시/소설</SelectItem>
-                  <SelectItem value="그림책/일러스트">
+                <Select.Trigger placeholder="카테고리 선택" />
+                <Select.Content>
+                  <Select.Option value="시/소설">시/소설</Select.Option>
+                  <Select.Option value="그림책/일러스트">
                     그림책/일러스트
-                  </SelectItem>
-                  <SelectItem value="에세이/인문">에세이/인문</SelectItem>
-                  <SelectItem value="사진">사진</SelectItem>
-                </SelectContent>
+                  </Select.Option>
+                  <Select.Option value="에세이/인문">에세이/인문</Select.Option>
+                  <Select.Option value="사진">사진</Select.Option>
+                </Select.Content>
               </Select>
               {errors.productCategory && (
                 <p className="text-red-500 text-sm">
@@ -172,6 +164,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             required: "도서 상세 설명을 입력하세요.",
           })}
           placeholder="상품에 대한 상세한 설명을 입력해 주세요."
+          resize="vertical"
         />
         {errors.productDescription && (
           <small className="text-red-400">
