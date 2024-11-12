@@ -10,11 +10,9 @@ export const useAddProduct = () => {
     mutationFn: addProductAPI,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.PRODUCTS] });
-      // toast
     },
     onError: (error) => {
       console.error("상품 등록 중 에러 발생:", error);
-      // toast
     },
   });
 };

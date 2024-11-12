@@ -8,6 +8,7 @@ import { GoogleSignIn } from "@/components/auth/GoogleSignIn";
 import { NavigationBar } from "@/components/common/components/NavigationBar";
 import Input from "@design-system/input/Input";
 import Label from "@design-system/label/Label";
+import { useToast } from "@design-system/toast/ToastContext";
 
 type SignInFormValues = {
   email: string;
@@ -21,6 +22,7 @@ const SignIn = () => {
     formState: { errors },
   } = useForm<SignInFormValues>();
   const navigate = useNavigate();
+  const { addToast } = useToast();
   const { mutate: signIn, isPending: isLoading } = useSignIn();
 
   const onSubmit: SubmitHandler<SignInFormValues> = (data) => {
@@ -34,6 +36,11 @@ const SignIn = () => {
       },
       onError: (error) => {
         console.error("로그인 실패", error);
+        addToast({
+          title: "로그인 정보를 정확히 입력해주세요.",
+          variant: "error",
+          duration: 3000,
+        });
       },
     });
   };

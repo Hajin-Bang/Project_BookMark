@@ -10,6 +10,7 @@ import Button from "@design-system/button/Button";
 import { useNavigate, useParams } from "react-router-dom";
 import { useModalContext } from "@design-system/modal/ModalContext";
 import CancelOrderModal from "@/components/order/CancelOrderModal";
+import { useToast } from "@design-system/toast/ToastContext";
 
 const OrderDetail = () => {
   const { orderId } = useParams<{ orderId: string }>();
@@ -17,6 +18,7 @@ const OrderDetail = () => {
   const { mutate: cancelOrder } = useCancelOrder();
   const navigate = useNavigate();
   const { openModal } = useModalContext();
+  const { addToast } = useToast();
 
   if (isLoading) return <div>로딩 중...</div>;
   if (error) return <div>오류가 발생했습니다: {error.message}</div>;
@@ -33,12 +35,20 @@ const OrderDetail = () => {
     if (orderId) {
       cancelOrder(orderId, {
         onSuccess: () => {
-          alert("주문이 취소되었습니다.");
           navigate("/orders");
+          addToast({
+            title: "주문이 취소되었습니다.",
+            variant: "success",
+            duration: 3000,
+          });
         },
         onError: (error) => {
           console.error("주문 취소 중 오류 발생:", error);
-          alert("주문 취소에 실패하였습니다.");
+          addToast({
+            title: "주문이 취소 중 오류가 발생했습니다.",
+            variant: "error",
+            duration: 3000,
+          });
         },
       });
     }

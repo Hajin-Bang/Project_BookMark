@@ -11,11 +11,9 @@ export const useCreateOrder = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.ORDERS] });
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.PRODUCTS] });
-      // toast
     },
     onError: (error) => {
       console.error("주문 생성 중 에러 발생", error);
-      // toast
     },
   });
 };

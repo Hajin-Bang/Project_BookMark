@@ -6,6 +6,7 @@ import { CreateOrderParams, OrderItem } from "@/lib/order/types";
 import Button from "@design-system/button/Button";
 import Input from "@design-system/input/Input";
 import Label from "@design-system/label/Label";
+import { useToast } from "@design-system/toast/ToastContext";
 
 interface OrderFormValues {
   name: string;
@@ -24,6 +25,7 @@ const OrderForm = ({ orderItems, totalAmount }: OrderFormProps) => {
   const navigate = useNavigate();
   const createOrder = useCreateOrder();
   const { user } = useAuthStore();
+  const { addToast } = useToast();
   const {
     register,
     handleSubmit,
@@ -53,6 +55,18 @@ const OrderForm = ({ orderItems, totalAmount }: OrderFormProps) => {
     createOrder.mutate(orderData, {
       onSuccess: () => {
         navigate("/mypage");
+        addToast({
+          title: "주문이 완료되었습니다!",
+          variant: "success",
+          duration: 3000,
+        });
+      },
+      onError: () => {
+        addToast({
+          title: "주문 처리 중 오류가 발생했습니다.",
+          variant: "error",
+          duration: 3000,
+        });
       },
     });
   };

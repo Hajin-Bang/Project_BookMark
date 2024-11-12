@@ -39,7 +39,6 @@ export const useAuthStore = create<AuthState>((set) => ({
       isLogin: false,
       loading: false,
     });
-    // Toast
   },
 
   checkLoginStatus: async () => {

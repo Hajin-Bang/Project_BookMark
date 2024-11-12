@@ -6,6 +6,7 @@ import { NavigationBar } from "@/components/common/components/NavigationBar";
 import Button from "@design-system/button/Button";
 import Input from "@design-system/input/Input";
 import Label from "@design-system/label/Label";
+import { useToast } from "@design-system/toast/ToastContext";
 
 type SignUpFormValues = {
   nickname: string;
@@ -21,9 +22,15 @@ const SignUp = () => {
     formState: { errors },
   } = useForm<SignUpFormValues>();
   const { mutate, isPending: isLoading } = useSignUp();
+  const { addToast } = useToast();
 
   const onSubmit = async (data: SignUpFormValues) => {
     mutate(data);
+    addToast({
+      title: "회원가입이 완료되었습니다!",
+      variant: "success",
+      duration: 3000,
+    });
   };
 
   const emailValidation = {

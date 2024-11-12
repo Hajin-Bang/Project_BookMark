@@ -8,11 +8,13 @@ import { useNavigate } from "react-router-dom";
 import { NavigationBar } from "@/components/common/components/NavigationBar";
 import { useAddProduct } from "@/lib/product/hooks/useAddProduct";
 import Button from "@design-system/button/Button";
+import { useToast } from "@design-system/toast/ToastContext";
 
 const ProductAdd = () => {
   const { user } = useAuthStore();
   const { mutate } = useAddProduct();
   const navigate = useNavigate();
+  const { addToast } = useToast();
 
   const handleProductAdd = (data: ProductAddFormValues) => {
     if (!user) {
@@ -33,6 +35,18 @@ const ProductAdd = () => {
     mutate(productData, {
       onSuccess: () => {
         navigate("/manage");
+        addToast({
+          title: "도서가 등록되었습니다!",
+          variant: "success",
+          duration: 3000,
+        });
+      },
+      onError: () => {
+        addToast({
+          title: "도서 등록 중 오류가 발생했습니다.",
+          variant: "error",
+          duration: 3000,
+        });
       },
     });
   };

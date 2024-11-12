@@ -10,6 +10,7 @@ import { useUpdateProduct } from "@/lib/product/hooks/useUpdateProduct";
 import Button from "@design-system/button/Button";
 import Modal from "@design-system/modal/components/Modal";
 import { useModalContext } from "@design-system/modal/ModalContext";
+import { useToast } from "@design-system/toast/ToastContext";
 import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -23,6 +24,7 @@ const ProductUpdateDelete = () => {
   const deleteProduct = useDeleteProduct();
   const navigate = useNavigate();
   const { openModal } = useModalContext();
+  const { addToast } = useToast();
 
   useEffect(() => {
     if (productId) {
@@ -63,9 +65,19 @@ const ProductUpdateDelete = () => {
     deleteProduct.mutate(productId, {
       onSuccess: () => {
         navigate("/manage");
+        addToast({
+          title: "도서가 삭제되었습니다.",
+          variant: "success",
+          duration: 3000,
+        });
       },
       onError: (error) => {
-        console.error("상품 삭제 중 에러 발생:", error);
+        console.error("도서 삭제 중 에러 발생:", error);
+        addToast({
+          title: "도서 삭제 중 오류가 발생했습니다.",
+          variant: "error",
+          duration: 3000,
+        });
       },
     });
   };
