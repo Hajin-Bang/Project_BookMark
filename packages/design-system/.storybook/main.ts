@@ -1,7 +1,8 @@
 import type { StorybookConfig } from "@storybook/react-vite";
+import { mergeConfig } from "vite";
 
 const config: StorybookConfig = {
-  stories: ["../src/**/*.stories.@(ts|tsx|mdx)"],
+  stories: ["../src/**/*.stories.@(ts|tsx)"],
   addons: [
     "@storybook/addon-onboarding",
     "@storybook/addon-essentials",
@@ -20,6 +21,14 @@ const config: StorybookConfig = {
   },
   core: {
     builder: "@storybook/builder-vite",
+  },
+  async viteFinal(config) {
+    return mergeConfig(config, {
+      optimizeDeps: {
+        include: ["storybook-addon"],
+      },
+      plugins: [require("@vitejs/plugin-react")()],
+    });
   },
 };
 export default config;

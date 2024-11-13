@@ -7,8 +7,9 @@ export interface ModalContextType {
 }
 
 export interface ModalRootProps {
+  open?: boolean;
+  onOpenChange?: (isOpen: boolean) => void;
   children: React.ReactNode;
-  className?: string;
 }
 
 export interface ModalTriggerProps {
@@ -30,10 +31,15 @@ export interface ModalDescriptionProps {
   className?: string;
 }
 
+export interface ModalActionsProps {
+  children: React.ReactNode;
+}
+
 export interface ModalCancelProps {
   children?: React.ReactNode;
   className?: string;
   priority?: ButtonPriority;
+  onOpenChange?: (isOpen: boolean) => void;
 }
 
 export interface ModalActionProps {

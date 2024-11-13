@@ -1,11 +1,34 @@
-import React from 'react'
+import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { ModalProvider } from "./ModalContext";
 import Modal from "./components/Modal";
+import Button from "../button/Button";
 
 const meta: Meta = {
   title: "Design System/Modal",
   component: Modal,
+  argTypes: {
+    open: {
+      description: "제어 모드에서 모달의 열림 상태를 설정합니다.",
+      table: {
+        type: { summary: "boolean" },
+      },
+    },
+    onOpenChange: {
+      action: "onOpenChange",
+      description: "제어 모드에서 모달의 상태가 변경될 때 호출되는 함수입니다.",
+      table: {
+        type: { summary: "function" },
+      },
+    },
+    onClick: {
+      action: "onClick",
+      description: "Modal.Action 버튼 클릭 시 호출되는 함수입니다.",
+      table: {
+        type: { summary: "function" },
+      },
+    },
+  },
   tags: ["autodocs"],
   decorators: [
     (Story) => (
@@ -43,12 +66,12 @@ export const Basic: Story = {
         <Modal.Description>
           This is a description of the modal content.
         </Modal.Description>
-        <div className="flex justify-center gap-2">
+        <Modal.Actions>
           <Modal.Cancel>Cancel</Modal.Cancel>
           <Modal.Action onClick={() => alert("Confirmed")}>
             Confirm
           </Modal.Action>
-        </div>
+        </Modal.Actions>
       </Modal.Content>
     </Modal>
   ),
@@ -63,7 +86,9 @@ export const CancelOnly: Story = {
         <Modal.Description>
           This modal has only a Cancel button to close it.
         </Modal.Description>
-        <Modal.Cancel>Confirm</Modal.Cancel>
+        <Modal.Actions>
+          <Modal.Cancel>Confirm</Modal.Cancel>
+        </Modal.Actions>
       </Modal.Content>
     </Modal>
   ),
@@ -78,7 +103,7 @@ export const CustomPriority: Story = {
         <Modal.Description>
           This modal demonstrates different priority levels for Button.
         </Modal.Description>
-        <div className="flex justify-center gap-2">
+        <Modal.Actions>
           <Modal.Cancel priority="important">Back</Modal.Cancel>
           <Modal.Action
             priority="important"
@@ -86,8 +111,38 @@ export const CustomPriority: Story = {
           >
             Proceed
           </Modal.Action>
-        </div>
+        </Modal.Actions>
       </Modal.Content>
     </Modal>
   ),
+};
+
+export const ControlledModal: Story = {
+  render: () => {
+    const [isModalOpen, setModalOpen] = React.useState(false);
+
+    const openModal = () => setModalOpen(true);
+    const closeModal = () => setModalOpen(false);
+
+    const handleClickModal = () => {
+      alert("confirmed");
+      closeModal();
+    };
+
+    return (
+      <>
+        <Button onClick={openModal}>Open Controlled Modal</Button>
+        <Modal open={isModalOpen} onOpenChange={setModalOpen}>
+          <Modal.Content>
+            <Modal.Title>Controlled Modal Title</Modal.Title>
+            <Modal.Description>Description</Modal.Description>
+            <Modal.Actions>
+              <Modal.Cancel onOpenChange={closeModal}>Cancel</Modal.Cancel>
+              <Modal.Action onClick={handleClickModal}>Confirm</Modal.Action>
+            </Modal.Actions>
+          </Modal.Content>
+        </Modal>
+      </>
+    );
+  },
 };
