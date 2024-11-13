@@ -23,6 +23,7 @@ export const StyledModalContent = styled.div`
   padding: 20px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 20px;
 `;
 
@@ -34,4 +35,10 @@ export const StyledModalTitle = styled.p`
 export const StyledModalDescription = styled.p`
   font-size: ${typography.fontSizeMD};
   color: ${palette.gray[700]};
+`;
+
+export const StyledModalActions = styled.div<{ buttonCount: number }>`
+  display: flex;
+  justify-content: center;
+  gap: ${({ buttonCount }) => (buttonCount === 2 ? "8px" : "0")};
 `;

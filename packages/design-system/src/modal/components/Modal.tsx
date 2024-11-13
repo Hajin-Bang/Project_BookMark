@@ -7,20 +7,29 @@ import { ModalTitle } from "./ModalTitle";
 import { ModalDescription } from "./ModalDescription";
 import { ModalCancel } from "./ModalCancel";
 import { ModalAction } from "./ModalAction";
+import { ModalRootProps } from "../types";
+import { ModalActions } from "./ModalActions";
 
-const Modal: React.FC<{ children: React.ReactNode }> & {
+const Modal: React.FC<ModalRootProps> & {
   Trigger: typeof ModalTrigger;
   Content: typeof ModalContent;
   Title: typeof ModalTitle;
   Description: typeof ModalDescription;
+  Actions: typeof ModalActions;
   Cancel: typeof ModalCancel;
   Action: typeof ModalAction;
-} = ({ children }) => {
-  const { isOpen, closeModal } = useModalContext();
+} = ({ open: controlledOpen, onOpenChange, children }) => {
+  const { isOpen: contextIsOpen, closeModal } = useModalContext();
+
+  const isOpen = controlledOpen !== undefined ? controlledOpen : contextIsOpen;
 
   const handleOverlayClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
-      closeModal();
+      if (onOpenChange) {
+        onOpenChange(false);
+      } else {
+        closeModal();
+      }
     }
   };
 
@@ -51,6 +60,7 @@ Modal.Trigger = ModalTrigger;
 Modal.Content = ModalContent;
 Modal.Title = ModalTitle;
 Modal.Description = ModalDescription;
+Modal.Actions = ModalActions;
 Modal.Cancel = ModalCancel;
 Modal.Action = ModalAction;
 
