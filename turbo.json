@@ -5,7 +5,7 @@
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": ["apps/bookmark/dist/**"]
+      "outputs": ["apps/bookmark/dist/**", "packages/design-system/dist/**"]
     },
     "lint": {
       "dependsOn": ["^lint"]
