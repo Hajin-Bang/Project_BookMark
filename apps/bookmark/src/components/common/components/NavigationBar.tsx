@@ -5,38 +5,25 @@ import { useState } from "react";
 import CartDrawer from "@/components/cart/CartDrawer";
 import { useFetchCart } from "@/lib/cart/hooks/useFetchCart";
 import Button from "@design-system/button/Button";
-import { useModalContext } from "@design-system/modal/ModalContext";
 import LogoutModal from "@/components/auth/LogoutModal";
+import { useModalState } from "@/hooks/useModalState";
 
 export const NavigationBar = () => {
   const navigate = useNavigate();
-  const { isLogin, logout, user } = useAuthStore();
+  const { isLogin, user } = useAuthStore();
   const [cartOpen, setCartOpen] = useState(false);
   const { totalQuantity } = useFetchCart();
-  const { openModal } = useModalContext();
+  const {
+    isOpen: logoutModalOpen,
+    openModal: openLogoutModal,
+    closeModal: closeLogoutModal,
+  } = useModalState();
 
-  const handleLogin = () => {
-    navigate("/signin");
-  };
-  const handleLogout = () => {
-    openModal();
-  };
-
-  const handleCartClick = () => {
-    setCartOpen((prev) => !prev);
-  };
-
-  const handleCartClose = () => {
-    setCartOpen(false);
-  };
-
-  const handleMyPageClick = () => {
-    navigate("/mypage");
-  };
-
-  const handleManagePageClick = () => {
-    navigate("/manage/options");
-  };
+  const handleLogin = () => navigate("/signin");
+  const handleCartClick = () => setCartOpen((prev) => !prev);
+  const handleCartClose = () => setCartOpen(false);
+  const handleMyPageClick = () => navigate("/mypage");
+  const handleManagePageClick = () => navigate("/manage/options");
 
   return (
     <>
@@ -57,7 +44,7 @@ export const NavigationBar = () => {
                 />
                 <Button
                   variant="ghost"
-                  size="sm"
+                  size="md"
                   onClick={handleLogin}
                   className="font-extrabold"
                 >
@@ -83,7 +70,7 @@ export const NavigationBar = () => {
                   onClick={handleMyPageClick}
                 />
                 <LogOut
-                  onClick={handleLogout}
+                  onClick={openLogoutModal}
                   className="h-5 w-5 cursor-pointer"
                 />
               </>
@@ -92,7 +79,7 @@ export const NavigationBar = () => {
               <>
                 <Button
                   variant="ghost"
-                  size="sm"
+                  size="md"
                   priority="important"
                   className="font-extrabold"
                   onClick={handleManagePageClick}
@@ -100,7 +87,7 @@ export const NavigationBar = () => {
                   계정 관리
                 </Button>
                 <LogOut
-                  onClick={handleLogout}
+                  onClick={openLogoutModal}
                   className="h-5 w-5 cursor-pointer"
                 />
               </>
@@ -113,7 +100,7 @@ export const NavigationBar = () => {
         <CartDrawer isOpen={cartOpen} onClose={handleCartClose} />
       </div>
 
-      <LogoutModal />
+      <LogoutModal open={logoutModalOpen} onOpenChange={closeLogoutModal} />
     </>
   );
 };

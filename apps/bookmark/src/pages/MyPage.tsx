@@ -1,21 +1,16 @@
 import LogoutModal from "@/components/auth/LogoutModal";
 import { authStatusType, Layout } from "@/components/common/components/Layout";
 import { NavigationBar } from "@/components/common/components/NavigationBar";
+import { useModalState } from "@/hooks/useModalState";
 import Button from "@design-system/button/Button";
-import { useModalContext } from "@design-system/modal/ModalContext";
 import { useNavigate } from "react-router-dom";
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const { openModal } = useModalContext();
+  const { isOpen, openModal, closeModal } = useModalState();
 
-  const handleLogout = () => {
-    openModal();
-  };
+  const handleOrderList = () => navigate("/orders");
 
-  const handleOrderList = () => {
-    navigate("/orders");
-  };
   return (
     <Layout authStatus={authStatusType.ONLY_BUYER}>
       <NavigationBar />
@@ -35,7 +30,7 @@ const MyPage = () => {
             </Button>
             <Button
               full
-              onClick={handleLogout}
+              onClick={openModal}
               priority="custom"
               className="bg-slate-400 text-white hover:bg-slate-500"
             >
@@ -45,7 +40,7 @@ const MyPage = () => {
         </div>
       </main>
 
-      <LogoutModal />
+      <LogoutModal open={isOpen} onOpenChange={closeModal} />
     </Layout>
   );
 };
