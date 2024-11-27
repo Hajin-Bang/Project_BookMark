@@ -1,5 +1,5 @@
-import { Input } from "@/components/ui/input";
 import { useImageUploader } from "@/hooks/useImageUploader";
+import Input from "@design-system/input/Input";
 import { useEffect } from "react";
 
 type ImageUploaderProps = {
@@ -41,13 +41,16 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
       ) : (
         <p className="text-gray-500 text-center">사진을 추가해주세요</p>
       )}
-      <Input
-        type="file"
-        accept="image/*"
-        multiple
-        onChange={(e) => uploadImages(e.target.files)}
-        className="absolute bottom-0 w-full text-center text-white p-2 rounded-b-md cursor-pointer"
-      />
+      <div className="absolute bottom-0 w-full p-2">
+        <Input
+          full
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={(e) => uploadImages(e.target.files)}
+          className=" text-white cursor-pointer"
+        />
+      </div>
     </div>
   );
 };

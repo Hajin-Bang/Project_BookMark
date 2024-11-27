@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
-import { Skeleton } from "./components/ui/skeleton";
 import ScrollToTop from "./components/common/components/ScrollToTop";
 
 const Home = lazy(() => import("./pages/Home"));
@@ -22,7 +21,13 @@ const AppRouter = () => {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <Suspense fallback={<Skeleton className="w-24 h-8" />}>
+      <Suspense
+        fallback={
+          <div className="flex justify-center items-center h-screen">
+            Loading...
+          </div>
+        }
+      >
         <Routes>
           {/* 누구나 접근 가능한 공용 페이지 */}
           <Route path="/" element={<Home />} />
