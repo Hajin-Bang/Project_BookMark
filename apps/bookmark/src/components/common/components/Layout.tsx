@@ -27,10 +27,6 @@ export const Layout: React.FC<LayoutProps> = ({
     checkLoginStatus();
   }, [checkLoginStatus]);
 
-  if (loading) {
-    return <div>로딩 중...</div>;
-  }
-
   // 로그인 필요하고 로그인 안 되어 있으면 로그인 페이지로 이동
   if (authStatus === authStatusType.NEED_LOGIN && !isLogin) {
     return <Navigate to="/signin" />;
